@@ -8,38 +8,102 @@
     tools:context="com.loge.mealpricer.ProductActivityFragment"
     tools:showIn="@layout/activity_product">
 
+    <ImageView
+        android:id="@+id/product_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/product_image_description"
+        android:src="@android:color/darker_gray"/>
+
+    <ImageButton
+        android:id="@+id/product_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/poduct_cam_button_description"
+        android:src="@drawable/ic_take_photo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/product_image"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/product_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="8dp">
+
+        <EditText
+            android:id="@+id/product_name_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/product_name_label"
+            android:inputType="textCapWords"/>
+    </android.support.design.widget.TextInputLayout>
+
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/textInputLayout2"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"
-        android:id="@+id/textInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/product_camera"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="8dp">
 
         <EditText
-            android:id="@+id/volume_entry"
+            android:id="@+id/product_weight_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/product_volume_hint"
+            android:hint="@string/product_weight_label"
+            android:inputType="number"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textInputLayout"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="8dp">
+
+        <EditText
+            android:id="@+id/product_volume_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/product_volume_label"
             android:inputType="number"
-            android:text="@string/product_volume_label"/>
+            />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-        tools:layout_editor_absoluteX="0dp">
+        android:id="@+id/textInputLayout3"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="8dp">
 
         <EditText
-            android:id="@+id/price_entry"
+            android:id="@+id/product_price_entry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="@string/product_price_hint"
+            android:hint="@string/product_price_label"
             android:inputType="number"
-            android:text="@string/product_price_label"/>
+            />
     </android.support.design.widget.TextInputLayout>
 
 

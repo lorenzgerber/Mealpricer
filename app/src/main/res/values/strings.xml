@@ -7,12 +7,10 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_meal_pricer_tab">MealPricerTabActivity</string>
     <string name="title_activity_product">ProductActivity</string>
-    <string name="product_name_label">Name</string>
-    <string name="product_name_hint">Enter the Product Name.</string>
+    <string name="product_name_label">Productname</string>
+    <string name="product_image_description">photo of product</string>
+    <string name="poduct_cam_button_description">button to take photo of product</string>
     <string name="product_weight_label">Weight (g)</string>
-    <string name="product_weight_hint">Enter Product Weight in gram.</string>
-    <string name="product_volume_label">Volumen (ml)</string>
-    <string name="product_volume_hint">Enter Product Volume in milliliter.</string>
-    <string name="product_price_label">Price</string>
-    <string name="product_price_hint">Enter Product Price in SEK.</string>
+    <string name="product_volume_label">Volume (ml)</string>
+    <string name="product_price_label">Price (SEK)</string>
 </resources>
