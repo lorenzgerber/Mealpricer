@@ -98,7 +98,7 @@ public class MealPricerTabActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(Meal item) {
 
     }
 

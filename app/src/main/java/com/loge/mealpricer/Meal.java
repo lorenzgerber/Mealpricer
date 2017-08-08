@@ -1,5 +1,6 @@
 package com.loge.mealpricer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,14 +12,17 @@ public class Meal {
 
     private UUID mMealId;
     private String mName;
+    private double mPrice;
     private int mPortion;
 
     private List<Ingredient> mIngredients;
 
 
     public Meal(){
+        mIngredients = new ArrayList<>();
         mMealId = UUID.randomUUID();
         mName = "Röschti";
+        mPrice = 50;
         mPortion = 1;
         Product mProduct1 = new Product();
         Product mProduct2 = new Product();
@@ -46,6 +50,14 @@ public class Meal {
 
     public void setName(String name) {
         mName = name;
+    }
+
+    public double getPrice() {
+        return mPrice;
+    }
+
+    public void setPrice(Double price) {
+        mPrice = price;
     }
 
     public int getPortion() {

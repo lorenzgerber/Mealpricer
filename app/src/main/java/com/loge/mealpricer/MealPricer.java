@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 
 public class MealPricer {
-    private static MealPricer sMealPricer;
+    public static MealPricer sMealPricer;
 
     private Context mContext;
     private SQLiteDatabase mDatabase;
@@ -26,8 +26,7 @@ public class MealPricer {
 
     private MealPricer(Context context){
         mContext = context.getApplicationContext();
-        mDatabase = new MealPricerBaseHelper(mContext)
-                .getWritableDatabase();
+        mDatabase = new MealPricerBaseHelper(mContext).getWritableDatabase();
 
     }
 

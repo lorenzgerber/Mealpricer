@@ -18,10 +18,10 @@ import java.util.List;
  */
 public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProductRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Meal> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyProductRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyProductRecyclerViewAdapter(List<Meal> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,8 +36,9 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mNameView.setText(mValues.get(position).getName());
+        holder.mPriceView.setText(String.valueOf(mValues.get(position).getPrice()));
+        holder.mPortionView.setText(String.valueOf(mValues.get(position).getPortion()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,20 +59,22 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mNameView;
+        public final TextView mPriceView;
+        public final TextView mPortionView;
+        public Meal mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mNameView = (TextView) view.findViewById(R.id.meal_name);
+            mPriceView = (TextView) view.findViewById(R.id.meal_price);
+            mPortionView = (TextView) view.findViewById(R.id.meal_portion);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mNameView.getText() + "'";
         }
     }
 }

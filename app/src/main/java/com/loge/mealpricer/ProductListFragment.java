@@ -29,6 +29,7 @@ public class ProductListFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private RecyclerView mProductRecyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -64,15 +65,29 @@ public class ProductListFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            mProductRecyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                mProductRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                mProductRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyProductRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+            updateUI();
+
+
+
         }
         return view;
+    }
+
+    private void updateUI() {
+
+        MealPricer mealPricer = MealPricer.get(getActivity());
+        List<Meal>  meals = mealPricer.getMeals();
+        MyProductRecyclerViewAdapter mAdapter = new MyProductRecyclerViewAdapter(meals, mListener);
+
+        mProductRecyclerView.setAdapter(mAdapter);
+
     }
 
 
@@ -105,6 +120,6 @@ public class ProductListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Meal item);
     }
 }

@@ -24,6 +24,8 @@ public class MealPricerBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        /*
         db.execSQL("create table " + ProductTable.NAME + "(" +
                 ProductTable.Cols.PRODUCT_ID +
                 " integer primary key  autoincrement, " +
@@ -35,12 +37,15 @@ public class MealPricerBaseHelper extends SQLiteOpenHelper {
                 ")"
         );
 
+        /*
         db.execSQL("create table " + MealTable.NAME + "(" +
                 MealTable.Cols.MEAL_ID +
                 " integer primary key autoincrement, " +
                 MealTable.Cols.NAME +
                 ")"
         );
+        */
+
 
         db.execSQL("create table " + IngredientTable.NAME + "(" +
                 IngredientTable.Cols.MEAL_ID + ", " +
