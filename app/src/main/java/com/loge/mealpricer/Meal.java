@@ -13,11 +13,26 @@ public class Meal {
     private String mName;
     private int mPortion;
 
-    private List<Ingredient> Ingredients;
+    private List<Ingredient> mIngredients;
 
 
     public Meal(){
         mMealId = UUID.randomUUID();
+        mName = "Röschti";
+        mPortion = 1;
+        Product mProduct1 = new Product();
+        Product mProduct2 = new Product();
+        Ingredient mIngredient1 = new Ingredient();
+        Ingredient mIngredient2 = new Ingredient();
+        mIngredient1.setProduct(mProduct1);
+        mIngredient2.setProduct(mProduct2);
+        mIngredient1.setAmount(300);
+        mIngredient2.setAmount(100);
+        mIngredient1.setMeasureType(0);
+        mIngredient2.setMeasureType(0);
+
+        mIngredients.add(mIngredient1);
+        mIngredients.add(mIngredient2);
 
     }
 
@@ -42,11 +57,16 @@ public class Meal {
     }
 
     public List<Ingredient> getIngredients() {
-        return Ingredients;
+        return mIngredients;
+    }
+
+    public void addIngredient(){
+
+
     }
 
     public void setIngredients(List<Ingredient> ingredients) {
-        Ingredients = ingredients;
+        mIngredients = ingredients;
     }
 
 

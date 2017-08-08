@@ -16,6 +16,9 @@ public class Product {
 
     public Product(){
         mProductId = UUID.randomUUID();
+        mName = "Potato";
+        mPrice = 20.0;
+        mWeight = 1000;
 
     }
 
