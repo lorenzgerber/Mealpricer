@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.loge.mealpricer.dummy.DummyContent;
-import com.loge.mealpricer.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
@@ -119,7 +117,6 @@ public class ProductListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(Meal item);
     }
 }

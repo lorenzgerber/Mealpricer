@@ -64,10 +64,8 @@ public class MealPricerTabActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MealPricerTabActivity.this, ProductActivity.class);
-                startActivity(intent);
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //        .setAction("Action", null).show();
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
 
@@ -99,7 +97,8 @@ public class MealPricerTabActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(Meal item) {
-
+        Intent intent = new Intent(MealPricerTabActivity.this, ProductActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -160,7 +159,7 @@ public class MealPricerTabActivity extends AppCompatActivity
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
     }
 }

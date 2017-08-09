@@ -1,5 +1,6 @@
 package com.loge.mealpricer;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,7 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
             mPriceView = (TextView) view.findViewById(R.id.meal_price);
             mPortionView = (TextView) view.findViewById(R.id.meal_portion);
         }
+
 
         @Override
         public String toString() {
