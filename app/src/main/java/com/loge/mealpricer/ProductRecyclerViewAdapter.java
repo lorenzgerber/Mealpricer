@@ -1,6 +1,5 @@
 package com.loge.mealpricer;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +16,12 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProductRecyclerViewAdapter.ViewHolder> {
+public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Meal> mValues;
+    private final List<Product> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyProductRecyclerViewAdapter(List<Meal> items, OnListFragmentInteractionListener listener) {
+    public ProductRecyclerViewAdapter(List<Product> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -39,7 +38,8 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
         holder.mItem = mValues.get(position);
         holder.mNameView.setText(mValues.get(position).getName());
         holder.mPriceView.setText(String.valueOf(mValues.get(position).getPrice()));
-        holder.mPortionView.setText(String.valueOf(mValues.get(position).getPortion()));
+        holder.mWeightView.setText(String.valueOf(mValues.get(position).getWeight()));
+        holder.mVolumeView.setText(String.valueOf(mValues.get(position).getVolume()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,15 +62,17 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
         public final View mView;
         public final TextView mNameView;
         public final TextView mPriceView;
-        public final TextView mPortionView;
-        public Meal mItem;
+        public final TextView mWeightView;
+        public final TextView mVolumeView;
+        public Product mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mNameView = (TextView) view.findViewById(R.id.meal_name);
-            mPriceView = (TextView) view.findViewById(R.id.meal_price);
-            mPortionView = (TextView) view.findViewById(R.id.meal_portion);
+            mNameView = (TextView) view.findViewById(R.id.product_name);
+            mPriceView = (TextView) view.findViewById(R.id.product_price);
+            mWeightView = (TextView) view.findViewById(R.id.product_weight);
+            mVolumeView = (TextView) view.findViewById(R.id.product_volume);
         }
 
 

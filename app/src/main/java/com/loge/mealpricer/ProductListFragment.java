@@ -3,7 +3,6 @@ package com.loge.mealpricer;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -81,8 +80,8 @@ public class ProductListFragment extends Fragment {
     private void updateUI() {
 
         MealPricer mealPricer = MealPricer.get(getActivity());
-        List<Meal>  meals = mealPricer.getMeals();
-        MyProductRecyclerViewAdapter mAdapter = new MyProductRecyclerViewAdapter(meals, mListener);
+        List<Product>  products = mealPricer.getProducts();
+        ProductRecyclerViewAdapter mAdapter = new ProductRecyclerViewAdapter(products, mListener);
 
         mProductRecyclerView.setAdapter(mAdapter);
 
@@ -117,6 +116,6 @@ public class ProductListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Meal item);
+        void onListFragmentInteraction(Product item);
     }
 }

@@ -6,21 +6,28 @@
 
 
     <TextView
-        android:id="@+id/meal_name"
+        android:id="@+id/product_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem"/>
 
     <TextView
-        android:id="@+id/meal_price"
+        android:id="@+id/product_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem"/>
 
     <TextView
-        android:id="@+id/meal_portion"
+        android:id="@+id/product_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="?attr/textAppearanceListItem"/>
+
+    <TextView
+        android:id="@+id/product_volume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"

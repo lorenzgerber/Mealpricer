@@ -96,7 +96,7 @@ public class MealPricerTabActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(Meal item) {
+    public void onListFragmentInteraction(Product item) {
         Intent intent = new Intent(MealPricerTabActivity.this, ProductActivity.class);
         startActivity(intent);
     }
@@ -148,7 +148,7 @@ public class MealPricerTabActivity extends AppCompatActivity
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0){
+            if (position == 1){
                 return ProductListFragment.newInstance(1);
             }
             // getItem is called to instantiate the fragment for the given page.

@@ -55,7 +55,7 @@ public class MealPricer {
 
     List<Product> getProducts(){
         ArrayList<Product> products = new ArrayList<>();
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 15; i++){
             products.add(new Product());
         }
         return products;
