@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.loge.mealpricer.dummy.DummyContent;
 
 import java.util.List;
 
@@ -19,24 +20,24 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ProductListFragment extends Fragment {
+public class MealListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-    private RecyclerView mProductRecyclerView;
+    private RecyclerView mMealRecyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ProductListFragment() {
+    public MealListFragment() {
     }
 
-    public static ProductListFragment newInstance(int columnCount) {
-        ProductListFragment fragment = new ProductListFragment();
+    public static MealListFragment newInstance(int columnCount) {
+        MealListFragment fragment = new MealListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -55,22 +56,19 @@ public class ProductListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_product_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_meal_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            mProductRecyclerView = (RecyclerView) view;
+            mMealRecyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                mProductRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+                mMealRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                mProductRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                mMealRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
             updateUI();
-
-
-
         }
         return view;
     }
@@ -78,10 +76,10 @@ public class ProductListFragment extends Fragment {
     private void updateUI() {
 
         MealPricer mealPricer = MealPricer.get(getActivity());
-        List<Product>  products = mealPricer.getProducts();
-        ProductRecyclerViewAdapter mAdapter = new ProductRecyclerViewAdapter(products, mListener);
+        List<Meal> meals = mealPricer.getMeals();
+        MealRecyclerViewAdapter mAdapter = new MealRecyclerViewAdapter(meals, mListener);
 
-        mProductRecyclerView.setAdapter(mAdapter);
+        mMealRecyclerView.setAdapter(mAdapter);
 
     }
 
@@ -114,6 +112,6 @@ public class ProductListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Product item);
+        void onListFragmentInteraction(Meal item);
     }
 }

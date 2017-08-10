@@ -20,10 +20,10 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-import com.loge.mealpricer.dummy.DummyContent;
 
 public class MealPricerTabActivity extends AppCompatActivity
-        implements ProductListFragment.OnListFragmentInteractionListener {
+        implements ProductListFragment.OnListFragmentInteractionListener,
+        MealListFragment.OnListFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -101,6 +101,11 @@ public class MealPricerTabActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    @Override
+    public void onListFragmentInteraction(Meal item){
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -150,6 +155,8 @@ public class MealPricerTabActivity extends AppCompatActivity
         public Fragment getItem(int position) {
             if (position == 1){
                 return ProductListFragment.newInstance(1);
+            } else if (position == 0){
+                return MealListFragment.newInstance(1);
             }
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
