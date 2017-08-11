@@ -19,12 +19,20 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ProductActivity"
             android:label="@string/title_activity_product"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".MealPricerTabActivity">
+            android:parentActivityName=".MealPricerTabActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".MealActivity"
+            android:label="@string/title_activity_meal"
+            android:parentActivityName=".MealPricerTabActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.loge.mealpricer.MealPricerTabActivity"/>
         </activity>
     </application>
 

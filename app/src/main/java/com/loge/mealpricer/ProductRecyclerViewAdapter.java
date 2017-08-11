@@ -7,15 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.loge.mealpricer.ProductListFragment.OnListFragmentInteractionListener;
-import com.loge.mealpricer.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder> {
 
     private final List<Product> mValues;

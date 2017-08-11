@@ -9,17 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class ProductActivity extends AppCompatActivity {
+public class MealActivity extends AppCompatActivity {
 
     public static Intent newIntent(Context packageContext){
-        Intent intent = new Intent(packageContext, ProductActivity.class);
+        Intent intent = new Intent(packageContext, MealActivity.class);
         return intent;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product);
+        setContentView(R.layout.activity_meal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

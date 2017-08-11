@@ -95,15 +95,17 @@ public class MealPricerTabActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
-    public void onListFragmentInteraction(Product item) {
-        Intent intent = new Intent(MealPricerTabActivity.this, ProductActivity.class);
+    public void onListFragmentInteraction(Meal item){
+        Intent intent = new Intent(MealPricerTabActivity.this, MealActivity.class);
         startActivity(intent);
     }
 
     @Override
-    public void onListFragmentInteraction(Meal item){
-
+    public void onListFragmentInteraction(Product item) {
+        Intent intent = new Intent(MealPricerTabActivity.this, ProductActivity.class);
+        startActivity(intent);
     }
 
     /**
