@@ -9,7 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class MealDetailActivity extends AppCompatActivity {
+import com.loge.mealpricer.dummy.DummyContent;
+
+public class MealDetailActivity extends AppCompatActivity
+        implements IngredientListFragment.OnListFragmentInteractionListener {
 
     public static Intent newIntent(Context packageContext){
         Intent intent = new Intent(packageContext, MealDetailActivity.class);
@@ -32,5 +35,10 @@ public class MealDetailActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
     }
 }
