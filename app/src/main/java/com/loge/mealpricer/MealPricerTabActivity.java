@@ -104,7 +104,8 @@ public class MealPricerTabActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(Product item) {
-        Intent intent = new Intent(MealPricerTabActivity.this, ProductActivity.class);
+        //Intent intent = new Intent(MealPricerTabActivity.this, ProductActivity.class);
+        Intent intent = ProductActivity.newIntent(this, item.getProductId());
         startActivity(intent);
     }
 

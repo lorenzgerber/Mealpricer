@@ -11,9 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.util.UUID;
+
 public class ProductActivity extends AppCompatActivity {
 
-    public static Intent newIntent(Context packageContext){
+    static final String EXTRA_PRODUCT_ID =
+            "com.loge.mealpricer.product_id";
+
+    public static Intent newIntent(Context packageContext, UUID productId){
         Intent intent = new Intent(packageContext, ProductActivity.class);
         return intent;
     }
@@ -41,7 +46,10 @@ public class ProductActivity extends AppCompatActivity {
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
 
         if (fragment == null ){
-            fragment = new ProductFragment();
+
+            UUID productId = (UUID) getIntent()
+                    .getSerializableExtra(EXTRA_PRODUCT_ID);
+            fragment = ProductFragment.newInstance(productId);
             fm.beginTransaction()
                     .add(R.id.fragment_container, fragment)
                     .commit();
