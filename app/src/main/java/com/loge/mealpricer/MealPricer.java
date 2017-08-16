@@ -76,9 +76,13 @@ public class MealPricer {
         return values;
     }
 
+    public Product newProduct(){
+        Product mProduct = new Product();
+        return mProduct;
+    }
+
     public void addProudct(Product p) {
         ContentValues values = getContentValues(p);
-
         mDatabase.insert(ProductTable.NAME, null, values);
     }
 
