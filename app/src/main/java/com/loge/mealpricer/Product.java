@@ -10,16 +10,19 @@ public class Product {
 
     private UUID mProductId;
     private String mName;
-    private Double mPrice;
+    private int mPrice;
     private int mWeight;
     private int mVolume;
 
     public Product(){
         mProductId = UUID.randomUUID();
         mName = "Potato";
-        mPrice = 20.0;
+        mPrice = 20;
         mWeight = 1000;
+    }
 
+    public Product(UUID productId){
+        mProductId = productId;
     }
 
     public UUID getProductId() {
@@ -34,11 +37,11 @@ public class Product {
         mName = name;
     }
 
-    public Double getPrice() {
+    public int getPrice() {
         return mPrice;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(int price) {
         mPrice = price;
     }
 

@@ -2,6 +2,7 @@ package com.loge.mealpricer;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -39,7 +40,6 @@ public class MealPricer {
     }
 
 
-
     List<Meal> getMeals(){
         ArrayList<Meal> meals = new ArrayList<>();
         for(int i = 0; i < 5; i++){
@@ -51,10 +51,23 @@ public class MealPricer {
 
     public Product getProduct(UUID productId){
 
-        // for the moment make a dummy product
-        Product mProduct = new Product();
+        ProductCursorWrapper cursor = queryProducts(
+                ProductTable.Cols.UUID + " = ?",
+                new String[] {
+                        productId.toString()
+                }
+        );
 
-        return mProduct;
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+
+            cursor.moveToFirst();
+            return cursor.getProduct();
+        } finally {
+            cursor.close();
+        }
     }
 
     public void updateProduct(Product product){
@@ -86,12 +99,36 @@ public class MealPricer {
         mDatabase.insert(ProductTable.NAME, null, values);
     }
 
+
     List<Product> getProducts(){
-        ArrayList<Product> products = new ArrayList<>();
-        for(int i = 0; i < 15; i++){
-            products.add(new Product());
+        List<Product> products = new ArrayList<>();
+
+        ProductCursorWrapper cursor = queryProducts(null, null);
+
+        try{
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                products.add(cursor.getProduct());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
         }
+
         return products;
+    }
+
+    private ProductCursorWrapper queryProducts(String whereClause, String[] whereArgs){
+        Cursor cursor = mDatabase.query(
+                ProductTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null
+        );
+        return new ProductCursorWrapper(cursor);
     }
 
 

@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -41,11 +44,15 @@ public class ProductFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID productId = (UUID) getArguments().getSerializable(ARG_PRODUCT_ID);
         mProduct = MealPricer.get(getActivity()).getProduct(productId);
-
-
-
-
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        MealPricer.get(getActivity()).updateProduct(mProduct);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -139,10 +146,11 @@ public class ProductFragment extends Fragment {
             @Override
             public void onTextChanged(
                     CharSequence s, int start, int before, int cout){
+
                 if(s.length() != 0){
-                    mProduct.setPrice(Double.parseDouble(s.toString()));
+                    mProduct.setPrice(Integer.parseInt(s.toString()));
                 } else {
-                    mProduct.setPrice(0.0);
+                    mProduct.setPrice(0);
                 }
 
             }
@@ -157,4 +165,8 @@ public class ProductFragment extends Fragment {
 
         return v;
     }
+
+
+
+
 }

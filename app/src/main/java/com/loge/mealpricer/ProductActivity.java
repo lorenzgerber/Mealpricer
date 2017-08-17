@@ -20,6 +20,7 @@ public class ProductActivity extends AppCompatActivity {
 
     public static Intent newIntent(Context packageContext, UUID productId){
         Intent intent = new Intent(packageContext, ProductActivity.class);
+        intent.putExtra(EXTRA_PRODUCT_ID, productId);
         return intent;
     }
 
