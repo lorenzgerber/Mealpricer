@@ -12,18 +12,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
 
 
 public class MealPricerTabActivity extends AppCompatActivity
         implements ProductListFragment.OnListFragmentInteractionListener,
         MealListFragment.OnListFragmentInteractionListener {
+
+    private static final String SWITCH_TAB = "switch_tab";
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -78,10 +77,15 @@ public class MealPricerTabActivity extends AppCompatActivity
                     onListFragmentInteraction(mProduct);
                 }
 
-
             }
         });
 
+        final Intent intent = getIntent();
+
+        if (intent.hasExtra(SWITCH_TAB)) {
+            final int tab = intent.getExtras().getInt(SWITCH_TAB);
+            mViewPager.setCurrentItem(tab);
+        }
     }
 
 
@@ -119,6 +123,9 @@ public class MealPricerTabActivity extends AppCompatActivity
         Intent intent = ProductActivity.newIntent(this, item.getProductId());
         startActivity(intent);
     }
+
+
+
 
 
     /**

@@ -17,6 +17,8 @@ public class ProductActivity extends AppCompatActivity {
 
     static final String EXTRA_PRODUCT_ID =
             "com.loge.mealpricer.product_id";
+    private static final String SWITCH_TAB = "switch_tab";
+    private static final int TAB_SECOND = 1;
 
     public static Intent newIntent(Context packageContext, UUID productId){
         Intent intent = new Intent(packageContext, ProductActivity.class);
@@ -56,5 +58,18 @@ public class ProductActivity extends AppCompatActivity {
                     .commit();
         }
     }
+
+    @Override
+    public Intent getSupportParentActivityIntent() { // getParentActivityIntent() if you are not using the Support Library
+        final Bundle bundle = new Bundle();
+        final Intent intent = new Intent(this, MealPricerTabActivity.class);
+
+        bundle.putInt(SWITCH_TAB, TAB_SECOND); // Both constants are defined in your code
+        intent.putExtras(bundle);
+
+        return intent;
+    }
+
+
 
 }
