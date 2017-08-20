@@ -17,7 +17,7 @@ public class ProductCursorWrapper extends CursorWrapper {
     }
 
     public Product getProduct(){
-        String uuidString = getString(getColumnIndex(ProductTable.Cols.UUID));
+        String uuidString = getString(getColumnIndex(ProductTable.Cols.PRODUCT_ID));
         String name = getString(getColumnIndex(ProductTable.Cols.NAME));
         int weight = getInt(getColumnIndex(ProductTable.Cols.WEIGHT));
         int volume = getInt(getColumnIndex(ProductTable.Cols.VOLUME));
