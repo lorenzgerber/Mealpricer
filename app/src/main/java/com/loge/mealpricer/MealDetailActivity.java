@@ -13,20 +13,36 @@ import android.view.View;
 
 import com.loge.mealpricer.dummy.DummyContent;
 
+import java.util.UUID;
+
 public class MealDetailActivity extends AppCompatActivity
         implements IngredientListFragment.OnListFragmentInteractionListener {
 
-    public static Intent newIntent(Context packageContext){
+
+    static final String EXTRA_MEAL_ID = "com.loge.mealpricer.meal_id";
+
+    private Meal mMeal;
+    private UUID mealId;
+
+    public static Intent newIntent(Context packageContext, UUID mealId){
         Intent intent = new Intent(packageContext, MealDetailActivity.class);
+        intent.putExtra(EXTRA_MEAL_ID, mealId);
         return intent;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mealId = (UUID) getIntent().getSerializableExtra(EXTRA_MEAL_ID);
+        mMeal = MealPricer.get(this).getMeal(mealId);
+
+
+
         setContentView(R.layout.activity_meal_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         FloatingActionButton fab_photo = (FloatingActionButton) findViewById(R.id.fab_take_photo);
         fab_photo.setOnClickListener(new View.OnClickListener() {
@@ -51,12 +67,26 @@ public class MealDetailActivity extends AppCompatActivity
         Fragment fragment = fm.findFragmentById(R.id.ingredient_fragment_container);
 
         if (fragment == null ){
-            fragment = new IngredientListFragment();
+
+            fragment = IngredientListFragment.newInstance(mealId);
             fm.beginTransaction()
                     .add(R.id.ingredient_fragment_container, fragment)
                     .commit();
+            /*
+            fragment = new IngredientListFragment();
+            fm.beginTransaction()
+                    .add(R.id.ingredient_fragment_container, fragment)
+                    .commit();*/
         }
 
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+
+        MealPricer.get(this)
+                .updateMeal(mMeal);
     }
 
     @Override

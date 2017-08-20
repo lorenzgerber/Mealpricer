@@ -35,6 +35,11 @@ public class MealPricer {
 
     }
 
+    public Meal newMeal(){
+        Meal mMeal = new Meal();
+        return mMeal;
+    }
+
     public Meal getMeal(UUID mealId){
 
         return null;
@@ -47,7 +52,16 @@ public class MealPricer {
     }
 
     public void addMeal(Meal m){
+        ContentValues values = getContentValues(m);
+        mDatabase.insert(MealTable.NAME, null, values);
+    }
 
+    public void updateMeal(Meal meal){
+        String uuidString = meal.getMealId().toString();
+        ContentValues values = getContentValues(meal);
+
+        mDatabase.update(MealTable.NAME, values, MealTable.Cols.MEAL_ID + " = ?",
+                new String[] { uuidString });
     }
 
     private static ContentValues getContentValues(Meal meal){

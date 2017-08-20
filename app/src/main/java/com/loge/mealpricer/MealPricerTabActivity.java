@@ -69,6 +69,9 @@ public class MealPricerTabActivity extends AppCompatActivity
                 if(currentItemId == 0){
                     Snackbar.make(view, "Create a new Meal DB entry  ", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                    Meal mMeal = MealPricer.get(MealPricerTabActivity.this).newMeal();
+                    MealPricer.get(MealPricerTabActivity.this).addMeal(mMeal);
+                    onListFragmentInteraction(mMeal);
                 } else if (currentItemId == 1){
                     Snackbar.make(view, "Create a new Product DB entry ", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -114,7 +117,8 @@ public class MealPricerTabActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(Meal item){
-        Intent intent = new Intent(MealPricerTabActivity.this, MealDetailActivity.class);
+        Intent intent = MealDetailActivity.newIntent(this, item.getMealId());
+        //Intent intent = new Intent(MealPricerTabActivity.this, MealDetailActivity.class);
         startActivity(intent);
     }
 

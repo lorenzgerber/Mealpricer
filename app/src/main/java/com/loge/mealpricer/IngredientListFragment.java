@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import com.loge.mealpricer.dummy.DummyContent;
 import com.loge.mealpricer.dummy.DummyContent.DummyItem;
 
+import java.util.UUID;
+
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -20,6 +22,10 @@ import com.loge.mealpricer.dummy.DummyContent.DummyItem;
  * interface.
  */
 public class IngredientListFragment extends Fragment {
+
+    public static final String ARG_MEAL_ID = "meal_id";
+
+    private Meal mMeal;
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -32,6 +38,15 @@ public class IngredientListFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public IngredientListFragment() {
+    }
+
+    public static IngredientListFragment newInstance(UUID mealId){
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_MEAL_ID, mealId);
+
+        IngredientListFragment fragment = new IngredientListFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     // TODO: Customize parameter initialization
