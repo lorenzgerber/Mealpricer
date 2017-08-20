@@ -60,4 +60,8 @@ public class Product {
     public void setVolume(int volume) {
         mVolume = volume;
     }
+
+    public String getPhotoFilename() {
+        return "IMG_" + getProductId().toString() + ".jpg";
+    }
 }

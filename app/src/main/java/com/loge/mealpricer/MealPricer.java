@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -68,6 +69,11 @@ public class MealPricer {
         } finally {
             cursor.close();
         }
+    }
+
+    public File getPhotoFile(Product product){
+        File filesDir = mContext.getFilesDir();
+        return new File(filesDir, product.getPhotoFilename());
     }
 
     public void updateProduct(Product product){
