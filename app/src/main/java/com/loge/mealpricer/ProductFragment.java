@@ -134,7 +134,7 @@ public class ProductFragment extends Fragment {
 
             @Override
             public void onTextChanged(
-                    CharSequence s, int start, int before, int cout){
+                    CharSequence s, int start, int before, int count){
                 if (s.length() != 0){
                     mProduct.setWeight(Integer.parseInt(s.toString()));
                 } else {

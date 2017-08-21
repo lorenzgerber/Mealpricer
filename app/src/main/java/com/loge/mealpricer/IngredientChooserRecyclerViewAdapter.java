@@ -1,6 +1,8 @@
 package com.loge.mealpricer;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,11 @@ import com.loge.mealpricer.IngredientChooserFragment.OnListFragmentInteractionLi
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_WEIGHT;
+import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_BOTH_VOLUME;
+import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_BOTH_WEIGHT;
+import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_NONE;
+import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_ONLY_VOLUME;
+import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_ONLY_WEIGHT;
 
 public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<IngredientChooserRecyclerViewAdapter.ViewHolder> {
 
@@ -27,7 +33,10 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
         mListener = listener;
         for (Product product:mProducts){
-            mIngredients.add(new Ingredient(product));
+            Ingredient ingredient = new Ingredient(product);
+            ingredient.setMeasureType(getMeasureType(product));
+            mIngredients.add(ingredient);
+
         }
 
         mSelected = new boolean[mProducts.size()];
@@ -37,20 +46,33 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_ingredient_chooser_list_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, new WeightEditTextListener());
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mProducts.get(position);
         holder.mNameView.setText(mProducts.get(position).getName());
-        if (mIngredients.get(position).getMeasureType()== MEASURE_TYPE_WEIGHT ){
+        holder.mWeightEditTextListener.updatePosition(position);
+
+        if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_NONE){
+            holder.mWeightView.setEnabled(false);
+            holder.mVolumeView.setEnabled(false);
+            holder.mSelectIngredient.setEnabled(false);
+        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_ONLY_WEIGHT){
             holder.mWeightView.setText(String.valueOf(mIngredients.get(position).getAmount()));
-            holder.mVolumeView.setText(R.string.not_used);
-        } else {
+            holder.mVolumeView.setEnabled(false);
+        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_ONLY_VOLUME){
             holder.mVolumeView.setText(String.valueOf(mIngredients.get(position).getAmount()));
-            holder.mWeightView.setText(R.string.not_used);
+            holder.mVolumeView.setEnabled(false);
+        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_BOTH_WEIGHT){
+            holder.mWeightView.setText(String.valueOf(mIngredients.get(position).getAmount()));
+            holder.mVolumeView.setText("0");
+        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_BOTH_VOLUME){
+            holder.mWeightView.setText("0");
+            holder.mVolumeView.setText(String.valueOf(mIngredients.get(position).getAmount()));
         }
+
 
         if (mSelected[position]){
             holder.mSelectIngredient.setChecked(true);
@@ -92,15 +114,20 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         public final TextView mWeightView;
         public final TextView mVolumeView;
         public final CheckBox mSelectIngredient;
+        public WeightEditTextListener mWeightEditTextListener;
         public Product mItem;
 
 
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, WeightEditTextListener weightEditTextListener) {
             super(view);
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.product_name);
+
             mWeightView = (TextView) view.findViewById(R.id.product_weight);
+            mWeightEditTextListener = weightEditTextListener;
+            mWeightView.addTextChangedListener(mWeightEditTextListener);
+
             mVolumeView = (TextView) view.findViewById(R.id.product_volume);
             mSelectIngredient = (CheckBox) view.findViewById(R.id.select_ingredient);
         }
@@ -110,4 +137,50 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             return super.toString() + " '" + mNameView.getText() + "'";
         }
     }
+
+
+    private class WeightEditTextListener implements TextWatcher {
+        private int mPosition;
+        private int mMeasureType;
+
+        public void updatePosition(int position) {
+            this.mPosition = position;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+            mMeasureType = mIngredients.get(mPosition).getMeasureType();
+            if(charSequence.length()==0){
+                mIngredients.get(mPosition).setAmount(0);
+            } else {
+                mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            // no op
+        }
+    }
+
+    private int getMeasureType(Product product){
+        if (product.getWeight() == 0 && product.getVolume() == 0){
+            return MEASURE_TYPE_NONE;
+        } else if (product.getWeight() > 0 && product.getVolume() == 0){
+            return MEASURE_TYPE_ONLY_WEIGHT;
+        } else if (product.getWeight() > 0 && product.getVolume() > 0){
+            return MEASURE_TYPE_BOTH_WEIGHT;
+        }
+            return MEASURE_TYPE_ONLY_VOLUME;
+    }
+
+
+
+
+
+
 }
