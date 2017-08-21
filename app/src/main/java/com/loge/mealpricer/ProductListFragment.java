@@ -31,7 +31,7 @@ public class ProductListFragment extends Fragment {
     public ProductListFragment() {
     }
 
-    public static ProductListFragment newInstance(int columnCount) {
+    public static ProductListFragment newInstance() {
         ProductListFragment fragment = new ProductListFragment();
         return fragment;
     }

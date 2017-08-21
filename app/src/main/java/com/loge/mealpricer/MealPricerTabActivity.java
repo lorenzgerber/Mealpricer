@@ -144,7 +144,7 @@ public class MealPricerTabActivity extends AppCompatActivity
         @Override
         public Fragment getItem(int position) {
             if (position == 1){
-                return ProductListFragment.newInstance(1);
+                return ProductListFragment.newInstance();
             }
             return MealListFragment.newInstance();
         }
