@@ -54,6 +54,12 @@ public class ProductListFragment extends Fragment {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        updateUI();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
@@ -74,6 +80,7 @@ public class ProductListFragment extends Fragment {
         return view;
     }
 
+
     private void updateUI() {
 
         MealPricer mealPricer = MealPricer.get(getActivity());
@@ -85,9 +92,6 @@ public class ProductListFragment extends Fragment {
             mAdapter.setProducts(products);
             mAdapter.notifyDataSetChanged();
         }
-
-
-
 
     }
 

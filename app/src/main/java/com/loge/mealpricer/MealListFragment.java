@@ -28,6 +28,7 @@ public class MealListFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private RecyclerView mMealRecyclerView;
+    private MealRecyclerViewAdapter mAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -54,6 +55,13 @@ public class MealListFragment extends Fragment {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        updateUI();
+    }
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_meal_list, container, false);
@@ -77,9 +85,17 @@ public class MealListFragment extends Fragment {
 
         MealPricer mealPricer = MealPricer.get(getActivity());
         List<Meal> meals = mealPricer.getMeals();
-        MealRecyclerViewAdapter mAdapter = new MealRecyclerViewAdapter(meals, mListener);
 
-        mMealRecyclerView.setAdapter(mAdapter);
+        if(mAdapter == null){
+            mAdapter = new MealRecyclerViewAdapter(meals, mListener);
+            mMealRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.setMeals(meals);
+            mAdapter.notifyDataSetChanged();
+        }
+
+
+
 
     }
 

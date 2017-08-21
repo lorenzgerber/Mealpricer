@@ -13,7 +13,7 @@ import java.util.List;
 
 public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Meal> mValues;
+    private List<Meal> mValues;
     private final OnListFragmentInteractionListener mListener;
 
     public MealRecyclerViewAdapter(List<Meal> items, OnListFragmentInteractionListener listener) {
@@ -51,6 +51,8 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
     public int getItemCount() {
         return mValues.size();
     }
+
+    public void setMeals(List<Meal> meals){ mValues = meals; }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;

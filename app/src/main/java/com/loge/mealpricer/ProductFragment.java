@@ -69,6 +69,7 @@ public class ProductFragment extends Fragment {
         MealPricer.get(getActivity()).updateProduct(mProduct);
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (resultCode != Activity.RESULT_OK){
