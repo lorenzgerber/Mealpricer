@@ -9,9 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.loge.mealpricer.dummy.DummyContent;
-import com.loge.mealpricer.dummy.DummyContent.DummyItem;
-
+import java.util.List;
 
 
 /**
@@ -24,6 +22,8 @@ public class IngredientChooserFragment extends Fragment {
 
 
     private OnListFragmentInteractionListener mListener;
+    private RecyclerView mIngredientChooserRecyclerView;
+    private IngredientChooserRecyclerViewAdapter mAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -47,16 +47,32 @@ public class IngredientChooserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_product_list2, container, false);
+        View view = inflater.inflate(R.layout.fragment_ingredient_chooser_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new MyProductRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            mIngredientChooserRecyclerView = (RecyclerView) view;
+            mIngredientChooserRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+            updateUI();
+
         }
         return view;
+    }
+
+    private void updateUI(){
+        MealPricer mealPricer = MealPricer.get(getActivity());
+        List<Product> products = mealPricer.getProducts();
+
+        if(mAdapter == null){
+            mAdapter = new IngredientChooserRecyclerViewAdapter(products, mListener);
+            mIngredientChooserRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.setProducts(products);
+            mAdapter.notifyDataSetChanged();
+        }
+
     }
 
 
@@ -88,6 +104,6 @@ public class IngredientChooserFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Product item);
     }
 }

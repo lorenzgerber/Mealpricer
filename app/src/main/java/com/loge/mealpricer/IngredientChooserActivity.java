@@ -64,12 +64,12 @@ public class IngredientChooserActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(Product item) {
 
     }
 
     @Override
-    public Intent getSupportParentActivityIntent() { // getParentActivityIntent() if you are not using the Support Library
+    public Intent getSupportParentActivityIntent() {
         final Bundle bundle = new Bundle();
         final Intent intent = new Intent(this, MealDetailActivity.class);
 

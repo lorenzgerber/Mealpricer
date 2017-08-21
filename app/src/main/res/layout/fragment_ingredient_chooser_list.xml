@@ -11,4 +11,4 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.loge.mealpricer.IngredientChooserFragment"
-    tools:listitem="@layout/fragment_product2"/>
+    tools:listitem="@layout/fragment_ingredient_chooser_list_item"/>
