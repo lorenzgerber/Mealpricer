@@ -15,17 +15,27 @@ import com.loge.mealpricer.dummy.DummyContent;
 
 import java.util.UUID;
 
+import static com.loge.mealpricer.MealDetailActivity.EXTRA_MEAL_ID;
+
 public class IngredientChooserActivity extends AppCompatActivity
         implements IngredientChooserFragment.OnListFragmentInteractionListener {
 
-    public static Intent newIntent(Context packageContext){
+    private Meal mMeal;
+    private UUID mealId;
+
+    public static Intent newIntent(Context packageContext, UUID mealId){
         Intent intent = new Intent(packageContext, IngredientChooserActivity.class);
+        intent.putExtra(EXTRA_MEAL_ID, mealId);
         return intent;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mealId = (UUID) getIntent().getSerializableExtra(EXTRA_MEAL_ID);
+        mMeal = MealPricer.get(this).getMeal(mealId);
+
+
         setContentView(R.layout.activity_ingredient_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,4 +67,16 @@ public class IngredientChooserActivity extends AppCompatActivity
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
 
     }
+
+    @Override
+    public Intent getSupportParentActivityIntent() { // getParentActivityIntent() if you are not using the Support Library
+        final Bundle bundle = new Bundle();
+        final Intent intent = new Intent(this, MealDetailActivity.class);
+
+        intent.putExtra(EXTRA_MEAL_ID, mealId);
+
+        return intent;
+    }
+
+
 }

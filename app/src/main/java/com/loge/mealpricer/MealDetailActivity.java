@@ -56,7 +56,7 @@ public class MealDetailActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Add New Ingredients", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                Intent intent = IngredientChooserActivity.newIntent(MealDetailActivity.this);
+                Intent intent = IngredientChooserActivity.newIntent(MealDetailActivity.this, mealId);
                 startActivity(intent);
             }
         });
