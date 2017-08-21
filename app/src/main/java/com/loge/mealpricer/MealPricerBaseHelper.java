@@ -40,7 +40,8 @@ public class MealPricerBaseHelper extends SQLiteOpenHelper {
         db.execSQL("create table " + MealTable.NAME + "(" +
                 MealTable.Cols.MEAL_ID +
                 " string primary key, " +
-                MealTable.Cols.NAME +
+                MealTable.Cols.NAME + ", " +
+                MealTable.Cols.PORTION +
                 ")"
         );
 

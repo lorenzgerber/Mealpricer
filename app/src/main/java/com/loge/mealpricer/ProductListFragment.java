@@ -27,6 +27,7 @@ public class ProductListFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private RecyclerView mProductRecyclerView;
+    private ProductRecyclerViewAdapter mAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -69,8 +70,6 @@ public class ProductListFragment extends Fragment {
 
             updateUI();
 
-
-
         }
         return view;
     }
@@ -79,9 +78,16 @@ public class ProductListFragment extends Fragment {
 
         MealPricer mealPricer = MealPricer.get(getActivity());
         List<Product>  products = mealPricer.getProducts();
-        ProductRecyclerViewAdapter mAdapter = new ProductRecyclerViewAdapter(products, mListener);
+        if (mAdapter == null){
+            mAdapter = new ProductRecyclerViewAdapter(products, mListener);
+            mProductRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.setProducts(products);
+            mAdapter.notifyDataSetChanged();
+        }
 
-        mProductRecyclerView.setAdapter(mAdapter);
+
+
 
     }
 

@@ -72,11 +72,6 @@ public class MealDetailActivity extends AppCompatActivity
             fm.beginTransaction()
                     .add(R.id.ingredient_fragment_container, fragment)
                     .commit();
-            /*
-            fragment = new IngredientListFragment();
-            fm.beginTransaction()
-                    .add(R.id.ingredient_fragment_container, fragment)
-                    .commit();*/
         }
 
     }

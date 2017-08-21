@@ -41,14 +41,39 @@ public class MealPricer {
     }
 
     public Meal getMeal(UUID mealId){
+        MealCursorWrapper cursor = queryMeals(
+                MealTable.Cols.MEAL_ID + " = ?",
+                new String[] { mealId.toString() }
+        );
 
-        return null;
+        try{
+            if (cursor.getCount() == 0){
+                return null;
+            }
+
+            cursor.moveToFirst();
+            return cursor.getMeal();
+        } finally {
+            cursor.close();
+        }
     }
 
 
     List<Meal> getMeals(){
+        List<Meal> meals = new ArrayList<>();
+        MealCursorWrapper cursor = queryMeals(null ,null);
 
-        return new ArrayList<>();
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                meals.add(cursor.getMeal());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return meals;
     }
 
     public void addMeal(Meal m){
@@ -68,6 +93,7 @@ public class MealPricer {
         ContentValues  values = new ContentValues();
         values.put(MealTable.Cols.MEAL_ID, meal.getMealId().toString());
         values.put(MealTable.Cols.NAME, meal.getName());
+        values.put(MealTable.Cols.PORTION, meal.getPortion());
 
         return values;
     }
@@ -158,6 +184,19 @@ public class MealPricer {
                 null
         );
         return new ProductCursorWrapper(cursor);
+    }
+
+    private MealCursorWrapper queryMeals(String whereClause, String[] whereArgs){
+        Cursor cursor = mDatabase.query(
+                MealTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null
+        );
+        return new MealCursorWrapper(cursor);
     }
 
 

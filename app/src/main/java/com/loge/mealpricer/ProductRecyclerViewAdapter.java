@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Product> mValues;
+    private List<Product> mValues;
     private final OnListFragmentInteractionListener mListener;
 
     public ProductRecyclerViewAdapter(List<Product> items, OnListFragmentInteractionListener listener) {
@@ -50,6 +50,10 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
     @Override
     public int getItemCount() {
         return mValues.size();
+    }
+
+    public void setProducts(List<Product> products){
+        mValues = products;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

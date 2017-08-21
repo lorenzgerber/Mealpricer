@@ -40,6 +40,10 @@ public class Meal {
 
     }
 
+    public Meal(UUID mealId){
+        mMealId = mealId;
+    }
+
     public UUID getMealId() {
         return mMealId;
     }

@@ -23,6 +23,7 @@ public class MealPricerDbSchema {
         public static final class Cols {
             public static final String MEAL_ID = "id";
             public static final String NAME = "name";
+            public static final String PORTION = "portion";
         }
     }
 
