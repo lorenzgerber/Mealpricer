@@ -36,13 +36,9 @@ public class MealDetailActivity extends AppCompatActivity
         mealId = (UUID) getIntent().getSerializableExtra(EXTRA_MEAL_ID);
         mMeal = MealPricer.get(this).getMeal(mealId);
 
-
-
         setContentView(R.layout.activity_meal_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         FloatingActionButton fab_photo = (FloatingActionButton) findViewById(R.id.fab_take_photo);
         fab_photo.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +56,8 @@ public class MealDetailActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Add New Ingredients", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Intent intent = IngredientChooserActivity.newIntent(MealDetailActivity.this);
+                startActivity(intent);
             }
         });
 

@@ -4,8 +4,7 @@
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false"
-        />
+        android:required="false"/>
 
     <application
         android:allowBackup="true"
@@ -39,6 +38,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.loge.mealpricer.MealPricerTabActivity"/>
         </activity>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.loge.mealpricer.fileprovider"
@@ -48,6 +48,16 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/files"/>
         </provider>
+
+        <activity
+            android:name=".IngredientChooserActivity"
+            android:label="@string/title_activity_ingredient_detail"
+            android:parentActivityName=".MealDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.loge.mealpricer.MealDetailActivity"/>
+        </activity>
     </application>
 
 </manifest>

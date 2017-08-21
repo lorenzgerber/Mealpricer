@@ -6,17 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.loge.mealpricer.MealListFragment.OnListFragmentInteractionListener;
+import com.loge.mealpricer.IngredientChooserFragment.OnListFragmentInteractionListener;
+import com.loge.mealpricer.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
+/**
+ * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * specified {@link OnListFragmentInteractionListener}.
+ * TODO: Replace the implementation with code for your data type.
+ */
+public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProductRecyclerViewAdapter.ViewHolder> {
 
-public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerViewAdapter.ViewHolder> {
-
-    private List<Meal> mValues;
+    private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MealRecyclerViewAdapter(List<Meal> items, OnListFragmentInteractionListener listener) {
+    public MyProductRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -24,21 +29,22 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_meal_list_item, parent, false);
+                .inflate(R.layout.fragment_product2, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mNameView.setText(mValues.get(position).getName());
-        holder.mPriceView.setText(String.valueOf(mValues.get(position).getPrice()));
-        holder.mPortionView.setText(String.valueOf(mValues.get(position).getPortion()));
+        holder.mIdView.setText(mValues.get(position).id);
+        holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
+                    // Notify the active callbacks interface (the activity, if the
+                    // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
@@ -50,26 +56,22 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         return mValues.size();
     }
 
-    public void setMeals(List<Meal> meals){ mValues = meals; }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mNameView;
-        public final TextView mPriceView;
-        public final TextView mPortionView;
-        public Meal mItem;
+        public final TextView mIdView;
+        public final TextView mContentView;
+        public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mNameView = (TextView) view.findViewById(R.id.meal_name);
-            mPriceView = (TextView) view.findViewById(R.id.meal_price);
-            mPortionView = (TextView) view.findViewById(R.id.meal_portion);
+            mIdView = (TextView) view.findViewById(R.id.id);
+            mContentView = (TextView) view.findViewById(R.id.content);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mNameView.getText() + "'";
+            return super.toString() + " '" + mContentView.getText() + "'";
         }
     }
 }
