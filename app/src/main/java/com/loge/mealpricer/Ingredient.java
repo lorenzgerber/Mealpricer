@@ -6,11 +6,17 @@ package com.loge.mealpricer;
 
 public class Ingredient {
 
+    public static final int MEASURE_TYPE_WEIGHT = 0;
+    public static final int MEASURE_TYPE_VOLUME = 1;
+
     private Product mProduct;
     private int mMeasureType;
     private int mAmount;
 
-    public Ingredient(){
+    public Ingredient(Product product){
+        mProduct = product;
+        mMeasureType = MEASURE_TYPE_WEIGHT;
+        mAmount = 0;
 
     }
 

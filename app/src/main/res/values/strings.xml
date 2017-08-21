@@ -19,6 +19,7 @@
     <string name="meal_price_label">Price (SEK)</string>
     <string name="meal_portion_label">Portion (Persons)</string>
     <string name="title_activity_meal_detail">MealDetailActivity</string>
+    <string name="not_used">Not Used</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

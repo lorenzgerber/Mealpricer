@@ -8,18 +8,29 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.loge.mealpricer.IngredientChooserFragment.OnListFragmentInteractionListener;
-import com.loge.mealpricer.dummy.DummyContent.DummyItem;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_WEIGHT;
 
 public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<IngredientChooserRecyclerViewAdapter.ViewHolder> {
 
-    private List<Product> mValues;
+    private List<Product> mProducts;
+    private List<Ingredient> mIngredients;
+    private boolean[] mSelected;
     private final OnListFragmentInteractionListener mListener;
 
     public IngredientChooserRecyclerViewAdapter(List<Product> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+        mProducts = items;
+        mIngredients = new ArrayList<>();
+
         mListener = listener;
+        for (Product product:mProducts){
+            mIngredients.add(new Ingredient(product));
+        }
+
+        mSelected = new boolean[mProducts.size()];
     }
 
     @Override
@@ -31,8 +42,21 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mNameView.setText(mValues.get(position).getName());
+        holder.mItem = mProducts.get(position);
+        holder.mNameView.setText(mProducts.get(position).getName());
+        if (mIngredients.get(position).getMeasureType()== MEASURE_TYPE_WEIGHT ){
+            holder.mWeightView.setText(String.valueOf(mIngredients.get(position).getAmount()));
+            holder.mVolumeView.setText(R.string.not_used);
+        } else {
+            holder.mVolumeView.setText(String.valueOf(mIngredients.get(position).getAmount()));
+            holder.mWeightView.setText(R.string.not_used);
+        }
+
+        if (mSelected[position]){
+            holder.mSelectIngredient.setChecked(true);
+        } else {
+            holder.mSelectIngredient.setChecked(false);
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,11 +72,18 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mProducts.size();
     }
 
     public void setProducts(List<Product> products){
-        mValues = products;
+        mProducts = products;
+        mIngredients = new ArrayList<>();
+        for (Product product:mProducts){
+            mIngredients.add(new Ingredient(product));
+        }
+
+        mSelected = new boolean[mProducts.size()];
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
