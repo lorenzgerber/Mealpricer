@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import com.loge.mealpricer.dummy.DummyContent;
 import com.loge.mealpricer.dummy.DummyContent.DummyItem;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -25,12 +27,11 @@ public class IngredientListFragment extends Fragment {
 
     public static final String ARG_MEAL_ID = "meal_id";
 
-    private Meal mMeal;
+    private UUID mMealId;
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
+    private List<Ingredient> mIngredients;
+    private List<Product> mProducts;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -53,10 +54,18 @@ public class IngredientListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mMealId = (UUID) getArguments().getSerializable(ARG_MEAL_ID);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+        mIngredients = new ArrayList<>();
+        mProducts = new ArrayList<>();
+
+        mIngredients = MealPricer.get(getActivity()).getIngredients(mMealId);
+        if(mIngredients != null){
+            for(Ingredient ingredient:mIngredients){
+                mProducts.add(MealPricer.get(getActivity()).getProduct(ingredient.getProductId()));
+            }
         }
+
     }
 
     @Override
@@ -73,7 +82,7 @@ public class IngredientListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new IngredientRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new IngredientRecyclerViewAdapter(mIngredients, mProducts, mListener));
         }
         return view;
     }
@@ -107,6 +116,6 @@ public class IngredientListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Ingredient item);
     }
 }

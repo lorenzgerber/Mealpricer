@@ -18,11 +18,13 @@ import java.util.List;
  */
 public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Ingredient> mIngredients;
+    private final List<Product> mProducts;
     private final OnListFragmentInteractionListener mListener;
 
-    public IngredientRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public IngredientRecyclerViewAdapter(List<Ingredient> ingredients, List<Product> products, OnListFragmentInteractionListener listener) {
+        mIngredients = ingredients;
+        mProducts = products;
         mListener = listener;
     }
 
@@ -35,9 +37,33 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIngredientItem = mIngredients.get(position);
+        holder.mProductItem = mProducts.get(position);
+
+        holder.mNameView.setText(mProducts.get(position).getName());
+        holder.mAmountView.setText(String.valueOf(mIngredients.get(position).getAmount()));
+        int mType = mIngredients.get(position).getMeasureType();
+        if (mType == 1 || mType == 3){
+            holder.mTypeView.setText(R.string.gram_unit);
+        } else {
+            holder.mTypeView.setText(R.string.milli_liter_unit);
+        }
+
+        float mAmount = (float) mIngredients.get(position).getAmount();
+        float mPrice = (float) mProducts.get(position).getPrice();
+
+        float mPortion;
+        if(mType == 1 || mType == 3){
+            mPortion = (float) mProducts.get(position).getWeight();
+        } else {
+            mPortion = (float) mProducts.get(position).getVolume();
+        }
+
+        float result = mPrice/mPortion*mAmount;
+
+        holder.mValueView.setText(String.valueOf((int) result) + " SEK");
+
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +71,7 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(holder.mIngredientItem);
                 }
             }
         });
@@ -53,25 +79,34 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mIngredients.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mNameView;
+        public final TextView mAmountView;
+        public final TextView mTypeView;
+        public final TextView mValueView;
+        public Ingredient mIngredientItem;
+        public Product mProductItem;
+
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mNameView = (TextView) view.findViewById(R.id.ingredient_name);
+            mAmountView = (TextView) view.findViewById(R.id.ingredient_amount);
+            mTypeView = (TextView) view.findViewById(R.id.ingredient_amount_type);
+            mValueView = (TextView) view.findViewById(R.id.ingredient_value);
+
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mNameView.getText() + "'";
         }
     }
+
+
 }
