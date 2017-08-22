@@ -42,7 +42,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_ingredient_chooser_list_item, parent, false);
-        return new ViewHolder(view, new WeightEditTextListener());
+        return new ViewHolder(view, new WeightEditTextListener(), new VolumeEditTextListener());
     }
 
     @Override
@@ -60,7 +60,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             holder.mVolumeView.setEnabled(false);
         } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_ONLY_VOLUME){
             holder.mVolumeView.setText(String.valueOf(mIngredients.get(position).getAmount()));
-            holder.mVolumeView.setEnabled(false);
+            holder.mWeightView.setEnabled(false);
         } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_BOTH_WEIGHT){
             holder.mWeightView.setText(String.valueOf(mIngredients.get(position).getAmount()));
             holder.mVolumeView.setText("0");
@@ -104,11 +104,12 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         public final TextView mVolumeView;
         public final CheckBox mSelectIngredient;
         public WeightEditTextListener mWeightEditTextListener;
+        public VolumeEditTextListener mVolumeEditTextListener;
         public Product mItem;
 
 
 
-        public ViewHolder(View view, WeightEditTextListener weightEditTextListener) {
+        public ViewHolder(View view, WeightEditTextListener weightEditTextListener, VolumeEditTextListener volumeEditTextListener) {
             super(view);
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.product_name);
@@ -118,7 +119,37 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             mWeightView.addTextChangedListener(mWeightEditTextListener);
 
             mVolumeView = (TextView) view.findViewById(R.id.product_volume);
+            mVolumeEditTextListener = volumeEditTextListener;
             mSelectIngredient = (CheckBox) view.findViewById(R.id.select_ingredient);
+
+
+            mWeightView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus){
+                        mWeightView.setText("");
+                        if(mVolumeView.isEnabled()){
+                            mVolumeView.setText("0");
+                        }
+                    }
+                }
+            });
+
+            mVolumeView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus){
+                        mVolumeView.setText("");
+                        if(mWeightView.isEnabled()){
+                            mWeightView.setText("0");
+                        }
+                    }
+                }
+            });
+
+
         }
 
         @Override
@@ -147,6 +178,35 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             } else {
                 mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
             }
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            // no op
+        }
+    }
+
+    private class VolumeEditTextListener implements TextWatcher {
+        private int mPosition;
+
+        public void updatePosition(int position) {
+            this.mPosition = position;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+
+            if(charSequence.length()==0){
+                mIngredients.get(mPosition).setAmount(0);
+            } else {
+                mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
+            }
+
         }
 
         @Override
