@@ -19,7 +19,8 @@
             android:id="@id/product_weight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Weight"/>
+            android:hint="Weight (g)"
+            android:inputType="number"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -30,7 +31,8 @@
             android:id="@id/product_volume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Volume"/>
+            android:hint="Volume (ml)"
+            android:inputType="number"/>
     </android.support.design.widget.TextInputLayout>
 
     <CheckBox

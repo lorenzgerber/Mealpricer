@@ -27,19 +27,18 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
     private boolean[] mSelected;
     private final OnListFragmentInteractionListener mListener;
 
-    public IngredientChooserRecyclerViewAdapter(List<Product> items, OnListFragmentInteractionListener listener) {
+    public IngredientChooserRecyclerViewAdapter(List<Product> items, List<Ingredient> ingredients, boolean[] selected, OnListFragmentInteractionListener listener) {
         mProducts = items;
-        mIngredients = new ArrayList<>();
+        mIngredients = ingredients;
 
         mListener = listener;
         for (Product product:mProducts){
             Ingredient ingredient = new Ingredient(product);
             ingredient.setMeasureType(getMeasureType(product));
             mIngredients.add(ingredient);
-
         }
 
-        mSelected = new boolean[mProducts.size()];
+        mSelected = selected; //new boolean[mProducts.size()];
     }
 
     @Override
@@ -177,10 +176,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         }
             return MEASURE_TYPE_ONLY_VOLUME;
     }
-
-
-
-
 
 
 }

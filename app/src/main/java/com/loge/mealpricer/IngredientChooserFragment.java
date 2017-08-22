@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,6 +25,10 @@ public class IngredientChooserFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
     private RecyclerView mIngredientChooserRecyclerView;
     private IngredientChooserRecyclerViewAdapter mAdapter;
+    private List<Product> mProducts;
+    private List<Ingredient> mIngredients;
+    private boolean[] mSelected;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -41,6 +46,14 @@ public class IngredientChooserFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        MealPricer mealPricer = MealPricer.get(getActivity());
+        mProducts = mealPricer.getProducts();
+        mIngredients = new ArrayList<>();
+        mSelected = new boolean[mProducts.size()];
+
+
+
 
     }
 
@@ -62,14 +75,13 @@ public class IngredientChooserFragment extends Fragment {
     }
 
     private void updateUI(){
-        MealPricer mealPricer = MealPricer.get(getActivity());
-        List<Product> products = mealPricer.getProducts();
+
 
         if(mAdapter == null){
-            mAdapter = new IngredientChooserRecyclerViewAdapter(products, mListener);
+            mAdapter = new IngredientChooserRecyclerViewAdapter(mProducts, mIngredients, mSelected, mListener);
             mIngredientChooserRecyclerView.setAdapter(mAdapter);
         } else {
-            mAdapter.setProducts(products);
+            mAdapter.setProducts(mProducts);
             mAdapter.notifyDataSetChanged();
         }
 
