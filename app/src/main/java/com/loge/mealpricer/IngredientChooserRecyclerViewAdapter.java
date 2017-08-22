@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.loge.mealpricer.IngredientChooserFragment.OnListFragmentInteractionListener;
@@ -42,7 +43,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_ingredient_chooser_list_item, parent, false);
-        return new ViewHolder(view, new WeightEditTextListener(), new VolumeEditTextListener());
+        return new ViewHolder(view, new WeightEditTextListener(), new VolumeEditTextListener(), new SelectedCheckBoxListener());
     }
 
     @Override
@@ -51,6 +52,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         holder.mNameView.setText(mProducts.get(position).getName());
         holder.mWeightEditTextListener.updatePosition(position);
         holder.mVolumeEditTextListener.updatePosition(position);
+        holder.mSelectedCheckBoxListener.updatePosition(position);
 
         if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_NONE){
             holder.mWeightView.setEnabled(false);
@@ -76,6 +78,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         } else {
             holder.mSelectIngredient.setChecked(false);
         }
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,11 +109,15 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         public final CheckBox mSelectIngredient;
         public WeightEditTextListener mWeightEditTextListener;
         public VolumeEditTextListener mVolumeEditTextListener;
+        public SelectedCheckBoxListener mSelectedCheckBoxListener;
         public Product mItem;
 
 
 
-        public ViewHolder(View view, WeightEditTextListener weightEditTextListener, VolumeEditTextListener volumeEditTextListener) {
+        public ViewHolder(View view,
+                          WeightEditTextListener weightEditTextListener,
+                          VolumeEditTextListener volumeEditTextListener,
+                          SelectedCheckBoxListener selectedCheckBoxListener) {
             super(view);
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.product_name);
@@ -122,7 +129,10 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             mVolumeView = (TextView) view.findViewById(R.id.product_volume);
             mVolumeEditTextListener = volumeEditTextListener;
             mVolumeView.addTextChangedListener(mVolumeEditTextListener);
+
             mSelectIngredient = (CheckBox) view.findViewById(R.id.select_ingredient);
+            mSelectedCheckBoxListener = selectedCheckBoxListener;
+            mSelectIngredient.setOnCheckedChangeListener(mSelectedCheckBoxListener);
 
 
             mWeightView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
@@ -160,6 +170,22 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         }
     }
 
+    private class SelectedCheckBoxListener implements CompoundButton.OnCheckedChangeListener {
+        private int mPosition;
+
+        public void updatePosition(int position){this.mPosition = position; }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+            if (buttonView.isChecked()){
+                mIngredients.get(mPosition).setSelected(true);
+            } else {
+                mIngredients.get(mPosition).setSelected(false);
+            }
+        }
+    }
+
 
     private class WeightEditTextListener implements TextWatcher {
         private int mPosition;
@@ -179,6 +205,10 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
                 mIngredients.get(mPosition).setAmount(0);
             } else {
                 mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
+            }
+
+            if(mIngredients.get(mPosition).getMeasureType() == 4){
+                mIngredients.get(mPosition).setMeasureType(3);
             }
 
         }
@@ -207,6 +237,10 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
                 mIngredients.get(mPosition).setAmount(0);
             } else {
                 mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
+            }
+
+            if(mIngredients.get(mPosition).getMeasureType() == 3) {
+                mIngredients.get(mPosition).setMeasureType(4);
             }
 
         }
