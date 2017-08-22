@@ -139,7 +139,9 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus){
-                        mWeightView.setText("");
+                        if(mWeightView.getText().toString().equals("0")){
+                            mWeightView.setText("");
+                        }
                         if(mVolumeView.isEnabled()){
                             mVolumeView.setText("0");
                         }
@@ -152,7 +154,10 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus){
-                        mVolumeView.setText("");
+                        if(mVolumeView.getText().toString().equals("0")){
+                            mVolumeView.setText("");
+                        }
+
                         if(mWeightView.isEnabled()){
                             mWeightView.setText("0");
                         }
