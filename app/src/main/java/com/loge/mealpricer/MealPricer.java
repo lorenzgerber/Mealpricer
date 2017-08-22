@@ -35,10 +35,66 @@ public class MealPricer {
 
     }
 
+    public Product newProduct(){
+        Product mProduct = new Product();
+        return mProduct;
+    }
+
     public Meal newMeal(){
         Meal mMeal = new Meal();
         return mMeal;
     }
+
+
+
+    public void addProudct(Product p) {
+        ContentValues values = getContentValues(p);
+        mDatabase.insert(ProductTable.NAME, null, values);
+    }
+
+
+    public void addMeal(Meal m){
+        ContentValues values = getContentValues(m);
+        mDatabase.insert(MealTable.NAME, null, values);
+    }
+
+    public void addIngredient(Ingredient i){
+        ContentValues values = getContentValues(i);
+        mDatabase.insert(IngredientTable.NAME, null, values);
+    }
+
+
+
+
+    public void updateProduct(Product product){
+        String uuidString = product.getProductId().toString();
+        ContentValues values = getContentValues(product);
+
+        mDatabase.update(ProductTable.NAME, values, ProductTable.Cols.PRODUCT_ID + " = ?",
+                new String[] { uuidString});
+    }
+
+
+    public void updateMeal(Meal meal){
+        String uuidString = meal.getMealId().toString();
+        ContentValues values = getContentValues(meal);
+
+        mDatabase.update(MealTable.NAME, values, MealTable.Cols.MEAL_ID + " = ?",
+                new String[] { uuidString });
+    }
+
+    public void updateIngredient(Ingredient ingredient){
+        String uuidMealString = ingredient.getMealId().toString();
+        String uuidProductString = ingredient.getProduct().toString();
+        ContentValues values = getContentValues(ingredient);
+
+        mDatabase.update(IngredientTable.NAME, values,
+                IngredientTable.Cols.MEAL_ID +
+                        " = ? AND " + IngredientTable.Cols.PRODUCT_ID + " = ?",
+                new String[] { uuidMealString, uuidProductString});
+    }
+
+
 
     public Meal getMeal(UUID mealId){
         MealCursorWrapper cursor = queryMeals(
@@ -76,18 +132,9 @@ public class MealPricer {
         return meals;
     }
 
-    public void addMeal(Meal m){
-        ContentValues values = getContentValues(m);
-        mDatabase.insert(MealTable.NAME, null, values);
-    }
 
-    public void updateMeal(Meal meal){
-        String uuidString = meal.getMealId().toString();
-        ContentValues values = getContentValues(meal);
 
-        mDatabase.update(MealTable.NAME, values, MealTable.Cols.MEAL_ID + " = ?",
-                new String[] { uuidString });
-    }
+
 
     private static ContentValues getContentValues(Meal meal){
         ContentValues  values = new ContentValues();
@@ -125,13 +172,7 @@ public class MealPricer {
         return new File(filesDir, product.getPhotoFilename());
     }
 
-    public void updateProduct(Product product){
-        String uuidString = product.getProductId().toString();
-        ContentValues values = getContentValues(product);
 
-        mDatabase.update(ProductTable.NAME, values, ProductTable.Cols.PRODUCT_ID + " = ?",
-                new String[] { uuidString});
-    }
 
     private static ContentValues getContentValues(Product product){
         ContentValues values = new ContentValues();
@@ -144,15 +185,9 @@ public class MealPricer {
         return values;
     }
 
-    public Product newProduct(){
-        Product mProduct = new Product();
-        return mProduct;
-    }
 
-    public void addProudct(Product p) {
-        ContentValues values = getContentValues(p);
-        mDatabase.insert(ProductTable.NAME, null, values);
-    }
+
+
 
 
     List<Product> getProducts(){
@@ -197,6 +232,16 @@ public class MealPricer {
                 null
         );
         return new MealCursorWrapper(cursor);
+    }
+
+    private static ContentValues getContentValues(Ingredient ingredient){
+        ContentValues values = new ContentValues();
+        values.put(IngredientTable.Cols.MEAL_ID, ingredient.getMealId().toString());
+        values.put(IngredientTable.Cols.PRODUCT_ID, ingredient.getProduct().toString());
+        values.put(IngredientTable.Cols.MEASURE_TYPE, ingredient.getMeasureType());
+        values.put(IngredientTable.Cols.AMOUNT, ingredient.getAmount());
+
+        return values;
     }
 
 

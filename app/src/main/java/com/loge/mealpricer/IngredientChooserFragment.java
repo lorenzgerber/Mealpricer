@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import static com.loge.mealpricer.IngredientListFragment.ARG_MEAL_ID;
 
 
 /**
@@ -27,7 +30,7 @@ public class IngredientChooserFragment extends Fragment {
     private IngredientChooserRecyclerViewAdapter mAdapter;
     private List<Product> mProducts;
     private List<Ingredient> mIngredients;
-    private boolean[] mSelected;
+    private UUID mMealId;
 
 
     /**
@@ -37,8 +40,12 @@ public class IngredientChooserFragment extends Fragment {
     public IngredientChooserFragment() {
     }
 
-    public static IngredientChooserFragment newInstance(){
+    public static IngredientChooserFragment newInstance(UUID mealId){
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_MEAL_ID, mealId);
+
         IngredientChooserFragment fragment = new IngredientChooserFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -46,14 +53,11 @@ public class IngredientChooserFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mMealId = (UUID) getArguments().getSerializable(ARG_MEAL_ID);
 
         MealPricer mealPricer = MealPricer.get(getActivity());
         mProducts = mealPricer.getProducts();
         mIngredients = new ArrayList<>();
-        mSelected = new boolean[mProducts.size()];
-
-
-
 
     }
 
@@ -78,7 +82,7 @@ public class IngredientChooserFragment extends Fragment {
 
 
         if(mAdapter == null){
-            mAdapter = new IngredientChooserRecyclerViewAdapter(mProducts, mIngredients, mListener);
+            mAdapter = new IngredientChooserRecyclerViewAdapter(mMealId, mProducts, mIngredients, mListener);
             mIngredientChooserRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.setProducts(mProducts);
@@ -99,8 +103,11 @@ public class IngredientChooserFragment extends Fragment {
         }
     }
 
+
     @Override
     public void onDetach() {
+
+
         super.onDetach();
         mListener = null;
     }

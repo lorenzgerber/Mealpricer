@@ -42,7 +42,7 @@ public class IngredientChooserActivity extends AppCompatActivity
 
         if (fragment == null ){
 
-            fragment = IngredientChooserFragment.newInstance();
+            fragment = IngredientChooserFragment.newInstance(mealId);
             fm.beginTransaction()
                     .add(R.id.ingredient_chooser_fragment_container, fragment)
                     .commit();

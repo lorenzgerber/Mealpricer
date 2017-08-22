@@ -12,8 +12,9 @@ import android.widget.TextView;
 
 import com.loge.mealpricer.IngredientChooserFragment.OnListFragmentInteractionListener;
 
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.UUID;
 
 import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_BOTH_VOLUME;
 import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_BOTH_WEIGHT;
@@ -25,16 +26,19 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     private List<Product> mProducts;
     private List<Ingredient> mIngredients;
+    private UUID mMealId;
     private final OnListFragmentInteractionListener mListener;
 
-    public IngredientChooserRecyclerViewAdapter(List<Product> items, List<Ingredient> ingredients, OnListFragmentInteractionListener listener) {
+    public IngredientChooserRecyclerViewAdapter(UUID mealId, List<Product> items, List<Ingredient> ingredients, OnListFragmentInteractionListener listener) {
         mProducts = items;
         mIngredients = ingredients;
+        mMealId = mealId;
 
         mListener = listener;
         for (Product product:mProducts){
             Ingredient ingredient = new Ingredient(product);
             ingredient.setMeasureType(getMeasureType(product));
+            ingredient.setMealId(mMealId);
             mIngredients.add(ingredient);
         }
     }

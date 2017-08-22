@@ -1,5 +1,7 @@
 package com.loge.mealpricer;
 
+import java.util.UUID;
+
 /**
  * Created by loge on 2017-08-01.
  */
@@ -16,14 +18,20 @@ public class Ingredient {
     private int mMeasureType;
     private int mAmount;
     private boolean mSelected;
+    private UUID mMealId;
 
     public Ingredient(Product product){
         mProduct = product;
         mMeasureType = MEASURE_TYPE_NONE;
         mAmount = 0;
         mSelected = false;
+        mMealId = null;
 
     }
+
+    public UUID getMealId() { return mMealId; }
+
+    public void setMealId(UUID mealId){ mMealId = mealId; }
 
     public Product getProduct() {
         return mProduct;
