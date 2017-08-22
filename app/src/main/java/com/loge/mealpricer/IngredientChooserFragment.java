@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_BOTH_WEIGHT;
+import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_NONE;
+import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_ONLY_VOLUME;
+import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_ONLY_WEIGHT;
 import static com.loge.mealpricer.IngredientListFragment.ARG_MEAL_ID;
 
 
@@ -30,6 +34,7 @@ public class IngredientChooserFragment extends Fragment {
     private IngredientChooserRecyclerViewAdapter mAdapter;
     private List<Product> mProducts;
     private List<Ingredient> mIngredients;
+    private Ingredient mIngredient;
     private UUID mMealId;
 
 
@@ -58,6 +63,19 @@ public class IngredientChooserFragment extends Fragment {
         MealPricer mealPricer = MealPricer.get(getActivity());
         mProducts = mealPricer.getProducts();
         mIngredients = new ArrayList<>();
+
+        for(Product product:mProducts){
+            mIngredient = MealPricer.get(getActivity()).getIngredient(mMealId, product.getProductId());
+            if ( mIngredient != null){
+                mIngredient.setSelected(true);
+                mIngredients.add(mIngredient);
+            } else {
+                mIngredient = new Ingredient(mMealId, product.getProductId());
+                mIngredient.setMeasureType(getMeasureType(product));
+                mIngredients.add(mIngredient);
+            }
+
+        }
 
     }
 
@@ -115,4 +133,16 @@ public class IngredientChooserFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Product item);
     }
+
+    private int getMeasureType(Product product){
+        if (product.getWeight() == 0 && product.getVolume() == 0){
+            return MEASURE_TYPE_NONE;
+        } else if (product.getWeight() > 0 && product.getVolume() == 0){
+            return MEASURE_TYPE_ONLY_WEIGHT;
+        } else if (product.getWeight() > 0 && product.getVolume() > 0){
+            return MEASURE_TYPE_BOTH_WEIGHT;
+        }
+        return MEASURE_TYPE_ONLY_VOLUME;
+    }
+
 }

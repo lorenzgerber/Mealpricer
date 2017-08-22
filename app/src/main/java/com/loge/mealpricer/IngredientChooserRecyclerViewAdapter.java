@@ -26,6 +26,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     private List<Product> mProducts;
     private List<Ingredient> mIngredients;
+    private Ingredient mIngredient;
     private UUID mMealId;
     private final OnListFragmentInteractionListener mListener;
 
@@ -35,12 +36,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         mMealId = mealId;
 
         mListener = listener;
-        for (Product product:mProducts){
-            Ingredient ingredient = new Ingredient(mMealId, product.getProductId());
-            ingredient.setMeasureType(getMeasureType(product));
-            ingredient.setMealId(mMealId);
-            mIngredients.add(ingredient);
-        }
     }
 
     @Override
