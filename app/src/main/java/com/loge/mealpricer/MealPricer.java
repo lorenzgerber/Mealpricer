@@ -85,7 +85,7 @@ public class MealPricer {
 
     public void updateIngredient(Ingredient ingredient){
         String uuidMealString = ingredient.getMealId().toString();
-        String uuidProductString = ingredient.getProduct().toString();
+        String uuidProductString = ingredient.getProductId().toString();
         ContentValues values = getContentValues(ingredient);
 
         mDatabase.update(IngredientTable.NAME, values,
@@ -95,23 +95,22 @@ public class MealPricer {
     }
 
 
+    List<Product> getProducts(){
+        List<Product> products = new ArrayList<>();
 
-    public Meal getMeal(UUID mealId){
-        MealCursorWrapper cursor = queryMeals(
-                MealTable.Cols.MEAL_ID + " = ?",
-                new String[] { mealId.toString() }
-        );
+        ProductCursorWrapper cursor = queryProducts(null, null);
 
         try{
-            if (cursor.getCount() == 0){
-                return null;
-            }
-
             cursor.moveToFirst();
-            return cursor.getMeal();
+            while (!cursor.isAfterLast()){
+                products.add(cursor.getProduct());
+                cursor.moveToNext();
+            }
         } finally {
             cursor.close();
         }
+
+        return products;
     }
 
 
@@ -132,18 +131,25 @@ public class MealPricer {
         return meals;
     }
 
+    List<Ingredient> getIngredients(UUID mealId){
+        List<Ingredient> ingredients = new ArrayList<>();
+        IngredientCursorWrapper cursor = queryIngredients(IngredientTable.Cols.MEAL_ID + " = ?",
+                new String[] {mealId.toString()});
 
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                ingredients.add(cursor.getIngredient());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
 
-
-
-    private static ContentValues getContentValues(Meal meal){
-        ContentValues  values = new ContentValues();
-        values.put(MealTable.Cols.MEAL_ID, meal.getMealId().toString());
-        values.put(MealTable.Cols.NAME, meal.getName());
-        values.put(MealTable.Cols.PORTION, meal.getPortion());
-
-        return values;
+        return ingredients;
     }
+
+
 
 
     public Product getProduct(UUID productId){
@@ -167,6 +173,48 @@ public class MealPricer {
         }
     }
 
+
+
+
+    public Meal getMeal(UUID mealId){
+        MealCursorWrapper cursor = queryMeals(
+                MealTable.Cols.MEAL_ID + " = ?",
+                new String[] { mealId.toString() }
+        );
+
+        try{
+            if (cursor.getCount() == 0){
+                return null;
+            }
+
+            cursor.moveToFirst();
+            return cursor.getMeal();
+        } finally {
+            cursor.close();
+        }
+    }
+
+    public Ingredient getIngredient(UUID mealId, UUID productId){
+        IngredientCursorWrapper cursor = queryIngredients(
+                IngredientTable.Cols.MEAL_ID + " = ? AND " +
+                        IngredientTable.Cols.PRODUCT_ID + " = ?",
+                new String[] {mealId.toString(), productId.toString() }
+        );
+
+        try{
+            if (cursor.getCount() == 0){
+                return null;
+            }
+
+            cursor.moveToFirst();
+            return cursor.getIngredient();
+        } finally {
+            cursor.close();
+        }
+
+    }
+
+
     public File getPhotoFile(Product product){
         File filesDir = mContext.getFilesDir();
         return new File(filesDir, product.getPhotoFilename());
@@ -185,28 +233,30 @@ public class MealPricer {
         return values;
     }
 
+    private static ContentValues getContentValues(Meal meal){
+        ContentValues  values = new ContentValues();
+        values.put(MealTable.Cols.MEAL_ID, meal.getMealId().toString());
+        values.put(MealTable.Cols.NAME, meal.getName());
+        values.put(MealTable.Cols.PORTION, meal.getPortion());
 
-
-
-
-
-    List<Product> getProducts(){
-        List<Product> products = new ArrayList<>();
-
-        ProductCursorWrapper cursor = queryProducts(null, null);
-
-        try{
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()){
-                products.add(cursor.getProduct());
-                cursor.moveToNext();
-            }
-        } finally {
-            cursor.close();
-        }
-
-        return products;
+        return values;
     }
+
+    private static ContentValues getContentValues(Ingredient ingredient){
+        ContentValues values = new ContentValues();
+        values.put(IngredientTable.Cols.MEAL_ID, ingredient.getMealId().toString());
+        values.put(IngredientTable.Cols.PRODUCT_ID, ingredient.getProductId().toString());
+        values.put(IngredientTable.Cols.MEASURE_TYPE, ingredient.getMeasureType());
+        values.put(IngredientTable.Cols.AMOUNT, ingredient.getAmount());
+
+        return values;
+    }
+
+
+
+
+
+
 
     private ProductCursorWrapper queryProducts(String whereClause, String[] whereArgs){
         Cursor cursor = mDatabase.query(
@@ -234,15 +284,20 @@ public class MealPricer {
         return new MealCursorWrapper(cursor);
     }
 
-    private static ContentValues getContentValues(Ingredient ingredient){
-        ContentValues values = new ContentValues();
-        values.put(IngredientTable.Cols.MEAL_ID, ingredient.getMealId().toString());
-        values.put(IngredientTable.Cols.PRODUCT_ID, ingredient.getProduct().toString());
-        values.put(IngredientTable.Cols.MEASURE_TYPE, ingredient.getMeasureType());
-        values.put(IngredientTable.Cols.AMOUNT, ingredient.getAmount());
-
-        return values;
+    private IngredientCursorWrapper queryIngredients(String whereClause, String[] whereArgs){
+        Cursor cursor = mDatabase.query(
+                IngredientTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null
+        );
+        return new IngredientCursorWrapper(cursor);
     }
+
+
 
 
 

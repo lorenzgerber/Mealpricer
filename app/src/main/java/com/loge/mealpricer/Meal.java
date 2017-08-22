@@ -26,8 +26,8 @@ public class Meal {
         mPortion = 1;
         Product mProduct1 = new Product();
         Product mProduct2 = new Product();
-        Ingredient mIngredient1 = new Ingredient(mProduct1);
-        Ingredient mIngredient2 = new Ingredient(mProduct2);
+        Ingredient mIngredient1 = new Ingredient(mMealId, mProduct1.getProductId());
+        Ingredient mIngredient2 = new Ingredient(mMealId, mProduct2.getProductId());
         mIngredient1.setAmount(300);
         mIngredient2.setAmount(100);
         mIngredient1.setMeasureType(0);

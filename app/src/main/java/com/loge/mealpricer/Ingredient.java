@@ -14,18 +14,20 @@ public class Ingredient {
     public static final int MEASURE_TYPE_BOTH_WEIGHT = 3;
     public static final int MEASURE_TYPE_BOTH_VOLUME = 4;
 
-    private Product mProduct;
+    private UUID mMealId;
+    private UUID mProductId;
     private int mMeasureType;
     private int mAmount;
     private boolean mSelected;
-    private UUID mMealId;
 
-    public Ingredient(Product product){
-        mProduct = product;
+
+    public Ingredient(UUID mealId, UUID productId){
+        mMealId = mealId;
+        mProductId = productId;
         mMeasureType = MEASURE_TYPE_NONE;
         mAmount = 0;
         mSelected = false;
-        mMealId = null;
+
 
     }
 
@@ -33,12 +35,12 @@ public class Ingredient {
 
     public void setMealId(UUID mealId){ mMealId = mealId; }
 
-    public Product getProduct() {
-        return mProduct;
+    public UUID getProductId() {
+        return mProductId;
     }
 
-    public void setProduct(Product product) {
-        mProduct = product;
+    public void setProduct(UUID productId) {
+        mProductId = productId;
     }
 
     public int getMeasureType() {

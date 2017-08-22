@@ -36,7 +36,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
         mListener = listener;
         for (Product product:mProducts){
-            Ingredient ingredient = new Ingredient(product);
+            Ingredient ingredient = new Ingredient(mMealId, product.getProductId());
             ingredient.setMeasureType(getMeasureType(product));
             ingredient.setMealId(mMealId);
             mIngredients.add(ingredient);
