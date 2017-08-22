@@ -121,6 +121,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
             mVolumeView = (TextView) view.findViewById(R.id.product_volume);
             mVolumeEditTextListener = volumeEditTextListener;
+            mVolumeView.addTextChangedListener(mVolumeEditTextListener);
             mSelectIngredient = (CheckBox) view.findViewById(R.id.select_ingredient);
 
 
