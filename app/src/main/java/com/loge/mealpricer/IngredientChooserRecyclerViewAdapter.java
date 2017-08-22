@@ -50,6 +50,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         holder.mItem = mProducts.get(position);
         holder.mNameView.setText(mProducts.get(position).getName());
         holder.mWeightEditTextListener.updatePosition(position);
+        holder.mVolumeEditTextListener.updatePosition(position);
 
         if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_NONE){
             holder.mWeightView.setEnabled(false);
