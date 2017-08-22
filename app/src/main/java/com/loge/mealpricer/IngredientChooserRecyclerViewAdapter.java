@@ -249,5 +249,5 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             // no op
         }
     }
-    
+
 }

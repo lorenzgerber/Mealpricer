@@ -125,6 +125,20 @@ public class IngredientChooserFragment extends Fragment {
     @Override
     public void onDetach() {
 
+        for(Ingredient ingredient:mIngredients){
+
+            if(MealPricer.get(getActivity()).getIngredient(mMealId, ingredient.getProductId()) != null){
+                if(ingredient.getSelected()){
+                    MealPricer.get(getActivity()).updateIngredient(ingredient);
+                } else{
+                    //MealPricer.get(getActivity()).deleteIngredient(ingredient);
+                }
+            } else {
+                if(ingredient.getSelected()){
+                    MealPricer.get(getActivity()).addIngredient(ingredient);
+                }
+            }
+        }
 
         super.onDetach();
         mListener = null;
