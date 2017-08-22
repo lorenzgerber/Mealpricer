@@ -249,17 +249,5 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             // no op
         }
     }
-
-    private int getMeasureType(Product product){
-        if (product.getWeight() == 0 && product.getVolume() == 0){
-            return MEASURE_TYPE_NONE;
-        } else if (product.getWeight() > 0 && product.getVolume() == 0){
-            return MEASURE_TYPE_ONLY_WEIGHT;
-        } else if (product.getWeight() > 0 && product.getVolume() > 0){
-            return MEASURE_TYPE_BOTH_WEIGHT;
-        }
-            return MEASURE_TYPE_ONLY_VOLUME;
-    }
-
-
+    
 }
