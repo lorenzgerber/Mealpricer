@@ -78,7 +78,7 @@ public class IngredientChooserFragment extends Fragment {
 
 
         if(mAdapter == null){
-            mAdapter = new IngredientChooserRecyclerViewAdapter(mProducts, mIngredients, mSelected, mListener);
+            mAdapter = new IngredientChooserRecyclerViewAdapter(mProducts, mIngredients, mListener);
             mIngredientChooserRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.setProducts(mProducts);

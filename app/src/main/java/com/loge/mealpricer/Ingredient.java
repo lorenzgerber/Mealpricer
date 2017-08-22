@@ -15,11 +15,13 @@ public class Ingredient {
     private Product mProduct;
     private int mMeasureType;
     private int mAmount;
+    private boolean mSelected;
 
     public Ingredient(Product product){
         mProduct = product;
         mMeasureType = MEASURE_TYPE_NONE;
         mAmount = 0;
+        mSelected = false;
 
     }
 
@@ -46,4 +48,9 @@ public class Ingredient {
     public void setAmount(int amount) {
         mAmount = amount;
     }
+
+    public boolean getSelected() { return mSelected; }
+
+    public void setSelected(boolean selected ) {mSelected = selected; }
+
 }

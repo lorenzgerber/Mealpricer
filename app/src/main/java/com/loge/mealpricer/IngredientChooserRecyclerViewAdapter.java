@@ -24,10 +24,9 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     private List<Product> mProducts;
     private List<Ingredient> mIngredients;
-    private boolean[] mSelected;
     private final OnListFragmentInteractionListener mListener;
 
-    public IngredientChooserRecyclerViewAdapter(List<Product> items, List<Ingredient> ingredients, boolean[] selected, OnListFragmentInteractionListener listener) {
+    public IngredientChooserRecyclerViewAdapter(List<Product> items, List<Ingredient> ingredients, OnListFragmentInteractionListener listener) {
         mProducts = items;
         mIngredients = ingredients;
 
@@ -37,8 +36,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             ingredient.setMeasureType(getMeasureType(product));
             mIngredients.add(ingredient);
         }
-
-        mSelected = selected; //new boolean[mProducts.size()];
     }
 
     @Override
@@ -73,7 +70,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         }
 
 
-        if (mSelected[position]){
+        if (mIngredients.get(position).getSelected()){
             holder.mSelectIngredient.setChecked(true);
         } else {
             holder.mSelectIngredient.setChecked(false);
@@ -98,13 +95,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     public void setProducts(List<Product> products){
         mProducts = products;
-        mIngredients = new ArrayList<>();
-        for (Product product:mProducts){
-            mIngredients.add(new Ingredient(product));
-        }
-
-        mSelected = new boolean[mProducts.size()];
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -140,7 +130,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     private class WeightEditTextListener implements TextWatcher {
         private int mPosition;
-        private int mMeasureType;
 
         public void updatePosition(int position) {
             this.mPosition = position;
@@ -152,7 +141,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
         @Override
         public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-            mMeasureType = mIngredients.get(mPosition).getMeasureType();
+
             if(charSequence.length()==0){
                 mIngredients.get(mPosition).setAmount(0);
             } else {
