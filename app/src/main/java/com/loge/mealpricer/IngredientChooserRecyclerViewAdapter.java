@@ -26,15 +26,11 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     private List<Product> mProducts;
     private List<Ingredient> mIngredients;
-    private Ingredient mIngredient;
-    private UUID mMealId;
     private final OnListFragmentInteractionListener mListener;
 
-    public IngredientChooserRecyclerViewAdapter(UUID mealId, List<Product> items, List<Ingredient> ingredients, OnListFragmentInteractionListener listener) {
+    public IngredientChooserRecyclerViewAdapter(List<Product> items, List<Ingredient> ingredients, OnListFragmentInteractionListener listener) {
         mProducts = items;
         mIngredients = ingredients;
-        mMealId = mealId;
-
         mListener = listener;
     }
 
