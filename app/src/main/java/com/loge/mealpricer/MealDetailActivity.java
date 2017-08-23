@@ -84,6 +84,5 @@ public class MealDetailActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(Ingredient item) {
-
     }
 }

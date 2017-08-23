@@ -29,7 +29,8 @@ public class IngredientListFragment extends Fragment {
 
     private UUID mMealId;
 
-    private int mColumnCount = 1;
+    private RecyclerView mIngredientListRecyclerView;
+    private IngredientRecyclerViewAdapter mAdapter;
     private List<Ingredient> mIngredients;
     private List<Product> mProducts;
     private OnListFragmentInteractionListener mListener;
@@ -76,15 +77,30 @@ public class IngredientListFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new IngredientRecyclerViewAdapter(mIngredients, mProducts, mListener));
+            mIngredientListRecyclerView = (RecyclerView) view;
+            mIngredientListRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+            updateUI();
+
         }
         return view;
+    }
+
+
+    private void updateUI(){
+
+        mIngredients = MealPricer.get(getActivity()).getIngredients(mMealId);
+        mProducts = MealPricer.get(getActivity()).getProducts();
+
+        if(mAdapter == null){
+            mAdapter = new IngredientRecyclerViewAdapter(mIngredients, mProducts, mListener);
+            mIngredientListRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.setIngredientsProducts(mIngredients, mProducts);
+            mAdapter.notifyDataSetChanged();
+        }
+
+
     }
 
 
@@ -97,6 +113,12 @@ public class IngredientListFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        updateUI();
     }
 
     @Override

@@ -13,11 +13,11 @@ import java.util.List;
 
 public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerViewAdapter.ViewHolder> {
 
-    private List<Meal> mValues;
+    private List<Meal> mMeals;
     private final OnListFragmentInteractionListener mListener;
 
     public MealRecyclerViewAdapter(List<Meal> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+        mMeals = items;
         mListener = listener;
     }
 
@@ -30,10 +30,10 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mNameView.setText(mValues.get(position).getName());
-        holder.mPriceView.setText(String.valueOf(mValues.get(position).getPrice()));
-        holder.mPortionView.setText(String.valueOf(mValues.get(position).getPortion()));
+        holder.mItem = mMeals.get(position);
+        holder.mNameView.setText(mMeals.get(position).getName());
+        holder.mPriceView.setText(String.valueOf(mMeals.get(position).getPrice()));
+        holder.mPortionView.setText(String.valueOf(mMeals.get(position).getPortion()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,10 +47,10 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mMeals.size();
     }
 
-    public void setMeals(List<Meal> meals){ mValues = meals; }
+    public void setMeals(List<Meal> meals){ mMeals = meals; }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;

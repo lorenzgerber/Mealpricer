@@ -121,9 +121,10 @@ public class IngredientChooserFragment extends Fragment {
         }
     }
 
-
     @Override
-    public void onDetach() {
+    public void onPause(){
+
+        super.onPause();
 
         for(Ingredient ingredient:mIngredients){
 
@@ -139,7 +140,11 @@ public class IngredientChooserFragment extends Fragment {
                 }
             }
         }
+        
+    }
 
+    @Override
+    public void onDetach() {
         super.onDetach();
         mListener = null;
     }

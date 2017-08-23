@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Ingredient> mIngredients;
-    private final List<Product> mProducts;
+    private  List<Ingredient> mIngredients;
+    private  List<Product> mProducts;
     private final OnListFragmentInteractionListener mListener;
 
     public IngredientRecyclerViewAdapter(List<Ingredient> ingredients, List<Product> products, OnListFragmentInteractionListener listener) {
@@ -73,6 +73,7 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mIngredientItem);
                 }
+
             }
         });
     }
@@ -80,6 +81,11 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
     @Override
     public int getItemCount() {
         return mIngredients.size();
+    }
+
+    public void setIngredientsProducts(List<Ingredient> ingredients, List<Product> products){
+        mIngredients = ingredients;
+        mProducts = products;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
