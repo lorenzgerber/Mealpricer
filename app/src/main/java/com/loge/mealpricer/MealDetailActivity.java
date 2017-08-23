@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,8 +17,8 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
-import com.loge.mealpricer.dummy.DummyContent;
 
 import java.io.File;
 import java.util.List;
@@ -32,6 +34,9 @@ public class MealDetailActivity extends AppCompatActivity
     private Meal mMeal;
     private UUID mealId;
     private File mPhotoFile;
+    private Toolbar mToolbar;
+    private ImageView mImageView;
+
 
     public static Intent newIntent(Context packageContext, UUID mealId){
         Intent intent = new Intent(packageContext, MealDetailActivity.class);
@@ -45,10 +50,23 @@ public class MealDetailActivity extends AppCompatActivity
         mealId = (UUID) getIntent().getSerializableExtra(EXTRA_MEAL_ID);
         mMeal = MealPricer.get(this).getMeal(mealId);
         mPhotoFile = MealPricer.get(this).getPhotoFile(mMeal);
-
         setContentView(R.layout.activity_meal_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        mImageView = (ImageView) findViewById(R.id.meal_photo_test);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mImageView.setBackground(getResources().getDrawable(R.drawable.header));
+
+        if(mPhotoFile == null || !mPhotoFile.exists()){
+
+            mImageView.setBackground(null);
+        } else {
+            Bitmap bitmap = PictureUtils.getScaledBitmap(
+                    mPhotoFile.getPath(), MealDetailActivity.this);
+            mImageView.setBackground(new BitmapDrawable(MealDetailActivity.this.getResources(), bitmap));
+        }
+
 
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         FloatingActionButton fab_photo = (FloatingActionButton) findViewById(R.id.fab_take_photo);
@@ -76,6 +94,11 @@ public class MealDetailActivity extends AppCompatActivity
                             uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 }
                 startActivityForResult(captureImage, REQUEST_PHOTO);
+
+
+
+
+
 
                 Snackbar.make(view, "Take Photo for Meal", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -118,4 +141,30 @@ public class MealDetailActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(Ingredient item) {
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode != RESULT_OK){
+            return;
+        }
+
+        if (requestCode == REQUEST_PHOTO){
+            Uri uri = FileProvider.getUriForFile(this,
+                    "com.loge.mealpricer.fileprovider", mPhotoFile);
+
+            this.revokeUriPermission(uri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            mPhotoFile = MealPricer.get(MealDetailActivity.this).getPhotoFile(mMeal);
+            if(mPhotoFile == null || !mPhotoFile.exists()){
+                mImageView.setBackground(null);
+            } else {
+                Bitmap bitmap = PictureUtils.getScaledBitmap(
+                        mPhotoFile.getPath(), MealDetailActivity.this);
+                mImageView.setBackground(new BitmapDrawable(getResources(), bitmap));
+            }
+        }
+
+    }
+
 }

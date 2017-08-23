@@ -25,7 +25,7 @@
             app:toolbarId="@+id/toolbar">
 
             <ImageView
-                android:id="@+id/header"
+                android:id="@+id/meal_photo_test"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/header"
