@@ -70,17 +70,13 @@ public class Meal {
         mPortion = portion;
     }
 
-    public List<Ingredient> getIngredients() {
-        return mIngredients;
-    }
-
-    public void addIngredient(){
-
-
-    }
-
     public void setIngredients(List<Ingredient> ingredients) {
         mIngredients = ingredients;
+    }
+
+
+    public String getPhotoFilename() {
+        return "IMG_" + getMealId().toString() + ".jpg";
     }
 
 

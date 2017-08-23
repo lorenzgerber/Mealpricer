@@ -231,6 +231,11 @@ public class MealPricer {
         return new File(filesDir, product.getPhotoFilename());
     }
 
+    public File getPhotoFile(Meal meal){
+        File filesDir = mContext.getFilesDir();
+        return new File(filesDir, meal.getPhotoFilename());
+    }
+
 
 
     private static ContentValues getContentValues(Product product){

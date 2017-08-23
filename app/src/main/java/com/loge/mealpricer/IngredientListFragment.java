@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.loge.mealpricer.dummy.DummyContent;
 import com.loge.mealpricer.dummy.DummyContent.DummyItem;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,11 +29,11 @@ public class IngredientListFragment extends Fragment {
     public static final String ARG_MEAL_ID = "meal_id";
 
     private UUID mMealId;
-
     private RecyclerView mIngredientListRecyclerView;
     private IngredientRecyclerViewAdapter mAdapter;
     private List<Ingredient> mIngredients;
     private List<Product> mProducts;
+    private File mPhotoFile;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -55,15 +56,16 @@ public class IngredientListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MealPricer mealPricer = MealPricer.get(getActivity());
         mMealId = (UUID) getArguments().getSerializable(ARG_MEAL_ID);
 
         mIngredients = new ArrayList<>();
         mProducts = new ArrayList<>();
 
-        mIngredients = MealPricer.get(getActivity()).getIngredients(mMealId);
+        mIngredients = mealPricer.getIngredients(mMealId);
         if(mIngredients != null){
             for(Ingredient ingredient:mIngredients){
-                mProducts.add(MealPricer.get(getActivity()).getProduct(ingredient.getProductId()));
+                mProducts.add(mealPricer.getProduct(ingredient.getProductId()));
             }
         }
 
