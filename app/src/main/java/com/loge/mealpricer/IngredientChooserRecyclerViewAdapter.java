@@ -65,9 +65,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             holder.mWeightView.setEnabled(false);
         } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_BOTH_WEIGHT){
             holder.mWeightView.setText(String.valueOf(mIngredients.get(position).getAmount()));
-            holder.mVolumeView.setText("0");
         } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_BOTH_VOLUME){
-            holder.mWeightView.setText("0");
             holder.mVolumeView.setText(String.valueOf(mIngredients.get(position).getAmount()));
         }
 
@@ -143,7 +141,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
                             mWeightView.setText("");
                         }
                         if(mVolumeView.isEnabled()){
-                            mVolumeView.setText("0");
+                            mVolumeView.setText("");
                         }
                     }
                 }
@@ -159,7 +157,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
                         }
 
                         if(mWeightView.isEnabled()){
-                            mWeightView.setText("0");
+                            mWeightView.setText("");
                         }
                     }
                 }

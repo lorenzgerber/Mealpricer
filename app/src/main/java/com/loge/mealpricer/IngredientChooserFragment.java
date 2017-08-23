@@ -140,7 +140,7 @@ public class IngredientChooserFragment extends Fragment {
                 }
             }
         }
-        
+
     }
 
     @Override
