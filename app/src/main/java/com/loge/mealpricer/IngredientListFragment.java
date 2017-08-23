@@ -88,9 +88,12 @@ public class IngredientListFragment extends Fragment {
 
 
     private void updateUI(){
+        MealPricer mealPricer = MealPricer.get(getActivity());
 
-        mIngredients = MealPricer.get(getActivity()).getIngredients(mMealId);
-        mProducts = MealPricer.get(getActivity()).getProducts();
+        mIngredients = mealPricer.getIngredients(mMealId);
+        for (Ingredient ingredient: mIngredients){
+            mProducts.add(mealPricer.getProduct(ingredient.getProductId()));
+        }
 
         if(mAdapter == null){
             mAdapter = new IngredientRecyclerViewAdapter(mIngredients, mProducts, mListener);

@@ -90,7 +90,8 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         return mProducts.size();
     }
 
-    public void setProducts(List<Product> products){
+    public void setIngredientsProducts(List<Ingredient> ingredients, List<Product> products){
+        mIngredients = ingredients;
         mProducts = products;
     }
 

@@ -63,6 +63,17 @@ public class MealPricer {
         mDatabase.insert(IngredientTable.NAME, null, values);
     }
 
+    public void deleteIngredient(Ingredient i){
+
+        String uuidMealIdString = i.getMealId().toString();
+        String uuidProductIdString = i.getProductId().toString();
+
+        mDatabase.delete(IngredientTable.NAME,
+                IngredientTable.Cols.MEAL_ID + " = ? AND " +
+                IngredientTable.Cols.PRODUCT_ID + " = ?",
+                new String[]{uuidMealIdString, uuidProductIdString});
+    }
+
 
 
 

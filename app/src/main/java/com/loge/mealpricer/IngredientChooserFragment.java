@@ -60,22 +60,7 @@ public class IngredientChooserFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mMealId = (UUID) getArguments().getSerializable(ARG_MEAL_ID);
 
-        MealPricer mealPricer = MealPricer.get(getActivity());
-        mProducts = mealPricer.getProducts();
-        mIngredients = new ArrayList<>();
 
-        for(Product product:mProducts){
-            mIngredient = MealPricer.get(getActivity()).getIngredient(mMealId, product.getProductId());
-            if ( mIngredient != null){
-                mIngredient.setSelected(true);
-                mIngredients.add(mIngredient);
-            } else {
-                mIngredient = new Ingredient(mMealId, product.getProductId());
-                mIngredient.setMeasureType(getMeasureType(product));
-                mIngredients.add(mIngredient);
-            }
-
-        }
 
     }
 
@@ -98,12 +83,30 @@ public class IngredientChooserFragment extends Fragment {
 
     private void updateUI(){
 
+        MealPricer mealPricer = MealPricer.get(getActivity());
+        mProducts = mealPricer.getProducts();
+        mIngredients = new ArrayList<>();
+
+        for(Product product:mProducts){
+            mIngredient = null;
+            mIngredient = mealPricer.getIngredient(mMealId, product.getProductId());
+            if ( mIngredient != null){
+                mIngredient.setSelected(true);
+                mIngredients.add(mIngredient);
+            } else {
+                mIngredient = new Ingredient(mMealId, product.getProductId());
+                mIngredient.setMeasureType(getMeasureType(product));
+                mIngredients.add(mIngredient);
+            }
+
+        }
+
 
         if(mAdapter == null){
             mAdapter = new IngredientChooserRecyclerViewAdapter(mProducts, mIngredients, mListener);
             mIngredientChooserRecyclerView.setAdapter(mAdapter);
         } else {
-            mAdapter.setProducts(mProducts);
+            mAdapter.setIngredientsProducts(mIngredients, mProducts);
             mAdapter.notifyDataSetChanged();
         }
 
@@ -132,7 +135,7 @@ public class IngredientChooserFragment extends Fragment {
                 if(ingredient.getSelected()){
                     MealPricer.get(getActivity()).updateIngredient(ingredient);
                 } else{
-                    //MealPricer.get(getActivity()).deleteIngredient(ingredient);
+                    MealPricer.get(getActivity()).deleteIngredient(ingredient);
                 }
             } else {
                 if(ingredient.getSelected()){
