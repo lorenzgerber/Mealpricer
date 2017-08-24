@@ -1,5 +1,6 @@
 package com.loge.mealpricer;
 
+import android.content.Context;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -47,9 +48,12 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mProducts.get(position);
         holder.mNameView.setText(mProducts.get(position).getName());
-        holder.mWeightEditTextListener.updatePosition(position);
-        holder.mVolumeEditTextListener.updatePosition(position);
-        holder.mSelectedCheckBoxListener.updatePosition(position);
+        //holder.mWeightEditTextListener.updatePosition(position);
+        //holder.mVolumeEditTextListener.updatePosition(position);
+        //holder.mSelectedCheckBoxListener.updatePosition(position);
+
+
+
         int mAmount = mIngredients.get(position).getAmount();
 
         if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_NONE){
@@ -62,7 +66,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             } else {
                 holder.mWeightView.setText(String.valueOf(mAmount));
             }
-            //holder.mVolumeView.setVisibility(INVISIBLE);
             holder.mTextInputLayoutVolume.setVisibility(INVISIBLE);
 
         } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_ONLY_VOLUME){
@@ -71,7 +74,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             } else {
                 holder.mVolumeView.setText(String.valueOf(mAmount));
             }
-            //holder.mWeightView.setVisibility(INVISIBLE);
             holder.mTextInputLayoutWeight.setVisibility(INVISIBLE);
 
         } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_BOTH_WEIGHT){
@@ -95,6 +97,24 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         } else {
             holder.mSelectIngredient.setChecked(false);
         }
+
+        // testing to set edittextlistener here
+        WeightEditTextListener weightListener = new WeightEditTextListener();
+        weightListener.updatePosition(position);
+        weightListener.setCheckBox(holder.mSelectIngredient);
+        holder.mWeightView.addTextChangedListener(weightListener);
+
+        VolumeEditTextListener volumeListener = new VolumeEditTextListener();
+        volumeListener.updatePosition(position);
+        volumeListener.setCheckBox(holder.mSelectIngredient);
+        holder.mVolumeView.addTextChangedListener(volumeListener);
+
+        SelectedCheckBoxListener selectListener = new SelectedCheckBoxListener();
+        selectListener.updatePosition(position);
+        selectListener.setWeightControl(holder.mWeightView);
+        selectListener.setVolumeControl(holder.mVolumeView);
+        holder.mSelectIngredient.setOnCheckedChangeListener(selectListener);
+
 
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -127,9 +147,9 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         public final TextView mVolumeView;
         public final TextInputLayout mTextInputLayoutVolume;
         public final CheckBox mSelectIngredient;
-        public WeightEditTextListener mWeightEditTextListener;
-        public VolumeEditTextListener mVolumeEditTextListener;
-        public SelectedCheckBoxListener mSelectedCheckBoxListener;
+        //public WeightEditTextListener mWeightEditTextListener;
+        //public VolumeEditTextListener mVolumeEditTextListener;
+        //public SelectedCheckBoxListener mSelectedCheckBoxListener;
         public Product mItem;
 
 
@@ -142,19 +162,22 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.product_name);
 
+            mSelectIngredient = (CheckBox) view.findViewById(R.id.select_ingredient);
+            //mSelectedCheckBoxListener = selectedCheckBoxListener;
+            //mSelectIngredient.setOnCheckedChangeListener(mSelectedCheckBoxListener);
+
             mWeightView = (TextView) view.findViewById(R.id.product_weight);
             mTextInputLayoutWeight = (TextInputLayout) view.findViewById(R.id.textInputLayout_weight);
-            mWeightEditTextListener = weightEditTextListener;
-            mWeightView.addTextChangedListener(mWeightEditTextListener);
+            //mWeightEditTextListener = weightEditTextListener;
+            //mWeightEditTextListener.setCheckbox(mSelectIngredient);
+            //mWeightView.addTextChangedListener(mWeightEditTextListener);
 
             mVolumeView = (TextView) view.findViewById(R.id.product_volume);
             mTextInputLayoutVolume = (TextInputLayout) view.findViewById(R.id.textInputLayout_volume);
-            mVolumeEditTextListener = volumeEditTextListener;
-            mVolumeView.addTextChangedListener(mVolumeEditTextListener);
+            //mVolumeEditTextListener = volumeEditTextListener;
+            //mVolumeView.addTextChangedListener(mVolumeEditTextListener);
 
-            mSelectIngredient = (CheckBox) view.findViewById(R.id.select_ingredient);
-            mSelectedCheckBoxListener = selectedCheckBoxListener;
-            mSelectIngredient.setOnCheckedChangeListener(mSelectedCheckBoxListener);
+
 
 
             mWeightView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
@@ -199,8 +222,18 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     private class SelectedCheckBoxListener implements CompoundButton.OnCheckedChangeListener {
         private int mPosition;
+        private TextView mWeight;
+        private TextView mVolume;
 
         public void updatePosition(int position){this.mPosition = position; }
+
+        public void setWeightControl(TextView weight){
+            mWeight = weight;
+        }
+
+        public void setVolumeControl(TextView volume){
+            mVolume = volume;
+        }
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -209,6 +242,8 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
                 mIngredients.get(mPosition).setSelected(true);
             } else {
                 mIngredients.get(mPosition).setSelected(false);
+                mWeight.setText("");
+                mVolume.setText("");
             }
         }
     }
@@ -216,9 +251,15 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     private class WeightEditTextListener implements TextWatcher {
         private int mPosition;
+        private CheckBox mSelected;
+
 
         public void updatePosition(int position) {
             this.mPosition = position;
+        }
+
+        public void setCheckBox(CheckBox selector){
+            this.mSelected = selector;
         }
 
         @Override
@@ -230,11 +271,17 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
             if(charSequence.length()!=0){
                 mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
+                mIngredients.get(mPosition).setSelected(true);
+                mSelected.setChecked(true);
             }
 
             if(mIngredients.get(mPosition).getMeasureType() == 4){
                 mIngredients.get(mPosition).setMeasureType(3);
             }
+
+
+
+
 
         }
 
@@ -246,9 +293,14 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     private class VolumeEditTextListener implements TextWatcher {
         private int mPosition;
+        private CheckBox mSelected;
 
         public void updatePosition(int position) {
             this.mPosition = position;
+        }
+
+        public void setCheckBox(CheckBox selector){
+            this.mSelected = selector;
         }
 
         @Override
@@ -260,11 +312,15 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
             if(charSequence.length()!=0){
                 mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
+                mIngredients.get(mPosition).setSelected(true);
+                mSelected.setChecked(true);
             }
 
             if(mIngredients.get(mPosition).getMeasureType() == 3) {
                 mIngredients.get(mPosition).setMeasureType(4);
             }
+
+
 
         }
 
