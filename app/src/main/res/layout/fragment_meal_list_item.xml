@@ -3,7 +3,7 @@
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:id="@+id/linearLayout4"
-                                             android:layout_width="wrap_content"
+                                             android:layout_width="match_parent"
                                              android:layout_height="wrap_content">
 
     <TextView
@@ -35,26 +35,13 @@
         android:id="@+id/textView_currency"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:text="SEK"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/meal_portion"
-        app:layout_constraintStart_toEndOf="@+id/meal_price"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/meal_portion"
-        android:layout_width="30dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:textAppearance="?attr/textAppearanceListItem"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/spinner"
-        app:layout_constraintStart_toEndOf="@+id/textView_currency"
+        app:layout_constraintStart_toEndOf="@+id/meal_price"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
@@ -62,18 +49,15 @@
         style="@android:style/Widget.Material.Light.ImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinner"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_delete_meal"/>
 
     <Spinner
-        style="@style/Widget.AppCompat.Spinner.Underlined"
         android:id="@+id/spinner"
-        android:layout_width="50dp"
+        style="@style/Widget.AppCompat.Spinner.Underlined"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
@@ -82,7 +66,7 @@
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageButton"
-        app:layout_constraintStart_toEndOf="@+id/meal_portion"
+        app:layout_constraintStart_toEndOf="@+id/textView_currency"
         app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

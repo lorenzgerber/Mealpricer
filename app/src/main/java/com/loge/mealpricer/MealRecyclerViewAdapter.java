@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
     private final OnListFragmentInteractionListener mListener;
     private static final String[] mPortionsString = {"1", "2", "4"};
     private static final Integer[] mPortionsInteger = {1, 2, 4};
+    private int mPosition;
 
     public MealRecyclerViewAdapter(List<Meal> items, OnListFragmentInteractionListener listener) {
         mMeals = items;
@@ -35,15 +37,43 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        mPosition = position;
+
         holder.mItem = mMeals.get(position);
         holder.mNameView.setText(mMeals.get(position).getName());
         holder.mPriceView.setText(String.valueOf(mMeals.get(position).getPrice()));
-        holder.mPortionView.setText(String.valueOf(mMeals.get(position).getPortion()));
+        //holder.mPortionView.setText(String.valueOf(mMeals.get(position).getPortion()));
 
-        ArrayAdapter<String> aa = new ArrayAdapter<String>(holder.mPortionView.getContext(), android.R.layout.simple_spinner_item, mPortionsString);
+
+        ArrayAdapter<String> aa = new ArrayAdapter<>(holder.mSpinner.getContext(), android.R.layout.simple_spinner_item, mPortionsString);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.mSpinner.setAdapter(aa);
-        
+        int mPortion = mMeals.get(position).getPortion();
+        if (mPortion == 1){
+            holder.mSpinner.setSelection(0);
+        } else if (mPortion == 2){
+            holder.mSpinner.setSelection(1);
+        } else {
+            holder.mSpinner.setSelection(2);
+        }
+
+
+
+        holder.mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //float mResult = (float) mMeals.get(mPosition).getPrice() / (float) mPortionsInteger[position];
+                //holder.mPriceView.setText(String.valueOf((int) mResult));
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +96,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         public final View mView;
         public final TextView mNameView;
         public final TextView mPriceView;
-        public final TextView mPortionView;
+        //public final TextView mPortionView;
         public final AppCompatSpinner mSpinner;
         public Meal mItem;
 
@@ -75,7 +105,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.meal_name);
             mPriceView = (TextView) view.findViewById(R.id.meal_price);
-            mPortionView = (TextView) view.findViewById(R.id.meal_portion);
+            //mPortionView = (TextView) view.findViewById(R.id.meal_portion);
             mSpinner = (AppCompatSpinner) view.findViewById(R.id.spinner);
         }
 
@@ -84,4 +114,10 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
             return super.toString() + " '" + mNameView.getText() + "'";
         }
     }
+
+
+
+
+
+
 }
