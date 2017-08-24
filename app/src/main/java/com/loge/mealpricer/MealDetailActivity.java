@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,7 @@ public class MealDetailActivity extends AppCompatActivity
     private UUID mealId;
     private File mPhotoFile;
     private Toolbar mToolbar;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private ImageView mImageView;
 
 
@@ -56,6 +58,14 @@ public class MealDetailActivity extends AppCompatActivity
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        mCollapsingToolbarLayout.setTitle(mMeal.getName());
+
+
+
+
+
         mImageView.setBackground(getResources().getDrawable(R.drawable.header));
 
         if(mPhotoFile == null || !mPhotoFile.exists()){

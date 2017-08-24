@@ -1,9 +1,11 @@
 package com.loge.mealpricer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -12,10 +14,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
+import android.widget.EditText;
 
 
 public class MealPricerTabActivity extends AppCompatActivity
@@ -40,6 +43,8 @@ public class MealPricerTabActivity extends AppCompatActivity
     private ViewPager mViewPager;
 
     private int currentItemId;
+
+    private String mMealName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +72,7 @@ public class MealPricerTabActivity extends AppCompatActivity
             public void onClick(View view) {
                 currentItemId = mViewPager.getCurrentItem();
                 if(currentItemId == 0){
-                    Snackbar.make(view, "Create a new Meal DB entry  ", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    Meal mMeal = MealPricer.get(MealPricerTabActivity.this).newMeal();
-                    MealPricer.get(MealPricerTabActivity.this).addMeal(mMeal);
-                    onListFragmentInteraction(mMeal);
+                    enterMealNameDialog();
                 } else if (currentItemId == 1){
                     Snackbar.make(view, "Create a new Product DB entry ", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -127,7 +128,41 @@ public class MealPricerTabActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void createNewMeal(){
+        //Snackbar.make(view, "Create a new Meal DB entry  ", Snackbar.LENGTH_LONG)
+        //        .setAction("Action", null).show();
+        Meal mMeal = MealPricer.get(MealPricerTabActivity.this).newMeal();
+        mMeal.setName(mMealName);
+        MealPricer.get(MealPricerTabActivity.this).addMeal(mMeal);
+        onListFragmentInteraction(mMeal);
+    }
 
+    public void enterMealNameDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MealPricerTabActivity.this);
+        builder.setTitle("Enter name of New Dish");
+
+        final EditText input = new EditText(MealPricerTabActivity.this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mMealName = input.getText().toString();
+                createNewMeal();
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
+    }
 
 
 
