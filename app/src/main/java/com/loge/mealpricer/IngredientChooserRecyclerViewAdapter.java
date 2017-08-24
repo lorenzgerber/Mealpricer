@@ -41,16 +41,13 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_ingredient_chooser_list_item, parent, false);
-        return new ViewHolder(view, new WeightEditTextListener(), new VolumeEditTextListener(), new SelectedCheckBoxListener());
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mProducts.get(position);
         holder.mNameView.setText(mProducts.get(position).getName());
-        //holder.mWeightEditTextListener.updatePosition(position);
-        //holder.mVolumeEditTextListener.updatePosition(position);
-        //holder.mSelectedCheckBoxListener.updatePosition(position);
 
 
 
@@ -98,7 +95,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             holder.mSelectIngredient.setChecked(false);
         }
 
-        // testing to set edittextlistener here
         WeightEditTextListener weightListener = new WeightEditTextListener();
         weightListener.updatePosition(position);
         weightListener.setCheckBox(holder.mSelectIngredient);
@@ -147,35 +143,22 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         public final TextView mVolumeView;
         public final TextInputLayout mTextInputLayoutVolume;
         public final CheckBox mSelectIngredient;
-        //public WeightEditTextListener mWeightEditTextListener;
-        //public VolumeEditTextListener mVolumeEditTextListener;
-        //public SelectedCheckBoxListener mSelectedCheckBoxListener;
         public Product mItem;
 
 
 
-        public ViewHolder(View view,
-                          WeightEditTextListener weightEditTextListener,
-                          VolumeEditTextListener volumeEditTextListener,
-                          SelectedCheckBoxListener selectedCheckBoxListener) {
+        public ViewHolder(View view) {
             super(view);
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.product_name);
 
             mSelectIngredient = (CheckBox) view.findViewById(R.id.select_ingredient);
-            //mSelectedCheckBoxListener = selectedCheckBoxListener;
-            //mSelectIngredient.setOnCheckedChangeListener(mSelectedCheckBoxListener);
 
             mWeightView = (TextView) view.findViewById(R.id.product_weight);
             mTextInputLayoutWeight = (TextInputLayout) view.findViewById(R.id.textInputLayout_weight);
-            //mWeightEditTextListener = weightEditTextListener;
-            //mWeightEditTextListener.setCheckbox(mSelectIngredient);
-            //mWeightView.addTextChangedListener(mWeightEditTextListener);
-
             mVolumeView = (TextView) view.findViewById(R.id.product_volume);
             mTextInputLayoutVolume = (TextInputLayout) view.findViewById(R.id.textInputLayout_volume);
-            //mVolumeEditTextListener = volumeEditTextListener;
-            //mVolumeView.addTextChangedListener(mVolumeEditTextListener);
+
 
 
 
@@ -278,10 +261,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             if(mIngredients.get(mPosition).getMeasureType() == 4){
                 mIngredients.get(mPosition).setMeasureType(3);
             }
-
-
-
-
 
         }
 
