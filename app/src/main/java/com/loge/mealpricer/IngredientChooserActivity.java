@@ -15,7 +15,6 @@ import static com.loge.mealpricer.MealDetailActivity.EXTRA_MEAL_ID;
 public class IngredientChooserActivity extends AppCompatActivity
         implements IngredientChooserFragment.OnListFragmentInteractionListener {
 
-    private Meal mMeal;
     private UUID mealId;
 
     public static Intent newIntent(Context packageContext, UUID mealId){
@@ -28,7 +27,6 @@ public class IngredientChooserActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mealId = (UUID) getIntent().getSerializableExtra(EXTRA_MEAL_ID);
-        mMeal = MealPricer.get(this).getMeal(mealId);
 
 
         setContentView(R.layout.activity_ingredient_chooser_detail);
@@ -57,9 +55,7 @@ public class IngredientChooserActivity extends AppCompatActivity
 
     @Override
     public Intent getSupportParentActivityIntent() {
-        final Bundle bundle = new Bundle();
         final Intent intent = new Intent(this, MealDetailActivity.class);
-
         intent.putExtra(EXTRA_MEAL_ID, mealId);
 
         return intent;
