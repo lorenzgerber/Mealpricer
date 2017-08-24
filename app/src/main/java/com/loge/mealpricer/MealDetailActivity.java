@@ -69,7 +69,7 @@ public class MealDetailActivity extends AppCompatActivity
 
 
 
-        mImageView.setBackground(getResources().getDrawable(R.drawable.header));
+        //mImageView.setBackground(getResources().getDrawable(R.drawable.header));
 
         if(mPhotoFile == null || !mPhotoFile.exists()){
 
