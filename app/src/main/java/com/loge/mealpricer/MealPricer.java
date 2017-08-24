@@ -237,6 +237,34 @@ public class MealPricer {
     }
 
 
+    public int calcPriceIngredient(UUID mealId, UUID productId){
+        Ingredient mIngredient = getIngredient(mealId, productId);
+        Product mProduct;
+        if (mIngredient!=null){
+            mProduct = getProduct(productId);
+
+            if(mIngredient.getMeasureType() == 1 || mIngredient.getMeasureType() == 3){
+                if(mProduct.getPrice() == 0 || (mProduct.getWeight() == 0)){
+                    return 0;
+                }
+                float mResult = (float) mProduct.getPrice() / (float) mProduct.getWeight() * (float) mIngredient.getAmount();
+                return (int) mResult;
+
+            } else if (mIngredient.getMeasureType() == 2 || mIngredient.getMeasureType() == 4){
+                if(mProduct.getPrice() == 0 || (mProduct.getVolume() == 0)){
+                    return 0;
+                }
+                float mResult = (float) mProduct.getPrice() / (float) mProduct.getVolume() * (float) mIngredient.getAmount();
+                return (int) mResult;
+
+            } else {
+                return 0;
+            }
+        }
+        return 0;
+    }
+
+
 
     private static ContentValues getContentValues(Product product){
         ContentValues values = new ContentValues();

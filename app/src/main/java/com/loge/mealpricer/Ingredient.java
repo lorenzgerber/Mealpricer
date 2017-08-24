@@ -63,4 +63,5 @@ public class Ingredient {
 
     public void setSelected(boolean selected ) {mSelected = selected; }
 
+
 }

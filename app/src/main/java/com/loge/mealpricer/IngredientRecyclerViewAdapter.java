@@ -20,11 +20,13 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
 
     private  List<Ingredient> mIngredients;
     private  List<Product> mProducts;
+    private  List<Integer> mPrices;
     private final OnListFragmentInteractionListener mListener;
 
-    public IngredientRecyclerViewAdapter(List<Ingredient> ingredients, List<Product> products, OnListFragmentInteractionListener listener) {
+    public IngredientRecyclerViewAdapter(List<Ingredient> ingredients, List<Product> products, List<Integer> prices, OnListFragmentInteractionListener listener) {
         mIngredients = ingredients;
         mProducts = products;
+        mPrices = prices;
         mListener = listener;
     }
 
@@ -49,19 +51,8 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
             holder.mTypeView.setText(R.string.milli_liter_unit);
         }
 
-        float mAmount = (float) mIngredients.get(position).getAmount();
-        float mPrice = (float) mProducts.get(position).getPrice();
 
-        float mPortion;
-        if(mType == 1 || mType == 3){
-            mPortion = (float) mProducts.get(position).getWeight();
-        } else {
-            mPortion = (float) mProducts.get(position).getVolume();
-        }
-
-        float result = mPrice/mPortion*mAmount;
-
-        holder.mValueView.setText(String.valueOf((int) result) + " SEK");
+        holder.mValueView.setText(String.valueOf(mPrices.get(position)) + " SEK");
 
 
 

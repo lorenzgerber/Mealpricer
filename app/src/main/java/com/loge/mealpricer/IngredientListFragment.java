@@ -33,6 +33,7 @@ public class IngredientListFragment extends Fragment {
     private IngredientRecyclerViewAdapter mAdapter;
     private List<Ingredient> mIngredients;
     private List<Product> mProducts;
+    private List<Integer> mPrices;
     private File mPhotoFile;
     private OnListFragmentInteractionListener mListener;
 
@@ -62,10 +63,13 @@ public class IngredientListFragment extends Fragment {
         mIngredients = new ArrayList<>();
         mProducts = new ArrayList<>();
 
+        mPrices = new ArrayList<>();
+
         mIngredients = mealPricer.getIngredients(mMealId);
         if(mIngredients != null){
             for(Ingredient ingredient:mIngredients){
                 mProducts.add(mealPricer.getProduct(ingredient.getProductId()));
+                mPrices.add(mealPricer.calcPriceIngredient(mMealId, ingredient.getProductId()));
             }
         }
 
@@ -98,7 +102,7 @@ public class IngredientListFragment extends Fragment {
         }
 
         if(mAdapter == null){
-            mAdapter = new IngredientRecyclerViewAdapter(mIngredients, mProducts, mListener);
+            mAdapter = new IngredientRecyclerViewAdapter(mIngredients, mProducts, mPrices, mListener);
             mIngredientListRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.setIngredientsProducts(mIngredients, mProducts);
