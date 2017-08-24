@@ -256,6 +256,8 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
                 mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
                 mIngredients.get(mPosition).setSelected(true);
                 mSelected.setChecked(true);
+            } else {
+                mIngredients.get(mPosition).setAmount(0);
             }
 
             if(mIngredients.get(mPosition).getMeasureType() == 4){
@@ -293,6 +295,8 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
                 mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
                 mIngredients.get(mPosition).setSelected(true);
                 mSelected.setChecked(true);
+            } else {
+                mIngredients.get(mPosition).setAmount(0);
             }
 
             if(mIngredients.get(mPosition).getMeasureType() == 3) {
