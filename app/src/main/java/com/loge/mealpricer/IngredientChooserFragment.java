@@ -65,9 +65,9 @@ public class IngredientChooserFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ingredient_chooser_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_ingredient_chooser_list, parent, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -80,6 +80,7 @@ public class IngredientChooserFragment extends Fragment {
                     mIngredientChooserRecyclerView.getContext(),
                     mLayoutManager.getOrientation()
             );
+
             mIngredientChooserRecyclerView.addItemDecoration(mDividerItemDecoration);
 
             updateUI();

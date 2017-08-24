@@ -10,42 +10,55 @@
         android:id="@+id/ingredient_name"
         android:layout_width="100dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ingredient_amount"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/ingredient_amount"
         android:layout_width="80dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:textAlignment="viewEnd"
         android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ingredient_amount_type"
-        app:layout_constraintStart_toEndOf="@+id/ingredient_name"/>
+        app:layout_constraintStart_toEndOf="@+id/ingredient_name"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/ingredient_amount_type"
         android:layout_width="20dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ingredient_value"
-        app:layout_constraintStart_toEndOf="@+id/ingredient_amount"/>
+        app:layout_constraintStart_toEndOf="@+id/ingredient_amount"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/ingredient_value"
         android:layout_width="100dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
         android:textAlignment="viewEnd"
         android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ingredient_amount_type"/>
+        app:layout_constraintStart_toEndOf="@+id/ingredient_amount_type"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

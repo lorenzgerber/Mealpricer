@@ -3,6 +3,7 @@ package com.loge.mealpricer;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ public class ProductListFragment extends Fragment {
 
     private OnListFragmentInteractionListener mListener;
     private RecyclerView mProductRecyclerView;
+    private DividerItemDecoration mDividerItemDecoration;
+    private LinearLayoutManager mLayoutManager;
     private ProductRecyclerViewAdapter mAdapter;
 
     /**
@@ -56,7 +59,15 @@ public class ProductListFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             mProductRecyclerView = (RecyclerView) view;
-            mProductRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+            mLayoutManager = new LinearLayoutManager(context);
+            mProductRecyclerView.setLayoutManager(mLayoutManager);
+
+            mDividerItemDecoration = new DividerItemDecoration(
+                    mProductRecyclerView.getContext(),
+                    mLayoutManager.getOrientation()
+            );
+
+            mProductRecyclerView.addItemDecoration(mDividerItemDecoration);
 
             updateUI();
 
