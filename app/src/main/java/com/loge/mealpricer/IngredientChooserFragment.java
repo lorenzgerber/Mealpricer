@@ -97,6 +97,7 @@ public class IngredientChooserFragment extends Fragment {
         mProducts = mealPricer.getProducts();
         mIngredients = new ArrayList<>();
 
+        /*
         List<Product> mNoPriceInfo = new ArrayList<>();
         for(Product product:mProducts){
             if (product.getVolume() == 0 && product.getWeight() == 0){
@@ -104,6 +105,7 @@ public class IngredientChooserFragment extends Fragment {
             }
         }
         mProducts.removeAll(mNoPriceInfo);
+        */
 
         for(Product product:mProducts){
             mIngredient = null;
@@ -145,8 +147,6 @@ public class IngredientChooserFragment extends Fragment {
     @Override
     public void onPause(){
 
-        super.onPause();
-
         for(Ingredient ingredient:mIngredients){
 
             if(MealPricer.get(getActivity()).getIngredient(mMealId, ingredient.getProductId()) != null){
@@ -161,6 +161,8 @@ public class IngredientChooserFragment extends Fragment {
                 }
             }
         }
+
+        super.onPause();
 
     }
 

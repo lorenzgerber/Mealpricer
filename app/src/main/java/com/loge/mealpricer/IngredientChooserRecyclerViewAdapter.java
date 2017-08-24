@@ -53,9 +53,9 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         int mAmount = mIngredients.get(position).getAmount();
 
         if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_NONE){
-            holder.mTextInputLayoutWeight.setVisibility(INVISIBLE);
-            holder.mTextInputLayoutVolume.setVisibility(INVISIBLE);
-            holder.mSelectIngredient.setEnabled(false);
+            holder.mWeightView.setEnabled(false);
+            holder.mVolumeView.setEnabled(false);
+            holder.mSelectIngredient.setEnabled(true);
         } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_ONLY_WEIGHT){
             if(mAmount == 0){
                 holder.mWeightView.setText("");
@@ -72,7 +72,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
                 holder.mVolumeView.setText(String.valueOf(mAmount));
             }
             //holder.mWeightView.setVisibility(INVISIBLE);
-            holder.mTextInputLayoutVolume.setVisibility(INVISIBLE);
+            holder.mTextInputLayoutWeight.setVisibility(INVISIBLE);
 
         } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_BOTH_WEIGHT){
             if(mAmount == 0){
@@ -228,9 +228,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         @Override
         public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
 
-            if(charSequence.length()==0){
-                mIngredients.get(mPosition).setAmount(0);
-            } else {
+            if(charSequence.length()!=0){
                 mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
             }
 
@@ -260,9 +258,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         @Override
         public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
 
-            if(charSequence.length()==0){
-                mIngredients.get(mPosition).setAmount(0);
-            } else {
+            if(charSequence.length()!=0){
                 mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
             }
 

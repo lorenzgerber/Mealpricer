@@ -5,6 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
     android:name="com.loge.mealpricer.IngredientChooserFragment"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
