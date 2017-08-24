@@ -264,6 +264,19 @@ public class MealPricer {
         return 0;
     }
 
+    public int calcPriceMeal(UUID mealId){
+
+        List<Ingredient> ingredients;
+        ingredients = getIngredients(mealId);
+        int totalValue = 0;
+
+        for(Ingredient ingredient: ingredients){
+            totalValue += calcPriceIngredient(ingredient.getMealId(), ingredient.getProductId());
+        }
+
+        return totalValue;
+    }
+
 
 
     private static ContentValues getContentValues(Product product){

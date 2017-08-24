@@ -12,7 +12,7 @@ public class Meal {
 
     private UUID mMealId;
     private String mName;
-    private double mPrice;
+    private int mPrice;
     private int mPortion;
 
     private List<Ingredient> mIngredients;
@@ -54,11 +54,11 @@ public class Meal {
         mName = name;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return mPrice;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(int price) {
         mPrice = price;
     }
 

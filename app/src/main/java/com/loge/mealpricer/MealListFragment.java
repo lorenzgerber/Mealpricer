@@ -68,6 +68,10 @@ public class MealListFragment extends Fragment {
         MealPricer mealPricer = MealPricer.get(getActivity());
         List<Meal> meals = mealPricer.getMeals();
 
+        for(Meal meal:meals){
+            meal.setPrice(mealPricer.calcPriceMeal(meal.getMealId()));
+        }
+
         if(mAdapter == null){
             mAdapter = new MealRecyclerViewAdapter(meals, mListener);
             mMealRecyclerView.setAdapter(mAdapter);
