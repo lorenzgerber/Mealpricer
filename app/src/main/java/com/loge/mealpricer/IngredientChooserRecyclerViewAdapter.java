@@ -1,5 +1,6 @@
 package com.loge.mealpricer;
 
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +17,7 @@ import com.loge.mealpricer.IngredientChooserFragment.OnListFragmentInteractionLi
 import java.util.List;
 import java.util.UUID;
 
+import static android.view.View.INVISIBLE;
 import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_BOTH_VOLUME;
 import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_BOTH_WEIGHT;
 import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_NONE;
@@ -48,23 +50,45 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         holder.mWeightEditTextListener.updatePosition(position);
         holder.mVolumeEditTextListener.updatePosition(position);
         holder.mSelectedCheckBoxListener.updatePosition(position);
+        int mAmount = mIngredients.get(position).getAmount();
 
         if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_NONE){
-            holder.mWeightView.setEnabled(false);
-            holder.mVolumeView.setEnabled(false);
+            holder.mTextInputLayoutWeight.setVisibility(INVISIBLE);
+            holder.mTextInputLayoutVolume.setVisibility(INVISIBLE);
             holder.mSelectIngredient.setEnabled(false);
         } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_ONLY_WEIGHT){
-            holder.mWeightView.setText(String.valueOf(mIngredients.get(position).getAmount()));
-            holder.mVolumeView.setEnabled(false);
-        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_ONLY_VOLUME){
-            holder.mVolumeView.setText(String.valueOf(mIngredients.get(position).getAmount()));
-            holder.mWeightView.setEnabled(false);
-        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_BOTH_WEIGHT){
-            holder.mWeightView.setText(String.valueOf(mIngredients.get(position).getAmount()));
-        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_BOTH_VOLUME){
-            holder.mVolumeView.setText(String.valueOf(mIngredients.get(position).getAmount()));
-        }
+            if(mAmount == 0){
+                holder.mWeightView.setText("");
+            } else {
+                holder.mWeightView.setText(String.valueOf(mAmount));
+            }
+            //holder.mVolumeView.setVisibility(INVISIBLE);
+            holder.mTextInputLayoutVolume.setVisibility(INVISIBLE);
 
+        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_ONLY_VOLUME){
+            if(mAmount == 0){
+                holder.mWeightView.setText("");
+            } else {
+                holder.mVolumeView.setText(String.valueOf(mAmount));
+            }
+            //holder.mWeightView.setVisibility(INVISIBLE);
+            holder.mTextInputLayoutVolume.setVisibility(INVISIBLE);
+
+        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_BOTH_WEIGHT){
+            if(mAmount == 0){
+                holder.mWeightView.setText("");
+            } else {
+                holder.mWeightView.setText(String.valueOf(mAmount));
+            }
+
+        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_BOTH_VOLUME){
+            if(mAmount == 0){
+                holder.mWeightView.setText("");
+            } else {
+                holder.mVolumeView.setText(String.valueOf(mAmount));
+            }
+
+        }
 
         if (mIngredients.get(position).getSelected()){
             holder.mSelectIngredient.setChecked(true);
@@ -99,7 +123,9 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         public final View mView;
         public final TextView mNameView;
         public final TextView mWeightView;
+        public final TextInputLayout mTextInputLayoutWeight;
         public final TextView mVolumeView;
+        public final TextInputLayout mTextInputLayoutVolume;
         public final CheckBox mSelectIngredient;
         public WeightEditTextListener mWeightEditTextListener;
         public VolumeEditTextListener mVolumeEditTextListener;
@@ -117,10 +143,12 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             mNameView = (TextView) view.findViewById(R.id.product_name);
 
             mWeightView = (TextView) view.findViewById(R.id.product_weight);
+            mTextInputLayoutWeight = (TextInputLayout) view.findViewById(R.id.textInputLayout_weight);
             mWeightEditTextListener = weightEditTextListener;
             mWeightView.addTextChangedListener(mWeightEditTextListener);
 
             mVolumeView = (TextView) view.findViewById(R.id.product_volume);
+            mTextInputLayoutVolume = (TextInputLayout) view.findViewById(R.id.textInputLayout_volume);
             mVolumeEditTextListener = volumeEditTextListener;
             mVolumeView.addTextChangedListener(mVolumeEditTextListener);
 

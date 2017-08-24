@@ -97,6 +97,14 @@ public class IngredientChooserFragment extends Fragment {
         mProducts = mealPricer.getProducts();
         mIngredients = new ArrayList<>();
 
+        List<Product> mNoPriceInfo = new ArrayList<>();
+        for(Product product:mProducts){
+            if (product.getVolume() == 0 && product.getWeight() == 0){
+                mNoPriceInfo.add(product);
+            }
+        }
+        mProducts.removeAll(mNoPriceInfo);
+
         for(Product product:mProducts){
             mIngredient = null;
             mIngredient = mealPricer.getIngredient(mMealId, product.getProductId());
