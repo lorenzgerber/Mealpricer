@@ -68,7 +68,12 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
             public void onClick(View v) {
 
                 MealPricer.get(holder.mImageButton.getContext()).deleteMeal(holder.mItem);
-                notifyItemRemoved(position);
+
+                int newPosition = holder.getAdapterPosition();
+                mMeals.remove(newPosition);
+                notifyItemRemoved(newPosition);
+                notifyItemRangeChanged(newPosition, mMeals.size());
+
 
             }
         });

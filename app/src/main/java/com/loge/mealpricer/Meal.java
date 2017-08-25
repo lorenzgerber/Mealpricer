@@ -15,27 +15,11 @@ public class Meal {
     private int mPrice;
     private int mPortion;
 
-    private List<Ingredient> mIngredients;
-
-
     public Meal(){
-        mIngredients = new ArrayList<>();
         mMealId = UUID.randomUUID();
-        mName = "Röschti";
-        mPrice = 50;
+        mName = "";
+        mPrice = 0;
         mPortion = 1;
-        Product mProduct1 = new Product();
-        Product mProduct2 = new Product();
-        Ingredient mIngredient1 = new Ingredient(mMealId, mProduct1.getProductId());
-        Ingredient mIngredient2 = new Ingredient(mMealId, mProduct2.getProductId());
-        mIngredient1.setAmount(300);
-        mIngredient2.setAmount(100);
-        mIngredient1.setMeasureType(0);
-        mIngredient2.setMeasureType(0);
-
-        mIngredients.add(mIngredient1);
-        mIngredients.add(mIngredient2);
-
     }
 
     public Meal(UUID mealId){
@@ -69,11 +53,6 @@ public class Meal {
     public void setPortion(int portion) {
         mPortion = portion;
     }
-
-    public void setIngredients(List<Ingredient> ingredients) {
-        mIngredients = ingredients;
-    }
-
 
     public String getPhotoFilename() {
         return "IMG_" + getMealId().toString() + ".jpg";

@@ -60,6 +60,7 @@ public class MealPricerTabActivity extends AppCompatActivity
     private int currentItemId;
 
     private String mMealName = "";
+    private String mProductName = "";
     private int mMealPortion = 1;
 
     @Override
@@ -93,11 +94,12 @@ public class MealPricerTabActivity extends AppCompatActivity
                     enterMealNameDialog();
 
                 } else if (currentItemId == 1){
-                    Snackbar.make(view, "Create a new Product DB entry ", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    enterProductNameDialog();
+                    /*
                     Product mProduct = MealPricer.get(MealPricerTabActivity.this).newProduct();
                     MealPricer.get(MealPricerTabActivity.this).addProudct(mProduct);
                     onListFragmentInteraction(mProduct);
+                    */
                 }
 
             }
@@ -148,13 +150,18 @@ public class MealPricerTabActivity extends AppCompatActivity
     }
 
     public void createNewMeal(){
-        //Snackbar.make(view, "Create a new Meal DB entry  ", Snackbar.LENGTH_LONG)
-        //        .setAction("Action", null).show();
         Meal mMeal = MealPricer.get(MealPricerTabActivity.this).newMeal();
         mMeal.setName(mMealName);
         mMeal.setPortion(mMealPortion);
         MealPricer.get(MealPricerTabActivity.this).addMeal(mMeal);
         onListFragmentInteraction(mMeal);
+    }
+
+    public void createNewProduct(){
+        Product mProduct = MealPricer.get(MealPricerTabActivity.this).newProduct();
+        mProduct.setName(mProductName);
+        MealPricer.get(MealPricerTabActivity.this).addProudct(mProduct);
+        onListFragmentInteraction(mProduct);
     }
 
     public void enterMealNameDialog(){
@@ -166,7 +173,7 @@ public class MealPricerTabActivity extends AppCompatActivity
         View mView = inflater.inflate(R.layout.new_meal_dialog, null);
 
 
-        final EditText input = (EditText) mView.findViewById(R.id.new_meal_name);
+        final EditText mInput = (EditText) mView.findViewById(R.id.new_meal_name);
 
         final AppCompatSpinner mSpinner = (AppCompatSpinner) mView.findViewById(R.id.portion_spinner);
         ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mPortionsString);
@@ -181,10 +188,35 @@ public class MealPricerTabActivity extends AppCompatActivity
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mMealName = input.getText().toString();
+                mMealName = mInput.getText().toString();
                 mMealPortion = Integer.valueOf(mSpinner.getSelectedItem().toString());
                 createNewMeal();
 
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
+    }
+
+    public void enterProductNameDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MealPricerTabActivity.this);
+        builder.setTitle("Enter Name of Product");
+
+        final EditText mInput = new EditText(this);
+        mInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        builder.setView(mInput);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mProductName = mInput.getText().toString();
+                createNewProduct();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
