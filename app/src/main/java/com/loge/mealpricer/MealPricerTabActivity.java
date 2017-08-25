@@ -1,5 +1,7 @@
 package com.loge.mealpricer;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -7,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -15,10 +18,18 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 
 public class MealPricerTabActivity extends AppCompatActivity
@@ -26,6 +37,8 @@ public class MealPricerTabActivity extends AppCompatActivity
         MealListFragment.OnListFragmentInteractionListener {
 
     private static final String SWITCH_TAB = "switch_tab";
+    private static final String[] mPortionsString = {"1", "2", "4"};
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -36,11 +49,13 @@ public class MealPricerTabActivity extends AppCompatActivity
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private AppCompatSpinner mSpinner;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
 
     private int currentItemId;
 
@@ -66,13 +81,16 @@ public class MealPricerTabActivity extends AppCompatActivity
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 currentItemId = mViewPager.getCurrentItem();
                 if(currentItemId == 0){
+
                     enterMealNameDialog();
+
                 } else if (currentItemId == 1){
                     Snackbar.make(view, "Create a new Product DB entry ", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -139,11 +157,50 @@ public class MealPricerTabActivity extends AppCompatActivity
 
     public void enterMealNameDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MealPricerTabActivity.this);
-        builder.setTitle("Enter name of New Dish");
+        builder.setTitle("Enter Name and Portion of Meal");
 
-        final EditText input = new EditText(MealPricerTabActivity.this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-        builder.setView(input);
+        LayoutInflater inflater = MealPricerTabActivity.this.getLayoutInflater();
+
+        View mView = inflater.inflate(R.layout.new_meal_dialog, null);
+
+
+
+
+        final EditText input = (EditText) mView.findViewById(R.id.new_meal_name);
+        final AppCompatSpinner mSpinner = (AppCompatSpinner) mView.findViewById(R.id.portion_spinner);
+        ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mPortionsString);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(aa);
+        /*
+        int mPortion = mMeals.get(position).getPortion();
+        if (mPortion == 1){
+            holder.mSpinner.setSelection(0);
+        } else if (mPortion == 2){
+            holder.mSpinner.setSelection(1);
+        } else {
+            holder.mSpinner.setSelection(2);
+        }*/
+
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //float mResult = (float) mMeals.get(mPosition).getPrice() / (float) mPortionsInteger[position];
+                //holder.mPriceView.setText(String.valueOf((int) mResult));
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        builder.setView(mView);
+
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -189,4 +246,6 @@ public class MealPricerTabActivity extends AppCompatActivity
             return 2;
         }
     }
+
+
 }
