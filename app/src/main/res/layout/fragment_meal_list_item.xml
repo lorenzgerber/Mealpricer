@@ -40,12 +40,12 @@
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        app:layout_constraintEnd_toStartOf="@+id/portion_spinner"
         app:layout_constraintStart_toEndOf="@+id/meal_price"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/portion_spinner"
         tools:style="@style/Widget.AppCompat.Spinner.Underlined"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
@@ -55,12 +55,12 @@
         android:layout_marginTop="16dp"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintEnd_toStartOf="@+id/delete_meal_button"
         app:layout_constraintStart_toEndOf="@+id/textView_currency"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/delete_meal_button"
         style="@style/Widget.AppCompat.ImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.loge.mealpricer.MealListFragment.OnListFragmentInteractionListener;
@@ -37,7 +38,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         mPosition = position;
 
         holder.mItem = mMeals.get(position);
@@ -62,6 +63,16 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         mSpinnerListener.setPriceView(holder.mPriceView);
 
         holder.mSpinner.setOnItemSelectedListener(mSpinnerListener);
+        holder.mImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                MealPricer.get(holder.mImageButton.getContext()).deleteMeal(holder.mItem);
+                notifyItemRemoved(position);
+
+            }
+        });
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +96,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         public final TextView mNameView;
         public final TextView mPriceView;
         public final AppCompatSpinner mSpinner;
+        public final ImageButton mImageButton;
         public Meal mItem;
 
         public ViewHolder(View view) {
@@ -92,7 +104,8 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.meal_name);
             mPriceView = (TextView) view.findViewById(R.id.meal_price);
-            mSpinner = (AppCompatSpinner) view.findViewById(R.id.spinner);
+            mSpinner = (AppCompatSpinner) view.findViewById(R.id.portion_spinner);
+            mImageButton = (ImageButton) view.findViewById(R.id.delete_meal_button);
         }
 
         @Override
@@ -116,7 +129,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            float mResult = (float) mMeals.get(mPosition).getPrice() / (float) mPortionsInteger[position];
+            float mResult = (float) mMeals.get(mPosition).getPrice() / ((float) mMeals.get(mPosition).getPortion() / (float) mPortionsInteger[position]);
             mPriceView.setText(String.valueOf((int) mResult));
         }
 
@@ -125,10 +138,6 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
 
         }
     }
-
-
-
-
 
 
 }

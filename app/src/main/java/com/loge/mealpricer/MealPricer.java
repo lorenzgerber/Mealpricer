@@ -63,6 +63,19 @@ public class MealPricer {
         mDatabase.insert(IngredientTable.NAME, null, values);
     }
 
+
+    public void deleteMeal(Meal m){
+        String uuidMealIdString = m.getMealId().toString();
+        deleteIngredients(getIngredients(m.getMealId()));
+
+        mDatabase.delete(MealTable.NAME,
+                MealTable.Cols.MEAL_ID + " = ?",
+                new String[]{uuidMealIdString});
+
+    }
+
+
+
     public void deleteIngredient(Ingredient i){
 
         String uuidMealIdString = i.getMealId().toString();
@@ -72,6 +85,12 @@ public class MealPricer {
                 IngredientTable.Cols.MEAL_ID + " = ? AND " +
                 IngredientTable.Cols.PRODUCT_ID + " = ?",
                 new String[]{uuidMealIdString, uuidProductIdString});
+    }
+
+    public void deleteIngredients(List<Ingredient> is){
+        for (Ingredient ingredient:is){
+            deleteIngredient(ingredient);
+        }
     }
 
 
