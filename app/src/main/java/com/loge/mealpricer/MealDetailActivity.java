@@ -62,8 +62,8 @@ public class MealDetailActivity extends AppCompatActivity
 
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        mCollapsingToolbarLayout.setTitle(mMeal.getName() + " - " +
-                String.valueOf(MealPricer.get(this).calcPriceMeal(mealId)) + " SEK");
+        mCollapsingToolbarLayout.setTitle(mMeal.getName() +
+                " - " + mMeal.getPortion() + " Portion(s)");
 
 
 

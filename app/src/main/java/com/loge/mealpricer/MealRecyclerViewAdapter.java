@@ -19,6 +19,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
 
     private List<Meal> mMeals;
     private final OnListFragmentInteractionListener mListener;
+    private CustomSpinnerListener mSpinnerListener;
     private static final String[] mPortionsString = {"1", "2", "4"};
     private static final Integer[] mPortionsInteger = {1, 2, 4};
     private int mPosition;
@@ -57,14 +58,18 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
             holder.mSpinner.setSelection(2);
         }
 
+        mSpinnerListener = new CustomSpinnerListener();
+        mSpinnerListener.updatePosition(position);
+        mSpinnerListener.setPriceView(holder.mPriceView);
 
-
+        holder.mSpinner.setOnItemSelectedListener(mSpinnerListener);
+        /*
         holder.mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //float mResult = (float) mMeals.get(mPosition).getPrice() / (float) mPortionsInteger[position];
-                //holder.mPriceView.setText(String.valueOf((int) mResult));
+                float mResult = (float) mMeals.get(mPosition).getPrice() / (float) mPortionsInteger[position];
+                holder.mPriceView.setText(String.valueOf((int) mResult));
 
             }
 
@@ -82,7 +87,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
-        });
+        });*/
     }
 
     @Override
@@ -112,6 +117,31 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         @Override
         public String toString() {
             return super.toString() + " '" + mNameView.getText() + "'";
+        }
+    }
+
+    private class CustomSpinnerListener implements AdapterView.OnItemSelectedListener {
+
+        private int mPosition;
+        private TextView mPriceView;
+
+        private void updatePosition(int position){
+            mPosition = position;
+        }
+
+        private void setPriceView(TextView priceView){
+            mPriceView = priceView;
+        }
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            float mResult = (float) mMeals.get(mPosition).getPrice() / (float) mPortionsInteger[position];
+            mPriceView.setText(String.valueOf((int) mResult));
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
         }
     }
 

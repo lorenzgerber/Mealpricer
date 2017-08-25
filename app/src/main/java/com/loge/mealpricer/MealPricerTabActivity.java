@@ -60,6 +60,7 @@ public class MealPricerTabActivity extends AppCompatActivity
     private int currentItemId;
 
     private String mMealName = "";
+    private int mMealPortion = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +152,7 @@ public class MealPricerTabActivity extends AppCompatActivity
         //        .setAction("Action", null).show();
         Meal mMeal = MealPricer.get(MealPricerTabActivity.this).newMeal();
         mMeal.setName(mMealName);
+        mMeal.setPortion(mMealPortion);
         MealPricer.get(MealPricerTabActivity.this).addMeal(mMeal);
         onListFragmentInteraction(mMeal);
     }
@@ -164,40 +166,14 @@ public class MealPricerTabActivity extends AppCompatActivity
         View mView = inflater.inflate(R.layout.new_meal_dialog, null);
 
 
-
-
         final EditText input = (EditText) mView.findViewById(R.id.new_meal_name);
+
         final AppCompatSpinner mSpinner = (AppCompatSpinner) mView.findViewById(R.id.portion_spinner);
-        ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mPortionsString);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mPortionsString);
+        mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(aa);
-        /*
-        int mPortion = mMeals.get(position).getPortion();
-        if (mPortion == 1){
-            holder.mSpinner.setSelection(0);
-        } else if (mPortion == 2){
-            holder.mSpinner.setSelection(1);
-        } else {
-            holder.mSpinner.setSelection(2);
-        }*/
-
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //float mResult = (float) mMeals.get(mPosition).getPrice() / (float) mPortionsInteger[position];
-                //holder.mPriceView.setText(String.valueOf((int) mResult));
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
+        mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(mArrayAdapter);
 
         builder.setView(mView);
 
@@ -206,6 +182,7 @@ public class MealPricerTabActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mMealName = input.getText().toString();
+                mMealPortion = Integer.valueOf(mSpinner.getSelectedItem().toString());
                 createNewMeal();
 
             }
