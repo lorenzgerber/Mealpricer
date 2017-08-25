@@ -43,7 +43,6 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         holder.mItem = mMeals.get(position);
         holder.mNameView.setText(mMeals.get(position).getName());
         holder.mPriceView.setText(String.valueOf(mMeals.get(position).getPrice()));
-        //holder.mPortionView.setText(String.valueOf(mMeals.get(position).getPortion()));
 
 
         ArrayAdapter<String> aa = new ArrayAdapter<>(holder.mSpinner.getContext(), android.R.layout.simple_spinner_item, mPortionsString);
@@ -63,22 +62,6 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         mSpinnerListener.setPriceView(holder.mPriceView);
 
         holder.mSpinner.setOnItemSelectedListener(mSpinnerListener);
-        /*
-        holder.mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                float mResult = (float) mMeals.get(mPosition).getPrice() / (float) mPortionsInteger[position];
-                holder.mPriceView.setText(String.valueOf((int) mResult));
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +70,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
-        });*/
+        });
     }
 
     @Override
@@ -101,7 +84,6 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         public final View mView;
         public final TextView mNameView;
         public final TextView mPriceView;
-        //public final TextView mPortionView;
         public final AppCompatSpinner mSpinner;
         public Meal mItem;
 
@@ -110,7 +92,6 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.meal_name);
             mPriceView = (TextView) view.findViewById(R.id.meal_price);
-            //mPortionView = (TextView) view.findViewById(R.id.meal_portion);
             mSpinner = (AppCompatSpinner) view.findViewById(R.id.spinner);
         }
 
