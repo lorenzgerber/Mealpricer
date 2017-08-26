@@ -22,6 +22,11 @@ import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_BOTH_WEIGHT;
 import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_NONE;
 import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_ONLY_VOLUME;
 import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_ONLY_WEIGHT;
+import static com.loge.mealpricer.MeasureType.BOTH_VOLUME;
+import static com.loge.mealpricer.MeasureType.BOTH_WEIGHT;
+import static com.loge.mealpricer.MeasureType.NONE;
+import static com.loge.mealpricer.MeasureType.ONLY_VOLUME;
+import static com.loge.mealpricer.MeasureType.ONLY_WEIGHT;
 
 public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<IngredientChooserRecyclerViewAdapter.ViewHolder> {
 
@@ -51,11 +56,11 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
         int mAmount = mIngredients.get(position).getAmount();
 
-        if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_NONE){
+        if (mIngredients.get(position).getMeasureType() == NONE){
             holder.mWeightView.setEnabled(false);
             holder.mVolumeView.setEnabled(false);
             holder.mSelectIngredient.setEnabled(true);
-        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_ONLY_WEIGHT){
+        } else if (mIngredients.get(position).getMeasureType() == ONLY_WEIGHT){
             if(mAmount == 0){
                 holder.mWeightView.setText("");
             } else {
@@ -63,7 +68,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             }
             holder.mTextInputLayoutVolume.setVisibility(INVISIBLE);
 
-        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_ONLY_VOLUME){
+        } else if (mIngredients.get(position).getMeasureType() == ONLY_VOLUME){
             if(mAmount == 0){
                 holder.mWeightView.setText("");
             } else {
@@ -71,14 +76,14 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             }
             holder.mTextInputLayoutWeight.setVisibility(INVISIBLE);
 
-        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_BOTH_WEIGHT){
+        } else if (mIngredients.get(position).getMeasureType() == BOTH_WEIGHT){
             if(mAmount == 0){
                 holder.mWeightView.setText("");
             } else {
                 holder.mWeightView.setText(String.valueOf(mAmount));
             }
 
-        } else if (mIngredients.get(position).getMeasureType() == MEASURE_TYPE_BOTH_VOLUME){
+        } else if (mIngredients.get(position).getMeasureType() == BOTH_VOLUME){
             if(mAmount == 0){
                 holder.mWeightView.setText("");
             } else {
@@ -115,8 +120,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction();
                 }
             }
@@ -156,10 +159,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             mTextInputLayoutWeight = view.findViewById(R.id.textInputLayout_weight);
             mVolumeView = view.findViewById(R.id.product_volume);
             mTextInputLayoutVolume = view.findViewById(R.id.textInputLayout_volume);
-
-
-
-
 
             mWeightView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
 
@@ -258,8 +257,8 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
                 mIngredients.get(mPosition).setAmount(0);
             }
 
-            if(mIngredients.get(mPosition).getMeasureType() == 4){
-                mIngredients.get(mPosition).setMeasureType(3);
+            if(mIngredients.get(mPosition).getMeasureType() == BOTH_VOLUME){
+                mIngredients.get(mPosition).setMeasureType(BOTH_WEIGHT);
             }
 
         }
@@ -297,8 +296,8 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
                 mIngredients.get(mPosition).setAmount(0);
             }
 
-            if(mIngredients.get(mPosition).getMeasureType() == 3) {
-                mIngredients.get(mPosition).setMeasureType(4);
+            if(mIngredients.get(mPosition).getMeasureType() == BOTH_WEIGHT) {
+                mIngredients.get(mPosition).setMeasureType(BOTH_VOLUME);
             }
 
 

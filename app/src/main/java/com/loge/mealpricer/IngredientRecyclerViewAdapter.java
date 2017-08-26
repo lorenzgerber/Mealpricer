@@ -11,6 +11,9 @@ import com.loge.mealpricer.IngredientListFragment.OnListFragmentInteractionListe
 
 import java.util.List;
 
+import static com.loge.mealpricer.MeasureType.BOTH_WEIGHT;
+import static com.loge.mealpricer.MeasureType.ONLY_WEIGHT;
+
 public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
 
     private  List<Ingredient> mIngredients;
@@ -39,8 +42,8 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
 
         holder.mNameView.setText(mProducts.get(position).getName());
         holder.mAmountView.setText(String.valueOf(mIngredients.get(position).getAmount()));
-        int mType = mIngredients.get(position).getMeasureType();
-        if (mType == 1 || mType == 3){
+        MeasureType mType = mIngredients.get(position).getMeasureType();
+        if (mType == ONLY_WEIGHT || mType == BOTH_WEIGHT){
             holder.mTypeView.setText(R.string.gram_unit);
         } else {
             holder.mTypeView.setText(R.string.milli_liter_unit);

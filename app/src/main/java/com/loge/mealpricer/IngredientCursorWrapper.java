@@ -21,7 +21,7 @@ class IngredientCursorWrapper extends CursorWrapper {
     public Ingredient getIngredient() {
         String uuidMealString = getString(getColumnIndex(IngredientTable.Cols.MEAL_ID));
         String uuidProductString = getString(getColumnIndex(IngredientTable.Cols.PRODUCT_ID));
-        int measureType = getInt(getColumnIndex(IngredientTable.Cols.MEASURE_TYPE));
+        MeasureType measureType = MeasureType.values()[getInt(getColumnIndex(IngredientTable.Cols.MEASURE_TYPE))];
         int amount = getInt(getColumnIndex(IngredientTable.Cols.AMOUNT));
 
         Ingredient ingredient = new Ingredient(UUID.fromString(uuidMealString), UUID.fromString(uuidProductString));

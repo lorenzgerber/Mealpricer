@@ -2,6 +2,8 @@ package com.loge.mealpricer;
 
 import java.util.UUID;
 
+import static com.loge.mealpricer.MeasureType.NONE;
+
 public class Ingredient {
 
     public static final int MEASURE_TYPE_NONE = 0;
@@ -12,7 +14,7 @@ public class Ingredient {
 
     private final UUID mMealId;
     private final UUID mProductId;
-    private int mMeasureType;
+    private MeasureType mMeasureType;
     private int mAmount;
     private boolean mSelected;
 
@@ -20,7 +22,7 @@ public class Ingredient {
     public Ingredient(UUID mealId, UUID productId){
         mMealId = mealId;
         mProductId = productId;
-        mMeasureType = MEASURE_TYPE_NONE;
+        mMeasureType = NONE;
         mAmount = 0;
         mSelected = false;
 
@@ -29,23 +31,15 @@ public class Ingredient {
 
     public UUID getMealId() { return mMealId; }
 
-    // --Commented out by Inspection (2017-08-26, 17:47):public void setMealId(UUID mealId){ mMealId = mealId; }
-
     public UUID getProductId() {
         return mProductId;
     }
 
-// --Commented out by Inspection START (2017-08-26, 17:47):
-//    public void setProduct(UUID productId) {
-//        mProductId = productId;
-//    }
-// --Commented out by Inspection STOP (2017-08-26, 17:47)
-
-    public int getMeasureType() {
+    public MeasureType getMeasureType() {
         return mMeasureType;
     }
 
-    public void setMeasureType(int measureType) {
+    public void setMeasureType(MeasureType measureType) {
         mMeasureType = measureType;
     }
 

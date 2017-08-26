@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.UUID;
 
 import static com.loge.mealpricer.MealPricerDbSchema.*;
+import static com.loge.mealpricer.MeasureType.BOTH_VOLUME;
+import static com.loge.mealpricer.MeasureType.BOTH_WEIGHT;
+import static com.loge.mealpricer.MeasureType.ONLY_VOLUME;
+import static com.loge.mealpricer.MeasureType.ONLY_WEIGHT;
 
 
 public class MealPricer {
@@ -238,14 +242,14 @@ public class MealPricer {
         if (mIngredient!=null){
             mProduct = getProduct(productId);
 
-            if(mIngredient.getMeasureType() == 1 || mIngredient.getMeasureType() == 3){
+            if(mIngredient.getMeasureType() == ONLY_WEIGHT || mIngredient.getMeasureType() == BOTH_WEIGHT){
                 if(mProduct.getPrice() == 0 || (mProduct.getWeight() == 0)){
                     return 0;
                 }
                 float mResult = (float) mProduct.getPrice() / (float) mProduct.getWeight() * (float) mIngredient.getAmount();
                 return (int) mResult;
 
-            } else if (mIngredient.getMeasureType() == 2 || mIngredient.getMeasureType() == 4){
+            } else if (mIngredient.getMeasureType() == ONLY_VOLUME || mIngredient.getMeasureType() == BOTH_VOLUME){
                 if(mProduct.getPrice() == 0 || (mProduct.getVolume() == 0)){
                     return 0;
                 }
@@ -298,7 +302,7 @@ public class MealPricer {
         ContentValues values = new ContentValues();
         values.put(IngredientTable.Cols.MEAL_ID, ingredient.getMealId().toString());
         values.put(IngredientTable.Cols.PRODUCT_ID, ingredient.getProductId().toString());
-        values.put(IngredientTable.Cols.MEASURE_TYPE, ingredient.getMeasureType());
+        values.put(IngredientTable.Cols.MEASURE_TYPE, ingredient.getMeasureType().ordinal());
         values.put(IngredientTable.Cols.AMOUNT, ingredient.getAmount());
 
         return values;

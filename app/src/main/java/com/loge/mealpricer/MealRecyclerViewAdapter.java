@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.loge.mealpricer.MealListFragment.OnListFragmentInteractionListener;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -36,7 +37,6 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        //mPosition = position;
 
         holder.mItem = mMeals.get(position);
         holder.mNameView.setText(mMeals.get(position).getName());
@@ -47,12 +47,20 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.mSpinner.setAdapter(aa);
         int mPortion = mMeals.get(position).getPortion();
-        if (mPortion == 1){
-            holder.mSpinner.setSelection(0);
-        } else if (mPortion == 2){
-            holder.mSpinner.setSelection(1);
-        } else {
-            holder.mSpinner.setSelection(2);
+
+        switch(mPortion) {
+            case 1:
+                holder.mSpinner.setSelection(0);
+                break;
+            case 2:
+                holder.mSpinner.setSelection(1);
+                break;
+            case 4:
+                holder.mSpinner.setSelection(2);
+                break;
+            default:
+                holder.mSpinner.setSelection(0);
+                break;
         }
 
         CustomSpinnerListener spinnerListener = new CustomSpinnerListener();
@@ -66,12 +74,15 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
 
                 MealPricer.get(holder.mImageButton.getContext()).deleteMeal(holder.mItem);
 
-                int newPosition = holder.getAdapterPosition();
-                mMeals.remove(newPosition);
-                notifyItemRemoved(newPosition);
-                notifyItemRangeChanged(newPosition, mMeals.size());
+                int mPosition = holder.getAdapterPosition();
+                File mPhotoFile = MealPricer.get(holder.mImageButton.getContext()).getPhotoFile(mMeals.get(mPosition));
+                if(mPhotoFile != null || mPhotoFile.exists()){
+                    mPhotoFile.delete();
+                }
 
-
+                mMeals.remove(mPosition);
+                notifyItemRemoved(mPosition);
+                notifyItemRangeChanged(mPosition, mMeals.size());
             }
         });
 
