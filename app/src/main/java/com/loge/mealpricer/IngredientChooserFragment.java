@@ -14,10 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_BOTH_WEIGHT;
-import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_NONE;
-import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_ONLY_VOLUME;
-import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_ONLY_WEIGHT;
 import static com.loge.mealpricer.IngredientListFragment.ARG_MEAL_ID;
 import static com.loge.mealpricer.MeasureType.BOTH_WEIGHT;
 import static com.loge.mealpricer.MeasureType.NONE;

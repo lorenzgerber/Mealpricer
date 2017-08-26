@@ -19,7 +19,7 @@ public class Ingredient {
         mMeasureType = NONE;
         mAmount = 0;
         mSelected = false;
-        
+
     }
 
     public UUID getMealId() { return mMealId; }

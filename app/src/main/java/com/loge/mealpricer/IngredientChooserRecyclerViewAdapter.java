@@ -17,11 +17,6 @@ import com.loge.mealpricer.IngredientChooserFragment.OnListFragmentInteractionLi
 import java.util.List;
 
 import static android.view.View.INVISIBLE;
-import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_BOTH_VOLUME;
-import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_BOTH_WEIGHT;
-import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_NONE;
-import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_ONLY_VOLUME;
-import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_ONLY_WEIGHT;
 import static com.loge.mealpricer.MeasureType.BOTH_VOLUME;
 import static com.loge.mealpricer.MeasureType.BOTH_WEIGHT;
 import static com.loge.mealpricer.MeasureType.NONE;
