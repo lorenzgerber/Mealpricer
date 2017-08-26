@@ -6,12 +6,6 @@ import static com.loge.mealpricer.MeasureType.NONE;
 
 public class Ingredient {
 
-    public static final int MEASURE_TYPE_NONE = 0;
-    public static final int MEASURE_TYPE_ONLY_WEIGHT = 1;
-    public static final int MEASURE_TYPE_ONLY_VOLUME = 2;
-    public static final int MEASURE_TYPE_BOTH_WEIGHT = 3;
-    public static final int MEASURE_TYPE_BOTH_VOLUME = 4;
-
     private final UUID mMealId;
     private final UUID mProductId;
     private MeasureType mMeasureType;
@@ -25,8 +19,7 @@ public class Ingredient {
         mMeasureType = NONE;
         mAmount = 0;
         mSelected = false;
-
-
+        
     }
 
     public UUID getMealId() { return mMealId; }
