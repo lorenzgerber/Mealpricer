@@ -5,11 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 
-/**
- * Created by lgerber on 8/20/17.
- */
 
-public class PictureUtils {
+class PictureUtils {
 
     public static Bitmap getScaledBitmap(String path, Activity activity){
         Point size = new Point();
@@ -19,7 +16,7 @@ public class PictureUtils {
     }
 
 
-    public static Bitmap getScaledBitmap(String path, int destWidth, int destHeight){
+    private static Bitmap getScaledBitmap(String path, int destWidth, int destHeight){
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(path, options);

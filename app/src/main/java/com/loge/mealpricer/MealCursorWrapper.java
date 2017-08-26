@@ -7,11 +7,7 @@ import com.loge.mealpricer.MealPricerDbSchema.MealTable;
 
 import java.util.UUID;
 
-/**
- * Created by loge on 2017-08-21.
- */
-
-public class MealCursorWrapper extends CursorWrapper{
+class MealCursorWrapper extends CursorWrapper{
 
 
     /**

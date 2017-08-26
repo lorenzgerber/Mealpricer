@@ -23,8 +23,6 @@ public class ProductListFragment extends Fragment {
 
     private OnListFragmentInteractionListener mListener;
     private RecyclerView mProductRecyclerView;
-    private DividerItemDecoration mDividerItemDecoration;
-    private LinearLayoutManager mLayoutManager;
     private ProductRecyclerViewAdapter mAdapter;
 
     /**
@@ -35,13 +33,7 @@ public class ProductListFragment extends Fragment {
     }
 
     public static ProductListFragment newInstance() {
-        ProductListFragment fragment = new ProductListFragment();
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        return new ProductListFragment();
     }
 
     @Override
@@ -59,15 +51,15 @@ public class ProductListFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             mProductRecyclerView = (RecyclerView) view;
-            mLayoutManager = new LinearLayoutManager(context);
-            mProductRecyclerView.setLayoutManager(mLayoutManager);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            mProductRecyclerView.setLayoutManager(layoutManager);
 
-            mDividerItemDecoration = new DividerItemDecoration(
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                     mProductRecyclerView.getContext(),
-                    mLayoutManager.getOrientation()
+                    layoutManager.getOrientation()
             );
 
-            mProductRecyclerView.addItemDecoration(mDividerItemDecoration);
+            mProductRecyclerView.addItemDecoration(dividerItemDecoration);
 
             updateUI();
 

@@ -8,11 +8,8 @@ import com.loge.mealpricer.MealPricerDbSchema.IngredientTable;
 import com.loge.mealpricer.MealPricerDbSchema.MealTable;
 import com.loge.mealpricer.MealPricerDbSchema.ProductTable;
 
-/**
- * Created by loge on 2017-08-07.
- */
 
-public class MealPricerBaseHelper extends SQLiteOpenHelper {
+class MealPricerBaseHelper extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "mealPricerBase.db";

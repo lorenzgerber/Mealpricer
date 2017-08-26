@@ -36,7 +36,7 @@
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="SEK"
+        android:text="@string/currency_sweden_sek"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -44,7 +44,7 @@
         app:layout_constraintStart_toEndOf="@+id/meal_price"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <Spinner
+    <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/portion_spinner"
         tools:style="@style/Widget.AppCompat.Spinner.Underlined"
         android:layout_width="80dp"

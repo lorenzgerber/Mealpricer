@@ -1,16 +1,11 @@
 package com.loge.mealpricer;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by loge on 2017-08-01.
- */
 
 public class Meal {
 
-    private UUID mMealId;
+    private final UUID mMealId;
     private String mName;
     private int mPrice;
     private int mPortion;

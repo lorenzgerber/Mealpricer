@@ -1,10 +1,7 @@
 package com.loge.mealpricer;
 
-/**
- * Created by loge on 2017-08-07.
- */
 
-public class MealPricerDbSchema {
+class MealPricerDbSchema {
     public static final class ProductTable {
         public static final String NAME = "product";
 

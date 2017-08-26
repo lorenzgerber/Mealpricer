@@ -2,13 +2,10 @@ package com.loge.mealpricer;
 
 import java.util.UUID;
 
-/**
- * Created by loge on 2017-08-01.
- */
 
 public class Product {
 
-    private UUID mProductId;
+    private final UUID mProductId;
     private String mName;
     private int mPrice;
     private int mWeight;

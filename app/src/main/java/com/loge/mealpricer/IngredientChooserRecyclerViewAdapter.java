@@ -1,6 +1,5 @@
 package com.loge.mealpricer;
 
-import android.content.Context;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -16,7 +15,6 @@ import com.loge.mealpricer.IngredientChooserFragment.OnListFragmentInteractionLi
 
 
 import java.util.List;
-import java.util.UUID;
 
 import static android.view.View.INVISIBLE;
 import static com.loge.mealpricer.Ingredient.MEASURE_TYPE_BOTH_VOLUME;
@@ -119,7 +117,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction();
                 }
             }
         });
@@ -150,14 +148,14 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mNameView = (TextView) view.findViewById(R.id.product_name);
+            mNameView = view.findViewById(R.id.product_name);
 
-            mSelectIngredient = (CheckBox) view.findViewById(R.id.select_ingredient);
+            mSelectIngredient = view.findViewById(R.id.select_ingredient);
 
-            mWeightView = (TextView) view.findViewById(R.id.product_weight);
-            mTextInputLayoutWeight = (TextInputLayout) view.findViewById(R.id.textInputLayout_weight);
-            mVolumeView = (TextView) view.findViewById(R.id.product_volume);
-            mTextInputLayoutVolume = (TextInputLayout) view.findViewById(R.id.textInputLayout_volume);
+            mWeightView = view.findViewById(R.id.product_weight);
+            mTextInputLayoutWeight = view.findViewById(R.id.textInputLayout_weight);
+            mVolumeView = view.findViewById(R.id.product_volume);
+            mTextInputLayoutVolume = view.findViewById(R.id.textInputLayout_volume);
 
 
 

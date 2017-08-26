@@ -1,5 +1,6 @@
 package com.loge.mealpricer;
 
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,20 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.loge.mealpricer.IngredientListFragment.OnListFragmentInteractionListener;
-import com.loge.mealpricer.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
 
     private  List<Ingredient> mIngredients;
     private  List<Product> mProducts;
-    private  List<Integer> mPrices;
+    private final List<Integer> mPrices;
     private final OnListFragmentInteractionListener mListener;
 
     public IngredientRecyclerViewAdapter(List<Ingredient> ingredients, List<Product> products, List<Integer> prices, OnListFragmentInteractionListener listener) {
@@ -40,7 +35,7 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mIngredientItem = mIngredients.get(position);
-        holder.mProductItem = mProducts.get(position);
+        //holder.mProductItem = mProducts.get(position);
 
         holder.mNameView.setText(mProducts.get(position).getName());
         holder.mAmountView.setText(String.valueOf(mIngredients.get(position).getAmount()));
@@ -52,7 +47,10 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
         }
 
 
-        holder.mValueView.setText(String.valueOf(mPrices.get(position)) + " SEK");
+        holder.mValueView.getResources().getString(R.string.price_sek, mPrices.get(position));
+        Resources r = holder.mValueView.getResources();
+        String mPrice = r.getString(R.string.price_sek, mPrices.get(position));
+        holder.mValueView.setText(mPrice);
 
 
 
@@ -62,7 +60,7 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mIngredientItem);
+                    mListener.onListFragmentInteraction();
                 }
 
             }
@@ -86,16 +84,16 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
         public final TextView mTypeView;
         public final TextView mValueView;
         public Ingredient mIngredientItem;
-        public Product mProductItem;
+        //public Product mProductItem;
 
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mNameView = (TextView) view.findViewById(R.id.ingredient_name);
-            mAmountView = (TextView) view.findViewById(R.id.ingredient_amount);
-            mTypeView = (TextView) view.findViewById(R.id.ingredient_amount_type);
-            mValueView = (TextView) view.findViewById(R.id.ingredient_value);
+            mNameView = view.findViewById(R.id.ingredient_name);
+            mAmountView = view.findViewById(R.id.ingredient_amount);
+            mTypeView = view.findViewById(R.id.ingredient_amount_type);
+            mValueView = view.findViewById(R.id.ingredient_value);
 
         }
 

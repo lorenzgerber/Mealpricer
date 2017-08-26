@@ -30,7 +30,7 @@ public class IngredientChooserActivity extends AppCompatActivity
 
 
         setContentView(R.layout.activity_ingredient_chooser_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -49,7 +49,7 @@ public class IngredientChooserActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(Product item) {
+    public void onListFragmentInteraction() {
 
     }
 

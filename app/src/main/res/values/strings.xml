@@ -3,7 +3,6 @@
     <string name="tab_text_1">Meals</string>
     <string name="tab_text_2">Products</string>
     <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_meal_pricer_tab">MealPricerTabActivity</string>
     <string name="title_activity_product">Edit Product</string>
     <string name="product_name_label">Product Name</string>
@@ -12,25 +11,16 @@
     <string name="product_weight_label">Weight (g)</string>
     <string name="product_volume_label">Volume (ml)</string>
     <string name="product_price_label">Price (SEK)</string>
-    <string name="title_activity_meal">Your Meals</string>
-    <string name="meal_image_description">photo of meal</string>
-    <string name="meal_cam_button_description">button to take photo of meal</string>
-    <string name="meal_name_label">Meal Name</string>
-    <string name="meal_price_label">Price (SEK)</string>
-    <string name="meal_portion_label">Portion (Persons)</string>
     <string name="title_activity_meal_detail">MealDetailActivity</string>
-    <string name="not_used">Not Used</string>
     <string name="gram_unit">g</string>
     <string name="milli_liter_unit">ml</string>
-    <string name="title_activity_testo">TestoActivity</string>
-    <string name="title_activity_ingredient_detail">Choose Ingredients...</string>
+    <string name="title_activity_ingredient_detail">Choose Ingredients…</string>
     <string name="description_photo_meal">this photo shows the meal</string>
     <string name="delete_meal_button_image">image button trashcan image</string>
-
-    <string-array name="titles">
-        <item>Prakash</item>
-        <item>Bhavin</item>
-        <item>Chirag</item>
-        <item>Yakub</item>
-    </string-array>
+    <string name="currency_sweden_sek">SEK</string>
+    <string name="weight_unit_g">g</string>
+    <string name="volume_unit_ml">ml</string>
+    <string name="hint_name_new_meal">Name New Meal</string>
+    <string name="hint_choose_portions">Choose Number of Portions</string>
+    <string name="price_sek">%1$d SEK</string>
 </resources>

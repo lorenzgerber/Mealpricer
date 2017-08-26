@@ -1,6 +1,5 @@
 package com.loge.mealpricer;
 
-import android.content.Context;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,10 +19,8 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
 
     private List<Meal> mMeals;
     private final OnListFragmentInteractionListener mListener;
-    private CustomSpinnerListener mSpinnerListener;
     private static final String[] mPortionsString = {"1", "2", "4"};
     private static final Integer[] mPortionsInteger = {1, 2, 4};
-    private int mPosition;
 
     public MealRecyclerViewAdapter(List<Meal> items, OnListFragmentInteractionListener listener) {
         mMeals = items;
@@ -58,11 +55,11 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
             holder.mSpinner.setSelection(2);
         }
 
-        mSpinnerListener = new CustomSpinnerListener();
-        mSpinnerListener.updatePosition(position);
-        mSpinnerListener.setPriceView(holder.mPriceView);
+        CustomSpinnerListener spinnerListener = new CustomSpinnerListener();
+        spinnerListener.updatePosition(position);
+        spinnerListener.setPriceView(holder.mPriceView);
 
-        holder.mSpinner.setOnItemSelectedListener(mSpinnerListener);
+        holder.mSpinner.setOnItemSelectedListener(spinnerListener);
         holder.mImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,10 +104,10 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mNameView = (TextView) view.findViewById(R.id.meal_name);
-            mPriceView = (TextView) view.findViewById(R.id.meal_price);
-            mSpinner = (AppCompatSpinner) view.findViewById(R.id.portion_spinner);
-            mImageButton = (ImageButton) view.findViewById(R.id.delete_meal_button);
+            mNameView = view.findViewById(R.id.meal_name);
+            mPriceView = view.findViewById(R.id.meal_price);
+            mSpinner = view.findViewById(R.id.portion_spinner);
+            mImageButton = view.findViewById(R.id.delete_meal_button);
         }
 
         @Override

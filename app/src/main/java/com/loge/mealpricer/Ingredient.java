@@ -2,10 +2,6 @@ package com.loge.mealpricer;
 
 import java.util.UUID;
 
-/**
- * Created by loge on 2017-08-01.
- */
-
 public class Ingredient {
 
     public static final int MEASURE_TYPE_NONE = 0;
@@ -14,8 +10,8 @@ public class Ingredient {
     public static final int MEASURE_TYPE_BOTH_WEIGHT = 3;
     public static final int MEASURE_TYPE_BOTH_VOLUME = 4;
 
-    private UUID mMealId;
-    private UUID mProductId;
+    private final UUID mMealId;
+    private final UUID mProductId;
     private int mMeasureType;
     private int mAmount;
     private boolean mSelected;
@@ -33,15 +29,17 @@ public class Ingredient {
 
     public UUID getMealId() { return mMealId; }
 
-    public void setMealId(UUID mealId){ mMealId = mealId; }
+    // --Commented out by Inspection (2017-08-26, 17:47):public void setMealId(UUID mealId){ mMealId = mealId; }
 
     public UUID getProductId() {
         return mProductId;
     }
 
-    public void setProduct(UUID productId) {
-        mProductId = productId;
-    }
+// --Commented out by Inspection START (2017-08-26, 17:47):
+//    public void setProduct(UUID productId) {
+//        mProductId = productId;
+//    }
+// --Commented out by Inspection STOP (2017-08-26, 17:47)
 
     public int getMeasureType() {
         return mMeasureType;

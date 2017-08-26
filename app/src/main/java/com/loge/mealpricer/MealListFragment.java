@@ -23,8 +23,6 @@ public class MealListFragment extends Fragment {
 
     private OnListFragmentInteractionListener mListener;
     private RecyclerView mMealRecyclerView;
-    private LinearLayoutManager mLayoutManager;
-    private DividerItemDecoration mDividerItemDecoration;
     private MealRecyclerViewAdapter mAdapter;
 
     /**
@@ -35,13 +33,7 @@ public class MealListFragment extends Fragment {
     }
 
     public static MealListFragment newInstance() {
-        MealListFragment fragment = new MealListFragment();
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
+        return new MealListFragment();
     }
 
     @Override
@@ -59,15 +51,15 @@ public class MealListFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             mMealRecyclerView = (RecyclerView) view;
-            mLayoutManager = new LinearLayoutManager(context);
-            mMealRecyclerView.setLayoutManager(mLayoutManager);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            mMealRecyclerView.setLayoutManager(layoutManager);
 
-            mDividerItemDecoration = new DividerItemDecoration(
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                     mMealRecyclerView.getContext(),
-                    mLayoutManager.getOrientation()
+                    layoutManager.getOrientation()
             );
 
-            mMealRecyclerView.addItemDecoration(mDividerItemDecoration);
+            mMealRecyclerView.addItemDecoration(dividerItemDecoration);
 
             updateUI();
         }

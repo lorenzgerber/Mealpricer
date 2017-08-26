@@ -32,12 +32,8 @@ public class IngredientChooserFragment extends Fragment {
 
     private OnListFragmentInteractionListener mListener;
     private RecyclerView mIngredientChooserRecyclerView;
-    private DividerItemDecoration mDividerItemDecoration;
-    private LinearLayoutManager mLayoutManager;
     private IngredientChooserRecyclerViewAdapter mAdapter;
-    private List<Product> mProducts;
     private List<Ingredient> mIngredients;
-    private Ingredient mIngredient;
     private UUID mMealId;
 
 
@@ -73,15 +69,15 @@ public class IngredientChooserFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             mIngredientChooserRecyclerView = (RecyclerView) view;
-            mLayoutManager = new LinearLayoutManager(context);
-            mIngredientChooserRecyclerView.setLayoutManager(mLayoutManager);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            mIngredientChooserRecyclerView.setLayoutManager(layoutManager);
 
-            mDividerItemDecoration = new DividerItemDecoration(
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                     mIngredientChooserRecyclerView.getContext(),
-                    mLayoutManager.getOrientation()
+                    layoutManager.getOrientation()
             );
 
-            mIngredientChooserRecyclerView.addItemDecoration(mDividerItemDecoration);
+            mIngredientChooserRecyclerView.addItemDecoration(dividerItemDecoration);
 
             updateUI();
 
@@ -92,30 +88,30 @@ public class IngredientChooserFragment extends Fragment {
     private void updateUI(){
 
         MealPricer mealPricer = MealPricer.get(getActivity());
-        mProducts = mealPricer.getProducts();
+        List<Product> products = mealPricer.getProducts();
         mIngredients = new ArrayList<>();
 
 
-        for(Product product:mProducts){
-            mIngredient = null;
-            mIngredient = mealPricer.getIngredient(mMealId, product.getProductId());
-            if ( mIngredient != null){
-                mIngredient.setSelected(true);
-                mIngredients.add(mIngredient);
+        for(Product product: products){
+            Ingredient ingredient;
+            ingredient = mealPricer.getIngredient(mMealId, product.getProductId());
+            if ( ingredient != null){
+                ingredient.setSelected(true);
+                mIngredients.add(ingredient);
             } else {
-                mIngredient = new Ingredient(mMealId, product.getProductId());
-                mIngredient.setMeasureType(getMeasureType(product));
-                mIngredients.add(mIngredient);
+                ingredient = new Ingredient(mMealId, product.getProductId());
+                ingredient.setMeasureType(getMeasureType(product));
+                mIngredients.add(ingredient);
             }
 
         }
 
 
         if(mAdapter == null){
-            mAdapter = new IngredientChooserRecyclerViewAdapter(mProducts, mIngredients, mListener);
+            mAdapter = new IngredientChooserRecyclerViewAdapter(products, mIngredients, mListener);
             mIngredientChooserRecyclerView.setAdapter(mAdapter);
         } else {
-            mAdapter.setIngredientsProducts(mIngredients, mProducts);
+            mAdapter.setIngredientsProducts(mIngredients, products);
             mAdapter.notifyDataSetChanged();
         }
 
@@ -162,7 +158,7 @@ public class IngredientChooserFragment extends Fragment {
     }
 
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Product item);
+        void onListFragmentInteraction();
     }
 
     private int getMeasureType(Product product){

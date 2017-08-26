@@ -23,7 +23,7 @@
             style="@style/Base.AlertDialog.AppCompat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name New Meal"
+            android:hint="@string/hint_name_new_meal"
             android:inputType="textCapWords"/>
 
     </android.support.design.widget.TextInputLayout>
@@ -37,7 +37,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_weight="1"
-        android:text="Choose Number of Portions"
+        android:text="@string/hint_choose_portions"
         android:textAppearance="@android:style/TextAppearance.Medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/portion_spinner"

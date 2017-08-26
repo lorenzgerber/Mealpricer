@@ -20,10 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.io.File;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -31,18 +28,13 @@ import java.util.UUID;
  */
 public class ProductFragment extends Fragment {
 
-    public static final String ARG_PRODUCT_ID = "product_id";
+    private static final String ARG_PRODUCT_ID = "product_id";
     private static final int REQUEST_PHOTO = 2;
 
 
     private Product mProduct;
     private File mPhotoFile;
-    private ImageButton mPhotoButton;
     private ImageView mPhotoView;
-    private EditText mNameField;
-    private EditText mWeightField;
-    private EditText mVolumeField;
-    private EditText mPriceField;
 
 
     public static ProductFragment newInstance(UUID productId){
@@ -96,9 +88,9 @@ public class ProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_product, container, false);
 
-        mNameField = v.findViewById(R.id.product_name_entry);
-        mNameField.setText(mProduct.getName());
-        mNameField.addTextChangedListener(new TextWatcher() {
+        EditText nameField = v.findViewById(R.id.product_name_entry);
+        nameField.setText(mProduct.getName());
+        nameField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(
                     CharSequence s, int start, int before, int count) {
@@ -107,7 +99,7 @@ public class ProductFragment extends Fragment {
 
             @Override
             public void onTextChanged(
-                    CharSequence s, int start, int before, int cout){
+                    CharSequence s, int start, int before, int count){
                 mProduct.setName(s.toString());
             }
 
@@ -118,9 +110,9 @@ public class ProductFragment extends Fragment {
 
         });
 
-        mWeightField = (EditText) v.findViewById(R.id.product_weight_entry);
-        mWeightField.setText(String.valueOf(mProduct.getWeight()));
-        mWeightField.addTextChangedListener(new TextWatcher() {
+        EditText weightField = v.findViewById(R.id.product_weight_entry);
+        weightField.setText(String.valueOf(mProduct.getWeight()));
+        weightField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(
                     CharSequence s, int start, int before, int count) {
@@ -145,9 +137,9 @@ public class ProductFragment extends Fragment {
 
         });
 
-        mVolumeField = (EditText) v.findViewById(R.id.product_volume_entry);
-        mVolumeField.setText(String.valueOf(mProduct.getVolume()));
-        mVolumeField.addTextChangedListener(new TextWatcher() {
+        EditText volumeField = v.findViewById(R.id.product_volume_entry);
+        volumeField.setText(String.valueOf(mProduct.getVolume()));
+        volumeField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(
                     CharSequence s, int start, int before, int count) {
@@ -156,7 +148,7 @@ public class ProductFragment extends Fragment {
 
             @Override
             public void onTextChanged(
-                    CharSequence s, int start, int before, int cout){
+                    CharSequence s, int start, int before, int count){
                 if (s.length() != 0){
                     mProduct.setVolume(Integer.parseInt(s.toString()));
                 } else {
@@ -171,9 +163,9 @@ public class ProductFragment extends Fragment {
 
         });
 
-        mPriceField = (EditText) v.findViewById(R.id.product_price_entry);
-        mPriceField.setText(String.valueOf(mProduct.getPrice()));
-        mPriceField.addTextChangedListener(new TextWatcher() {
+        EditText priceField = v.findViewById(R.id.product_price_entry);
+        priceField.setText(String.valueOf(mProduct.getPrice()));
+        priceField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(
                     CharSequence s, int start, int before, int count) {
@@ -182,7 +174,7 @@ public class ProductFragment extends Fragment {
 
             @Override
             public void onTextChanged(
-                    CharSequence s, int start, int before, int cout){
+                    CharSequence s, int start, int before, int count){
 
                 if(s.length() != 0){
                     mProduct.setPrice(Integer.parseInt(s.toString()));
@@ -201,14 +193,14 @@ public class ProductFragment extends Fragment {
 
         PackageManager packageManager = getActivity().getPackageManager();
 
-        mPhotoButton = (ImageButton) v.findViewById(R.id.product_camera);
+        ImageButton photoButton = v.findViewById(R.id.product_camera);
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         boolean canTakePhoto = mPhotoFile != null &&
                 captureImage.resolveActivity(packageManager) != null;
-        mPhotoButton.setEnabled(canTakePhoto);
+        photoButton.setEnabled(canTakePhoto);
 
-        mPhotoButton.setOnClickListener(new View.OnClickListener() {
+        photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Uri uri = FileProvider.getUriForFile(getActivity(),
@@ -229,7 +221,7 @@ public class ProductFragment extends Fragment {
         });
 
 
-        mPhotoView = (ImageView) v.findViewById(R.id.product_image);
+        mPhotoView = v.findViewById(R.id.product_image);
         updatePhotoView();
 
         return v;

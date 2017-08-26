@@ -1,12 +1,9 @@
 package com.loge.mealpricer;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
@@ -22,14 +19,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 
 public class MealPricerTabActivity extends AppCompatActivity
@@ -39,17 +30,6 @@ public class MealPricerTabActivity extends AppCompatActivity
     private static final String SWITCH_TAB = "switch_tab";
     private static final String[] mPortionsString = {"1", "2", "4"};
 
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private AppCompatSpinner mSpinner;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -68,40 +48,40 @@ public class MealPricerTabActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_pricer_tab);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        /*
+      The {@link android.support.v4.view.PagerAdapter} that will provide
+      fragments for each of the sections. We use a
+      {@link FragmentPagerAdapter} derivative, which will keep every
+      loaded fragment in memory. If this becomes too memory intensive, it
+      may be best to switch to a
+      {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     */
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager = findViewById(R.id.container);
+        mViewPager.setAdapter(sectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 currentItemId = mViewPager.getCurrentItem();
                 if(currentItemId == 0){
-
                     enterMealNameDialog();
-
                 } else if (currentItemId == 1){
                     enterProductNameDialog();
-                    /*
-                    Product mProduct = MealPricer.get(MealPricerTabActivity.this).newProduct();
-                    MealPricer.get(MealPricerTabActivity.this).addProudct(mProduct);
-                    onListFragmentInteraction(mProduct);
-                    */
                 }
-
             }
         });
 
@@ -149,7 +129,7 @@ public class MealPricerTabActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void createNewMeal(){
+    private void createNewMeal(){
         Meal mMeal = MealPricer.get(MealPricerTabActivity.this).newMeal();
         mMeal.setName(mMealName);
         mMeal.setPortion(mMealPortion);
@@ -157,14 +137,14 @@ public class MealPricerTabActivity extends AppCompatActivity
         onListFragmentInteraction(mMeal);
     }
 
-    public void createNewProduct(){
+    private void createNewProduct(){
         Product mProduct = MealPricer.get(MealPricerTabActivity.this).newProduct();
         mProduct.setName(mProductName);
-        MealPricer.get(MealPricerTabActivity.this).addProudct(mProduct);
+        MealPricer.get(MealPricerTabActivity.this).addProduct(mProduct);
         onListFragmentInteraction(mProduct);
     }
 
-    public void enterMealNameDialog(){
+    private void enterMealNameDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MealPricerTabActivity.this);
         builder.setTitle("Enter Name and Portion of Meal");
 
@@ -173,9 +153,9 @@ public class MealPricerTabActivity extends AppCompatActivity
         View mView = inflater.inflate(R.layout.new_meal_dialog, null);
 
 
-        final EditText mInput = (EditText) mView.findViewById(R.id.new_meal_name);
+        final EditText mInput = mView.findViewById(R.id.new_meal_name);
 
-        final AppCompatSpinner mSpinner = (AppCompatSpinner) mView.findViewById(R.id.portion_spinner);
+        final AppCompatSpinner mSpinner = mView.findViewById(R.id.portion_spinner);
         ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mPortionsString);
         mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -205,7 +185,7 @@ public class MealPricerTabActivity extends AppCompatActivity
 
     }
 
-    public void enterProductNameDialog(){
+    private void enterProductNameDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MealPricerTabActivity.this);
         builder.setTitle("Enter Name of Product");
 

@@ -35,8 +35,6 @@ public class MealDetailActivity extends AppCompatActivity
     private Meal mMeal;
     private UUID mealId;
     private File mPhotoFile;
-    private Toolbar mToolbar;
-    private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private ImageView mImageView;
 
 
@@ -54,15 +52,14 @@ public class MealDetailActivity extends AppCompatActivity
         mPhotoFile = MealPricer.get(this).getPhotoFile(mMeal);
         setContentView(R.layout.activity_meal_detail);
 
-        mImageView = (ImageView) findViewById(R.id.meal_photo_test);
+        mImageView = findViewById(R.id.meal_photo_test);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
 
-
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        mCollapsingToolbarLayout.setTitle(mMeal.getName() +
+        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
+        collapsingToolbarLayout.setTitle(mMeal.getName() +
                 " - " + mMeal.getPortion() + " Portion(s)");
 
 
@@ -82,7 +79,7 @@ public class MealDetailActivity extends AppCompatActivity
 
 
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        FloatingActionButton fab_photo = (FloatingActionButton) findViewById(R.id.fab_take_photo);
+        FloatingActionButton fab_photo = findViewById(R.id.fab_take_photo);
 
         PackageManager packageManager = this.getPackageManager();
         boolean canTakePhoto = mPhotoFile != null &&
@@ -119,7 +116,7 @@ public class MealDetailActivity extends AppCompatActivity
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FloatingActionButton fab_add_ingredient = (FloatingActionButton) findViewById(R.id.fab_add_ingredient);
+        FloatingActionButton fab_add_ingredient = findViewById(R.id.fab_add_ingredient);
         fab_add_ingredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,7 +149,7 @@ public class MealDetailActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(Ingredient item) {
+    public void onListFragmentInteraction() {
     }
 
     @Override
