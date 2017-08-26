@@ -101,11 +101,6 @@ public class MealDetailActivity extends AppCompatActivity
                 }
                 startActivityForResult(captureImage, REQUEST_PHOTO);
 
-
-
-
-
-
                 Snackbar.make(view, "Take Photo for Meal", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }

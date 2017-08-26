@@ -227,8 +227,6 @@ public class ProductFragment extends Fragment {
         return v;
     }
 
-
-
     private void updatePhotoView() {
         if(mPhotoFile == null || !mPhotoFile.exists()){
             mPhotoView.setImageDrawable(null);

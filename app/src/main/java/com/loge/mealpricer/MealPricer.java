@@ -277,7 +277,6 @@ public class MealPricer {
     }
 
 
-
     private static ContentValues getContentValues(Product product){
         ContentValues values = new ContentValues();
         values.put(ProductTable.Cols.PRODUCT_ID, product.getProductId().toString());
@@ -346,13 +345,5 @@ public class MealPricer {
         );
         return new IngredientCursorWrapper(cursor);
     }
-
-
-
-
-
-
-
-
 
 }

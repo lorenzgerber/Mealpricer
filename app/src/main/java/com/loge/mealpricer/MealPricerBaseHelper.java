@@ -22,7 +22,6 @@ class MealPricerBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-
         db.execSQL("create table " + ProductTable.NAME + "(" +
                 ProductTable.Cols.PRODUCT_ID +
                 " string primary key, " +
@@ -33,7 +32,6 @@ class MealPricerBaseHelper extends SQLiteOpenHelper {
                 ")"
         );
 
-
         db.execSQL("create table " + MealTable.NAME + "(" +
                 MealTable.Cols.MEAL_ID +
                 " string primary key, " +
@@ -41,8 +39,6 @@ class MealPricerBaseHelper extends SQLiteOpenHelper {
                 MealTable.Cols.PORTION +
                 ")"
         );
-
-
 
         db.execSQL("create table " + IngredientTable.NAME + "(" +
                 IngredientTable.Cols.MEAL_ID + ", " +
