@@ -20,8 +20,6 @@ import static android.view.View.INVISIBLE;
 import static com.loge.mealpricer.MeasureType.BOTH_VOLUME;
 import static com.loge.mealpricer.MeasureType.BOTH_WEIGHT;
 import static com.loge.mealpricer.MeasureType.NONE;
-import static com.loge.mealpricer.MeasureType.ONLY_VOLUME;
-import static com.loge.mealpricer.MeasureType.ONLY_WEIGHT;
 
 public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<IngredientChooserRecyclerViewAdapter.ViewHolder> {
 
@@ -50,42 +48,57 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
 
         int mAmount = mIngredients.get(position).getAmount();
+        MeasureType mMeasureType = mIngredients.get(position).getMeasureType();
 
-        if (mIngredients.get(position).getMeasureType() == NONE){
+        if(mMeasureType == NONE){
             holder.mWeightView.setEnabled(false);
             holder.mVolumeView.setEnabled(false);
             holder.mSelectIngredient.setEnabled(true);
-        } else if (mIngredients.get(position).getMeasureType() == ONLY_WEIGHT){
-            if(mAmount == 0){
-                holder.mWeightView.setText("");
-            } else {
-                holder.mWeightView.setText(String.valueOf(mAmount));
-            }
-            holder.mTextInputLayoutVolume.setVisibility(INVISIBLE);
-
-        } else if (mIngredients.get(position).getMeasureType() == ONLY_VOLUME){
-            if(mAmount == 0){
-                holder.mWeightView.setText("");
-            } else {
-                holder.mVolumeView.setText(String.valueOf(mAmount));
-            }
-            holder.mTextInputLayoutWeight.setVisibility(INVISIBLE);
-
-        } else if (mIngredients.get(position).getMeasureType() == BOTH_WEIGHT){
-            if(mAmount == 0){
-                holder.mWeightView.setText("");
-            } else {
-                holder.mWeightView.setText(String.valueOf(mAmount));
-            }
-
-        } else if (mIngredients.get(position).getMeasureType() == BOTH_VOLUME){
-            if(mAmount == 0){
-                holder.mWeightView.setText("");
-            } else {
-                holder.mVolumeView.setText(String.valueOf(mAmount));
-            }
-
         }
+
+        switch(mAmount){
+            case 0:
+                switch(mMeasureType){
+                    case ONLY_WEIGHT:
+                        holder.mWeightView.setText("");
+                        holder.mTextInputLayoutVolume.setVisibility(INVISIBLE);
+                        break;
+                    case ONLY_VOLUME:
+                        holder.mWeightView.setText("");
+                        holder.mTextInputLayoutWeight.setVisibility(INVISIBLE);
+                        break;
+                    case BOTH_WEIGHT:
+                        holder.mWeightView.setText("");
+                        break;
+                    case BOTH_VOLUME:
+                        holder.mWeightView.setText("");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                switch(mMeasureType){
+                    case ONLY_WEIGHT:
+                        holder.mWeightView.setText(String.valueOf(mAmount));
+                        holder.mTextInputLayoutVolume.setVisibility(INVISIBLE);
+                        break;
+                    case ONLY_VOLUME:
+                        holder.mVolumeView.setText(String.valueOf(mAmount));
+                        holder.mTextInputLayoutWeight.setVisibility(INVISIBLE);
+                        break;
+                    case BOTH_WEIGHT:
+                        holder.mWeightView.setText(String.valueOf(mAmount));
+                        break;
+                    case BOTH_VOLUME:
+                        holder.mVolumeView.setText(String.valueOf(mAmount));
+                        break;
+                    default:
+                        break;
+                }
+                break;
+        }
+
 
         if (mIngredients.get(position).getSelected()){
             holder.mSelectIngredient.setChecked(true);
@@ -108,8 +121,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         selectListener.setWeightControl(holder.mWeightView);
         selectListener.setVolumeControl(holder.mVolumeView);
         holder.mSelectIngredient.setOnCheckedChangeListener(selectListener);
-
-
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,7 +271,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
         @Override
         public void afterTextChanged(Editable editable) {
-            // no op
+            // intentionally empty
         }
     }
 
@@ -301,7 +312,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
         @Override
         public void afterTextChanged(Editable editable) {
-            // no op
+            // intentionally empty
         }
     }
 
