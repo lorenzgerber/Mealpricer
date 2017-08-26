@@ -96,7 +96,7 @@ public class ProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_product, container, false);
 
-        mNameField = (EditText) v.findViewById(R.id.product_name_entry);
+        mNameField = v.findViewById(R.id.product_name_entry);
         mNameField.setText(mProduct.getName());
         mNameField.addTextChangedListener(new TextWatcher() {
             @Override

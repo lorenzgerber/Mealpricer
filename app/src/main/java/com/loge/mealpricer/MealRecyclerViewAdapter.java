@@ -38,8 +38,8 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        mPosition = position;
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        //mPosition = position;
 
         holder.mItem = mMeals.get(position);
         holder.mNameView.setText(mMeals.get(position).getName());

@@ -24,6 +24,8 @@
     <string name="milli_liter_unit">ml</string>
     <string name="title_activity_testo">TestoActivity</string>
     <string name="title_activity_ingredient_detail">Choose Ingredients...</string>
+    <string name="description_photo_meal">this photo shows the meal</string>
+    <string name="delete_meal_button_image">image button trashcan image</string>
 
     <string-array name="titles">
         <item>Prakash</item>
