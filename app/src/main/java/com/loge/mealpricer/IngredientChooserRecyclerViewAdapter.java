@@ -25,8 +25,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.loge.mealpricer.IngredientChooserFragment.OnListFragmentInteractionListener;
-
 
 import java.util.List;
 
@@ -39,12 +37,10 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     private List<Product> mProducts;
     private List<Ingredient> mIngredients;
-    private final OnListFragmentInteractionListener mListener;
 
-    public IngredientChooserRecyclerViewAdapter(List<Product> items, List<Ingredient> ingredients, OnListFragmentInteractionListener listener) {
+    public IngredientChooserRecyclerViewAdapter(List<Product> items, List<Ingredient> ingredients) {
         mProducts = items;
         mIngredients = ingredients;
-        mListener = listener;
     }
 
     @Override
@@ -56,7 +52,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mProducts.get(position);
         holder.mNameView.setText(mProducts.get(position).getName());
 
 
@@ -136,14 +131,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         selectListener.setVolumeControl(holder.mVolumeView);
         holder.mSelectIngredient.setOnCheckedChangeListener(selectListener);
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    mListener.onListFragmentInteraction();
-                }
-            }
-        });
     }
 
     @Override
@@ -157,20 +144,17 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
         public final TextView mNameView;
         public final TextView mWeightView;
         public final TextInputLayout mTextInputLayoutWeight;
         public final TextView mVolumeView;
         public final TextInputLayout mTextInputLayoutVolume;
         public final CheckBox mSelectIngredient;
-        public Product mItem;
 
 
 
         public ViewHolder(View view) {
             super(view);
-            mView = view;
             mNameView = view.findViewById(R.id.product_name);
 
             mSelectIngredient = view.findViewById(R.id.select_ingredient);
@@ -280,7 +264,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             if(mIngredients.get(mPosition).getMeasureType() == BOTH_VOLUME){
                 mIngredients.get(mPosition).setMeasureType(BOTH_WEIGHT);
             }
-
         }
 
         @Override
@@ -319,9 +302,6 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             if(mIngredients.get(mPosition).getMeasureType() == BOTH_WEIGHT) {
                 mIngredients.get(mPosition).setMeasureType(BOTH_VOLUME);
             }
-
-
-
         }
 
         @Override

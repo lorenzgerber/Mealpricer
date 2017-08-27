@@ -90,24 +90,43 @@ public class Ingredient {
      *
      * @param measureType enum value measureType that determines whether to use weight or volume
      *                    based calculation. Further, measure type also specifies whether both
-     *                    options are available.
+     *                    options are available or not.
      */
     public void setMeasureType(MeasureType measureType) {
         mMeasureType = measureType;
     }
 
+    /**
+     * getter amount of the ingredient
+     *
+     * @return integer amount of the ingredient, volume or weight, depdening on the MeasureType setting
+     */
     public int getAmount() {
         return mAmount;
     }
 
+    /**
+     * setter for amount of ingredient
+     *
+     * @param amount integer value of quantity for the ingredient
+     */
     public void setAmount(int amount) {
         mAmount = amount;
     }
 
+    /**
+     * getter, boolean value whether ingredient shall be stored in db
+     *
+     * @return boolean whether shall be stored in the db
+     */
     public boolean getSelected() {
         return mSelected;
     }
 
+    /**
+     * setter, boolean value whether ingredient shall be stored in db
+     * @param selected boolean value
+     */
     public void setSelected(boolean selected) {
         mSelected = selected;
     }

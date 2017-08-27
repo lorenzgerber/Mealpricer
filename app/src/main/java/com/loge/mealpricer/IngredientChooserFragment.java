@@ -35,16 +35,9 @@ import static com.loge.mealpricer.MeasureType.ONLY_VOLUME;
 import static com.loge.mealpricer.MeasureType.ONLY_WEIGHT;
 
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class IngredientChooserFragment extends Fragment {
 
 
-    private OnListFragmentInteractionListener mListener;
     private RecyclerView mIngredientChooserRecyclerView;
     private IngredientChooserRecyclerViewAdapter mAdapter;
     private List<Ingredient> mIngredients;
@@ -122,25 +115,13 @@ public class IngredientChooserFragment extends Fragment {
 
 
         if(mAdapter == null){
-            mAdapter = new IngredientChooserRecyclerViewAdapter(products, mIngredients, mListener);
+            mAdapter = new IngredientChooserRecyclerViewAdapter(products, mIngredients);
             mIngredientChooserRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.setIngredientsProducts(mIngredients, products);
             mAdapter.notifyDataSetChanged();
         }
 
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
     }
 
     @Override
@@ -168,12 +149,8 @@ public class IngredientChooserFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction();
-    }
 
     private MeasureType getMeasureType(Product product){
         if (product.getWeight() == 0 && product.getVolume() == 0){
