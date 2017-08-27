@@ -84,12 +84,13 @@ public class IngredientChooserActivity extends AppCompatActivity{
 
     }
 
-    /*
-    @Override
-    public void onListFragmentInteraction() {
-
-    }*/
-
+    /**
+     * method to return an extra to the previous activity
+     *
+     * This is used to inform the resuming previous activity from where we return
+     * to set the proper state of the tab gui.
+     * @return
+     */
     @Override
     public Intent getSupportParentActivityIntent() {
         final Intent intent = new Intent(this, MealDetailActivity.class);

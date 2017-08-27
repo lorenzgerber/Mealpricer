@@ -33,16 +33,34 @@ import static com.loge.mealpricer.MeasureType.BOTH_VOLUME;
 import static com.loge.mealpricer.MeasureType.BOTH_WEIGHT;
 import static com.loge.mealpricer.MeasureType.NONE;
 
+/**
+ * RecyclerViewAdapter for the ingredient chooser fragment
+ *
+ * This class does the heavy lifting regarding GUI logic with user input
+ * validation.
+ *
+ */
 public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<IngredientChooserRecyclerViewAdapter.ViewHolder> {
 
     private List<Product> mProducts;
     private List<Ingredient> mIngredients;
 
+    /**
+     *
+     * @param items
+     * @param ingredients
+     */
     public IngredientChooserRecyclerViewAdapter(List<Product> items, List<Ingredient> ingredients) {
         mProducts = items;
         mIngredients = ingredients;
     }
 
+    /**
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -50,6 +68,11 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         return new ViewHolder(view);
     }
 
+    /**
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mNameView.setText(mProducts.get(position).getName());
@@ -133,16 +156,28 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getItemCount() {
         return mProducts.size();
     }
 
+    /**
+     *
+     * @param ingredients
+     * @param products
+     */
     public void setIngredientsProducts(List<Ingredient> ingredients, List<Product> products){
         mIngredients = ingredients;
         mProducts = products;
     }
 
+    /**
+     *
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mNameView;
         public final TextView mWeightView;
@@ -204,6 +239,9 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         }
     }
 
+    /**
+     *
+     */
     private class SelectedCheckBoxListener implements CompoundButton.OnCheckedChangeListener {
         private int mPosition;
         private TextView mWeight;
@@ -232,7 +270,9 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         }
     }
 
-
+    /**
+     *
+     */
     private class WeightEditTextListener implements TextWatcher {
         private int mPosition;
         private CheckBox mSelected;
@@ -272,6 +312,9 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         }
     }
 
+    /**
+     *
+     */
     private class VolumeEditTextListener implements TextWatcher {
         private int mPosition;
         private CheckBox mSelected;

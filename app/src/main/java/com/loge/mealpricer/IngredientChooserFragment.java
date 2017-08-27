@@ -34,7 +34,13 @@ import static com.loge.mealpricer.MeasureType.NONE;
 import static com.loge.mealpricer.MeasureType.ONLY_VOLUME;
 import static com.loge.mealpricer.MeasureType.ONLY_WEIGHT;
 
-
+/**
+ * Contains the gui and logic part for choosing ingredients
+ *
+ * The fragment uses a recycler view. The main gui logic part
+ * can be found in the recycler view adapter. This fragment receives on
+ * create and resume the mealId.
+ */
 public class IngredientChooserFragment extends Fragment {
 
 
@@ -45,12 +51,14 @@ public class IngredientChooserFragment extends Fragment {
 
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * constructor for fragment
+     *
+     * Needs to know which mealId we work with
+     * to pass it as argument on startup.
+     *
+     * @param mealId
+     * @return fragment initialized with the meal provided as mealId
      */
-    public IngredientChooserFragment() {
-    }
-
     public static IngredientChooserFragment newInstance(UUID mealId){
         Bundle args = new Bundle();
         args.putSerializable(ARG_MEAL_ID, mealId);
@@ -60,13 +68,29 @@ public class IngredientChooserFragment extends Fragment {
         return fragment;
     }
 
-
+    /**
+     * onCreate override to obtain extra
+     *
+     * The mealId string is obtained and converted into an UUID
+     * @param savedInstanceState bundle which has to contain the mealId as String
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMealId = (UUID) getArguments().getSerializable(ARG_MEAL_ID);
     }
 
+    /**
+     * onCreateView override does some gui styling
+     *
+     * Besides loading the recycler view layout manager, a divider line
+     * between the list entries is initiated here.
+     *
+     * @param inflater layout inflator
+     * @param parent parent ViewGroup, where the recycler view shall be attached to
+     * @param savedInstanceState bundle that contains the mealId
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
@@ -92,6 +116,15 @@ public class IngredientChooserFragment extends Fragment {
         return view;
     }
 
+    /**
+     * method to update the recycler view
+     *
+     * All products of the db are loaded and iterated over.
+     * For each instance from the db, it is checked whether it
+     * is already assigned to the current meal. If so, a new
+     * ingredient instance is configured accrodingly. Else,
+     * a new 'clean' ingredient instance is instantiated.
+     */
     private void updateUI(){
 
         MealPricer mealPricer = MealPricer.get(getActivity());
@@ -113,7 +146,6 @@ public class IngredientChooserFragment extends Fragment {
 
         }
 
-
         if(mAdapter == null){
             mAdapter = new IngredientChooserRecyclerViewAdapter(products, mIngredients);
             mIngredientChooserRecyclerView.setAdapter(mAdapter);
@@ -124,6 +156,11 @@ public class IngredientChooserFragment extends Fragment {
 
     }
 
+    /**
+     * override for onPause
+     *
+     * updates, adds or deletes ingredients
+     */
     @Override
     public void onPause(){
 
@@ -146,12 +183,14 @@ public class IngredientChooserFragment extends Fragment {
 
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-
+    /**
+     * Interprets the product for setting correct MeasureType
+     *
+     * The method checks which values are available in the product to
+     * set a correct MeasureType for the ingredient instance.
+     * @param product
+     * @return MeasureType enum value according to the provided product
+     */
     private MeasureType getMeasureType(Product product){
         if (product.getWeight() == 0 && product.getVolume() == 0){
             return NONE;
