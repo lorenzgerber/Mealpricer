@@ -37,7 +37,11 @@ import static com.loge.mealpricer.MeasureType.NONE;
  * RecyclerViewAdapter for the ingredient chooser fragment
  *
  * This class does the heavy lifting regarding GUI logic with user input
- * validation.
+ * validation of the ingredient chooser. In this view, the user can choose
+ * how much of which ingredient for the active meal. Selection is by
+ * TextView's for the values and a checkbox to select an ingredient. This
+ * class calls a number of text change listeners to synchronize GUI and
+ * data objects.
  *
  */
 public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<IngredientChooserRecyclerViewAdapter.ViewHolder> {
@@ -46,7 +50,9 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
     private List<Ingredient> mIngredients;
 
     /**
+     * Constructor for View Adapter
      *
+     * The main constructor assigns the data to internal variables.
      * @param items
      * @param ingredients
      */
@@ -56,6 +62,10 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
     }
 
     /**
+     * OnCreateViewHolder override
+     *
+     * This method inflates the layout of each individual data row
+     * in the recycler view.
      *
      * @param parent
      * @param viewType
