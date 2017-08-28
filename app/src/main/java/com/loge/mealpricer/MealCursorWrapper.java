@@ -21,6 +21,13 @@ import com.loge.mealpricer.MealPricerDbSchema.MealTable;
 
 import java.util.UUID;
 
+/**
+ * DAO Abstraction for DB access of the Meal Table
+ *
+ * This class provides DAO abstraction for the Meal Table.
+ * It parses the data retrieved from the DB into an Meal
+ * object.
+ */
 class MealCursorWrapper extends CursorWrapper{
 
 
@@ -32,6 +39,11 @@ class MealCursorWrapper extends CursorWrapper{
     public MealCursorWrapper(Cursor cursor) {
         super(cursor);
     }
+
+    /**
+     * Meal DAO getter
+     * @return Meal object
+     */
     public Meal getMeal(){
         String uuidString = getString(getColumnIndex(MealTable.Cols.MEAL_ID));
         String name = getString(getColumnIndex(MealTable.Cols.NAME));
