@@ -183,6 +183,7 @@ public class IngredientChooserFragment extends Fragment {
 
     }
 
+
     /**
      * Interprets the product for setting correct MeasureType
      * <p/>

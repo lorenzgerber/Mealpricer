@@ -27,18 +27,21 @@ import android.widget.TextView;
 import com.loge.mealpricer.MealListFragment.OnListFragmentInteractionListener;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerViewAdapter.ViewHolder> {
 
     private List<Meal> mMeals;
+    private ArrayList<Integer> mPortionSelection;
     private final OnListFragmentInteractionListener mListener;
     private static final String[] mPortionsString = {"1", "2", "4"};
     private static final Integer[] mPortionsInteger = {1, 2, 4};
 
-    public MealRecyclerViewAdapter(List<Meal> items, OnListFragmentInteractionListener listener) {
-        mMeals = items;
+    public MealRecyclerViewAdapter(List<Meal> meals, ArrayList<Integer> portionSelection, OnListFragmentInteractionListener listener) {
+        mMeals = meals;
+        mPortionSelection = portionSelection;
         mListener = listener;
     }
 
@@ -60,7 +63,8 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         ArrayAdapter<String> aa = new ArrayAdapter<>(holder.mSpinner.getContext(), android.R.layout.simple_spinner_item, mPortionsString);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.mSpinner.setAdapter(aa);
-        int mPortion = mMeals.get(position).getPortion();
+        //int mPortion = mMeals.get(position).getPortion();
+        int mPortion = mPortionSelection.get(position);
 
         switch(mPortion) {
             case 1:
@@ -95,6 +99,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
                 }
 
                 mMeals.remove(mPosition);
+                mPortionSelection.remove(mPosition);
                 notifyItemRemoved(mPosition);
                 notifyItemRangeChanged(mPosition, mMeals.size());
             }
@@ -116,7 +121,10 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         return mMeals.size();
     }
 
-    public void setMeals(List<Meal> meals){ mMeals = meals; }
+    public void setMealsPortions(List<Meal> meals, ArrayList<Integer> portions){
+        mMeals = meals;
+        mPortionSelection = portions;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
@@ -158,6 +166,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             float mResult = (float) mMeals.get(mPosition).getPrice() / ((float) mMeals.get(mPosition).getPortion() / (float) mPortionsInteger[position]);
             mPriceView.setText(String.valueOf((int) mResult));
+            mPortionSelection.set(mPosition, mPortionsInteger[position]);
         }
 
         @Override
