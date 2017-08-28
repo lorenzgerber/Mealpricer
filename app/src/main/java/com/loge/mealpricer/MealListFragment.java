@@ -28,10 +28,12 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
+ * A fragment that contains a recycler view
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * This fragment is by default hosted ot the main tabbed activity
+ * MeaPricerTabActivity which also implements the onListFragmentInteractionListener
+ * interface. The fragment hosts a recycler view that shows a list of all
+ * meals
  */
 public class MealListFragment extends Fragment {
 
@@ -40,22 +42,25 @@ public class MealListFragment extends Fragment {
     private MealRecyclerViewAdapter mAdapter;
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Method to create new instance of fragment
+     * <p/>
+     * This method is usually called from the the hosting activity.
+     * @return instance of MealListFragment
      */
-    public MealListFragment() {
-    }
-
     public static MealListFragment newInstance() {
         return new MealListFragment();
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        updateUI();
-    }
-
+    /**
+     * onCreate override
+     * <p/>
+     * This method is used to install the recycler view on startup. It does
+     * also some configuration on the recycler view (divider lines etc.)
+     * @param inflater inflater instance used to inflate recycler view
+     * @param container provides the ViewGroup where the recycler view shall be installed to
+     * @param savedInstanceState not used in override
+     * @return view to be rendered
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,6 +85,12 @@ public class MealListFragment extends Fragment {
         return view;
     }
 
+    /**
+     * method that updates the UI
+     *
+     * This function gets the data from the database and
+     * loads it onto the recycler view adapter.
+     */
     private void updateUI() {
 
         MealPricer mealPricer = MealPricer.get(getActivity());
@@ -98,7 +109,13 @@ public class MealListFragment extends Fragment {
         }
     }
 
-
+    /**
+     * onAttach override
+     * <p/>
+     * This method checks that the calling activity implements the
+     * OnListFragmentInteractionListener interface
+     * @param context Context of the caller, usually the activity.
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -110,12 +127,23 @@ public class MealListFragment extends Fragment {
         }
     }
 
+    /**
+     * onDetach override
+     * <p/>
+     * Detaching the custom OnListFragmentInteractionListener
+     */
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    /**
+     * interface for Listener
+     * <p/>
+     * This needs to be impelemented by the activity that hosts this
+     * fragment.
+     */
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Meal item);
     }
