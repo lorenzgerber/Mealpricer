@@ -29,10 +29,13 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * A fragment representing a list of Items.
+ * A fragment that contains a recycler view
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * Activities containing this fragment MUST implement
+ * the {@link OnListFragmentInteractionListener}
+ * interface. Currently, this interface is not used. The
+ * Recycler view of this fragment presents the ingredients
+ * of the meal that is obtained to the fragment as an extra.
  */
 public class IngredientListFragment extends Fragment {
 
@@ -46,7 +49,12 @@ public class IngredientListFragment extends Fragment {
     private List<Integer> mPrices;
     private OnListFragmentInteractionListener mListener;
 
-
+    /**
+     * Method to create new instance of fragment, providing the extra data
+     * <p/>
+     * @param mealId uuid of the meal to be shown in the view
+     * @return instance of IngredientList fragment
+     */
     public static IngredientListFragment newInstance(UUID mealId){
         Bundle args = new Bundle();
         args.putSerializable(ARG_MEAL_ID, mealId);
@@ -56,7 +64,12 @@ public class IngredientListFragment extends Fragment {
         return fragment;
     }
 
-
+    /**
+     * onCreate override to obtain extra data
+     * <p/>
+     * The mealId string is obtained and converted into an UUID
+     * @param savedInstanceState bundle which has to contain the mealId as String
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +91,15 @@ public class IngredientListFragment extends Fragment {
 
     }
 
+    /**
+     * onCreateView override
+     *
+     * Loads and inflates the recycler view
+     * @param inflater helper to inflate the layout
+     * @param container here the recycler view will be inflated into
+     * @param savedInstanceState eventual additional data
+     * @return Recycler view, ready to render
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,7 +117,14 @@ public class IngredientListFragment extends Fragment {
         return view;
     }
 
-
+    /**
+     * Updates the data of the view
+     *
+     * Method reloads in sequence the ingredient list and
+     * based on ingredients the products from the database.
+     * For the prices, it only provides a container, they
+     * will be calculated in the viewholder.
+     */
     private void updateUI(){
         MealPricer mealPricer = MealPricer.get(getActivity());
 
@@ -111,11 +140,18 @@ public class IngredientListFragment extends Fragment {
             mAdapter.setIngredientsProducts(mIngredients, mProducts);
             mAdapter.notifyDataSetChanged();
         }
-
-
     }
 
-
+    /**
+     * override onAttach to set listener
+     *
+     * This listener is currently not used. It is left in place as
+     * it will be used in the next version to call an individual
+     * ingredient edit activity similar to the product activity.
+     * Currently, ingredient edits have to be done in the ingredient
+     * chooser activity/fragment.
+     * @param context no specific use in override
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -127,12 +163,23 @@ public class IngredientListFragment extends Fragment {
         }
     }
 
+    /**
+     * onResume override
+     * <p/>
+     * onResume triggers an update of the UI. This happens for example
+     * also on rotation of the device.
+     */
     @Override
     public void onResume(){
         super.onResume();
         updateUI();
     }
 
+    /**
+     * onDetach override
+     * <p/>
+     * Removal of listeners.
+     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -145,9 +192,7 @@ public class IngredientListFragment extends Fragment {
      * to the activity and potentially other fragments contained in that
      * activity.
      * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Not used in the current version.
      */
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction();

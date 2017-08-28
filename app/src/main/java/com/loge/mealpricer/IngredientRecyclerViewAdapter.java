@@ -30,7 +30,7 @@ import static com.loge.mealpricer.MeasureType.ONLY_WEIGHT;
 
 /**
  * RecyclerViewAdapter for the MealList fragment
- *
+ * <p/>
  * This view is currently the main representation of the object of interest:
  * the meal with price information for all included ingredients. Currently
  * there is no interaction set on the default implemented recycler item listener.
@@ -47,14 +47,14 @@ public class IngredientRecyclerViewAdapter
 
     /**
      * Constructor for View Adapter
-     *
+     * <p/>
      * The main constructor assigns the data to the internal variables. There
      * is currently no sanity check for the arguments implemented (i.e. same number
-     * of list memebers).
+     * of list members).
      * @param ingredients list of ingredients for the meal shown
      * @param products list of products corresponding to the ingredients
-     * @param prices list of integers with the calculated prices for each ingredident
-     * @param listener currently unnused listener for interaction with individual
+     * @param prices list of integers with the calculated prices for each ingredient
+     * @param listener currently unused listener for interaction with individual
      *                 recycler view elements.
      */
     public IngredientRecyclerViewAdapter(List<Ingredient> ingredients,
@@ -69,12 +69,12 @@ public class IngredientRecyclerViewAdapter
 
     /**
      * onCreateViewHolder override
-     *
+     * <p/>
      * This method inflates the layout of each individual data row
      * in the recycler view
      * @param parent parent view, the recycler view
      * @param viewType not used
-     * @return viewholder to be shown on the recycler view
+     * @return ViewHolder to be shown on the recycler view
      */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -85,7 +85,7 @@ public class IngredientRecyclerViewAdapter
 
     /**
      * onBindViewHolder override
-     *
+     * <p/>
      * This method contains the logic for setting correct units in the gui.
      * @param holder ViewHolder where the item shall be bound to.
      * @param position integer number of the current item on the recycler view
@@ -126,7 +126,7 @@ public class IngredientRecyclerViewAdapter
 
     /**
      * getItemCount override
-     *
+     * <p/>
      * The item count is based on the number of Ingredients
      * provided by the fragment on instantiation.
      * @return integer number of ingredients
@@ -138,7 +138,7 @@ public class IngredientRecyclerViewAdapter
 
     /**
      * set or renew the data on which the view is based
-     *
+     * <p/>
      * This method expects a consistent set of ingredients and products.
      * Currently there is no sanity check for this as it is only called
      * from one spot in the corresponding fragment.
@@ -152,7 +152,7 @@ public class IngredientRecyclerViewAdapter
 
     /**
      * View holder Class, instantiates the view with all widgets
-     *
+     * <p/>
      * The ViewHolder of the IngredientRecyclerViewAdapter has
      * currently only the function of setting up the widgets into
      * the view.
@@ -168,9 +168,9 @@ public class IngredientRecyclerViewAdapter
 
         /**
          * Constructor for IngredientRecyclerViewAdapter ViewHolder
-         *
+         * <p/>
          * Getting and setting up the widgets for an individual
-         * datarow on the recycler view.
+         * data row on the recycler view.
          * @param view The recycler view
          */
         public ViewHolder(View view) {

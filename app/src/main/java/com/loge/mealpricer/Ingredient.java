@@ -20,7 +20,7 @@ import static com.loge.mealpricer.MeasureType.NONE;
 
 /**
  * Connector class between meal and product.
- *
+ * <p/>
  * This class is somewhat hybrid between being a pure model
  * class and containing also View information. The model part,
  * mMealId, mProductId and mAmount is stored also in the database.
@@ -42,7 +42,7 @@ public class Ingredient {
 
     /**
      * Constructor
-     *
+     * <p/>
      * A ingredient instance is used as a connector between a meal and a product
      * hence, on instantiation, by default uuid for meal and product have to
      * be provided. There should only be one unique ingredient per product and meal.
@@ -60,7 +60,7 @@ public class Ingredient {
 
     /**
      * getter for MealId
-     *
+     * <p/>
      * @return the unique id of the meal that the ingredient relates to
      */
     public UUID getMealId() {
@@ -69,7 +69,7 @@ public class Ingredient {
 
     /**
      * getter for ProductId
-     *
+     * <p/>
      * @return the unique id of the product that the ingredient relates to
      */
     public UUID getProductId() {
@@ -78,7 +78,7 @@ public class Ingredient {
 
     /**
      * getter for the measure type
-     *
+     * <p/>
      * @return enum value of the ingredients' MeasureType
      */
     public MeasureType getMeasureType() {
@@ -87,7 +87,7 @@ public class Ingredient {
 
     /**
      * setter for the measure type
-     *
+     * <p/>
      * @param measureType enum value measureType that determines whether to use weight or volume
      *                    based calculation. Further, measure type also specifies whether both
      *                    options are available or not.
@@ -98,8 +98,9 @@ public class Ingredient {
 
     /**
      * getter amount of the ingredient
-     *
-     * @return integer amount of the ingredient, volume or weight, depdening on the MeasureType setting
+     * <p/>
+     * @return integer amount of the ingredient, volume or weight, depends on
+     * the MeasureType setting
      */
     public int getAmount() {
         return mAmount;
@@ -107,7 +108,7 @@ public class Ingredient {
 
     /**
      * setter for amount of ingredient
-     *
+     * <p/>
      * @param amount integer value of quantity for the ingredient
      */
     public void setAmount(int amount) {
@@ -116,7 +117,7 @@ public class Ingredient {
 
     /**
      * getter, boolean value whether ingredient shall be stored in db
-     *
+     * <p/>
      * @return boolean whether shall be stored in the db
      */
     public boolean getSelected() {
@@ -125,6 +126,7 @@ public class Ingredient {
 
     /**
      * setter, boolean value whether ingredient shall be stored in db
+     * <p/>
      * @param selected boolean value
      */
     public void setSelected(boolean selected) {

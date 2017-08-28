@@ -28,21 +28,21 @@ import static com.loge.mealpricer.MealDetailActivity.EXTRA_MEAL_ID;
 
 /**
  * Base Activity to choose ingredients for a meal
- *
+ * <p/>
  * Activity hosts the fragment to choose ingredients for a meal.
  * This activity is started from the MealDetailActivity/MealListFragment
  * and obtains the mealId as an extra.
  */
 public class IngredientChooserActivity extends AppCompatActivity{
-        //implements IngredientChooserFragment.OnListFragmentInteractionListener {
 
     private UUID mealId;
 
     /**
      * static method used to start the activity from within another
      * activity/fragment. It facilitates for passing the mealId as extra.
+     * <p/>
      * @param packageContext from caller activity
-     * @param mealId uuid of the meal that shall be used in the ingredientchooser activity
+     * @param mealId uuid of the meal that shall be used in the IngredientChooser activity
      * @return intent to start IngredientChooserActivity
      */
     public static Intent newIntent(Context packageContext, UUID mealId){
@@ -53,7 +53,7 @@ public class IngredientChooserActivity extends AppCompatActivity{
 
     /**
      * configures toolbar and starts fragment
-     *
+     * <p/>
      * This method configures and starts the fragment which contains
      * the main functionality. Some configurations of the toolbar are
      * done here.
@@ -86,7 +86,7 @@ public class IngredientChooserActivity extends AppCompatActivity{
 
     /**
      * method to return an extra to the previous activity
-     *
+     * <p/>
      * This is used to inform the resuming previous activity from where we return
      * to set the proper state of the tab gui.
      * @return

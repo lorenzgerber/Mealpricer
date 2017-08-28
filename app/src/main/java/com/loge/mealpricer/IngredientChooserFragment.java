@@ -35,10 +35,10 @@ import static com.loge.mealpricer.MeasureType.ONLY_VOLUME;
 import static com.loge.mealpricer.MeasureType.ONLY_WEIGHT;
 
 /**
- * Contains the gui and logic part for choosing ingredients
- *
- * The fragment uses a recycler view. The main gui logic part
- * can be found in the recycler view adapter. This fragment receives on
+ * A fragment that contains an interactive recycler view.
+ * <p/>
+ * The fragment uses a recycler view to present the selection
+ * means for choosing ingredients to a meal. This fragment receives on
  * create and resume the mealId.
  */
 public class IngredientChooserFragment extends Fragment {
@@ -70,7 +70,7 @@ public class IngredientChooserFragment extends Fragment {
 
     /**
      * onCreate override to obtain extra
-     *
+     * <p/>
      * The mealId string is obtained and converted into an UUID
      * @param savedInstanceState bundle which has to contain the mealId as String
      */
@@ -82,11 +82,11 @@ public class IngredientChooserFragment extends Fragment {
 
     /**
      * onCreateView override does some gui styling
-     *
+     * <p/>
      * Besides loading the recycler view layout manager, a divider line
      * between the list entries is initiated here.
      *
-     * @param inflater layout inflator
+     * @param inflater layout inflater
      * @param parent parent ViewGroup, where the recycler view shall be attached to
      * @param savedInstanceState bundle that contains the mealId
      * @return
@@ -118,11 +118,11 @@ public class IngredientChooserFragment extends Fragment {
 
     /**
      * method to update the recycler view
-     *
+     * <p/>
      * All products of the db are loaded and iterated over.
      * For each instance from the db, it is checked whether it
      * is already assigned to the current meal. If so, a new
-     * ingredient instance is configured accrodingly. Else,
+     * ingredient instance is configured accordingly. Else,
      * a new 'clean' ingredient instance is instantiated.
      */
     private void updateUI(){
@@ -158,7 +158,7 @@ public class IngredientChooserFragment extends Fragment {
 
     /**
      * override for onPause
-     *
+     * <p/>
      * updates, adds or deletes ingredients
      */
     @Override
@@ -185,7 +185,7 @@ public class IngredientChooserFragment extends Fragment {
 
     /**
      * Interprets the product for setting correct MeasureType
-     *
+     * <p/>
      * The method checks which values are available in the product to
      * set a correct MeasureType for the ingredient instance.
      * @param product

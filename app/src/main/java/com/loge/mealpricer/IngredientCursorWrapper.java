@@ -1,6 +1,6 @@
 /*
  * IngredientCursorWrapper
- *
+ * <p/>
  * Mealpricer project, an Android app to calculate
  * the fractional cost of a meal from gross product prices.
  * Coursework 5DV155 Development of mobile applications
@@ -23,7 +23,7 @@ import java.util.UUID;
 
 /**
  * DAO Abstraction for DB access of the Ingredient Table
- *
+ * <p/>
  * This class provides DAO abstraction for the Ingredient Table.
  * It parses the data retrieved from the DB into an Ingredient
  * object.
@@ -31,7 +31,7 @@ import java.util.UUID;
 class IngredientCursorWrapper extends CursorWrapper {
     /**
      * Creates a cursor wrapper.
-     *
+     * <p/>
      * @param cursor The underlying cursor to wrap.
      */
     public IngredientCursorWrapper(Cursor cursor) {
@@ -40,6 +40,7 @@ class IngredientCursorWrapper extends CursorWrapper {
 
     /**
      * Ingredient DAO getter
+     * <p/>
      * @return Ingredient instance
      */
     public Ingredient getIngredient() {

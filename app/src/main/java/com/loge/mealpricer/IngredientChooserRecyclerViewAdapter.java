@@ -35,7 +35,7 @@ import static com.loge.mealpricer.MeasureType.NONE;
 
 /**
  * RecyclerViewAdapter for the ingredient chooser fragment
- *
+ * <p/>
  * This class does the heavy lifting regarding GUI logic with user input
  * validation of the ingredient chooser. In this view, the user can choose
  * how much of which ingredient for the active meal. Selection is by
@@ -51,7 +51,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     /**
      * Constructor for View Adapter
-     *
+     * <p/>
      * The main constructor assigns the data to internal variables.
      * @param products list of products, provided by the fragment
      * @param ingredients list of ingredients, provided by the fragment
@@ -63,13 +63,13 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     /**
      * OnCreateViewHolder override
-     *
+     * <p/>
      * This method inflates the layout of each individual data row
      * in the recycler view.
      *
      * @param parent The parent view here is the recycler view
-     * @param viewType not used here as only one type inmplemented
-     * @return viewholder to be shown on the recycler view
+     * @param viewType not used here as only one type implemented
+     * @return ViewHolder to be shown on the recycler view
      */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -80,7 +80,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     /**
      * onBindViewHolder override
-     *
+     * <p/>
      * This method contains the logic interpreting the MeasureType of
      * ingredients into how the GUI/layout should be adapted
      *
@@ -172,7 +172,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     /**
      * getItemCount override
-     *
+     * <p/>
      * The item count is based on the number of products provided
      * by the fragment on instantiation.
      *
@@ -185,7 +185,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     /**
      * Set or renew the data on which the view is based
-     *
+     * <p/>
      * This method expects a consistent set of ingredients and products.
      * Currently there is no sanity check for this as it is only called
      * from one spot in the fragment.
@@ -200,12 +200,12 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     /**
      * ViewHolder that instantiates the view with all widgets
-     *
+     * <p/>
      * Besides initializing and configuring the widgets into the
      * layout, the view holder also sets and defines callback
      * listeners for onFocus events. These affect only the gui,
      * not the underlying data structures. However, they can
-     * fire textchange listeners defined elsewhere which can
+     * fire TextChange listeners defined elsewhere which can
      * cause change to underlying data structures.
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -219,7 +219,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
         /**
          * ViewHolder construct populates the layout with widgets
-         *
+         * <p/>
          * The only configuration work done on the widgets are
          * two onFocus event listeners for the textView
          * boxes WeightView and VolumeView.
@@ -279,12 +279,12 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     /**
      * Custom Listener Class for the ingredient selection checkbox
-     *
-     * The checkbox decides whether an indgredient shall be persitently
+     * <p/>
+     * The checkbox decides whether an ingredient shall be persistently
      * stored in the database. This listener is used to remove text in
      * the TextViews when the checkbox is unchecked. To use it, before
-     * setting, the current viewholder position and references to the
-     * respective textviews has to be provided with the given methods.
+     * setting, the current ViewHolder position and references to the
+     * respective TextViews has to be provided with the given methods.
      */
     private class SelectedCheckBoxListener implements CompoundButton.OnCheckedChangeListener {
         private int mPosition;
@@ -292,15 +292,15 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         private TextView mVolume;
 
         /**
-         * Setting the current viewholder position
-         *
-         * @param position integer current viewholder position
+         * Setting the current ViewHolder position
+         * <p/>
+         * @param position integer current ViewHolder position
          */
         public void updatePosition(int position){this.mPosition = position; }
 
         /**
          * Method to provide access to the weight TextView
-         *
+         * <p/>
          * @param weight reference to the weight TextView widget
          */
         public void setWeightControl(TextView weight){
@@ -309,7 +309,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
         /**
          * Method to provide access to the volume TextView
-         *
+         * <p/>
          * @param volume reference to the volume TextView widget
          */
         public void setVolumeControl(TextView volume){
@@ -318,7 +318,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
         /**
          * set the connected TextViews to an empty string
-         *
+         * <p/>
          * Will check for isChecked and set, if false the weight and volume
          * TextView's to empty strings.
          * @param buttonView reference to the selected checkbox
@@ -339,19 +339,19 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     /**
      * Custom TextListener Class for the WeightEdit TextView Widget
-     *
+     * <p/>
      * This class contains the functionality that will write user
      * input to the underlying data structures, interpreting also
-     * the current configuratino of the GUI.
+     * the current configuration of the GUI.
      */
     private class WeightEditTextListener implements TextWatcher {
         private int mPosition;
         private CheckBox mSelected;
 
         /**
-         * Setting the current viewholder position
-         *
-         * @param position integer current viewholder position
+         * Setting the current ViewHolder position
+         * <p/>
+         * @param position integer current ViewHolder position
          */
         public void updatePosition(int position) {
             this.mPosition = position;
@@ -359,7 +359,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
         /**
          * Method to provide access to selected checkbox
-         *
+         * <p/>
          * @param selector reference to selector checkbox
          */
         public void setCheckBox(CheckBox selector){
@@ -372,7 +372,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
         /**
          * onTextChanged override for WeightEdit TextView widget
-         *
+         * <p/>
          * Method writes the the user entry to the underlying data structure.
          * It also adjusts the ingredients MeasureType accordingly.
          * @param charSequence The user input
@@ -404,19 +404,19 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
     /**
      * Custom TextListener Class for the VolumeEdit TextView Widget
-     *
+     * <p/>
      * This class contains the functionality that will write user
      * input to the underlying data structures, interpreting also
-     * the current configuratino of the GUI.
+     * the current configuration of the GUI.
      */
     private class VolumeEditTextListener implements TextWatcher {
         private int mPosition;
         private CheckBox mSelected;
 
         /**
-         * Setting the current viewholder position
-         *
-         * @param position integer current viewholder position
+         * Setting the current ViewHolder position
+         * <p/>
+         * @param position integer current ViewHolder position
          */
         public void updatePosition(int position) {
             this.mPosition = position;
@@ -424,7 +424,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
         /**
          * Method to provide access to selected checkbox
-         *
+         * <p/>
          * @param selector reference to selector checkbox
          */
         public void setCheckBox(CheckBox selector){
@@ -437,7 +437,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
 
         /**
          * onTextChanged override for VolumeEdit TextView widget
-         *
+         * <p/>
          * Method writes the the user entry to the underlying data structure.
          * It also adjusts the ingredients MeasureType accordingly.
          * @param charSequence The user input
