@@ -39,6 +39,18 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Activity that shows one meal and its ingredients
+ * <p/>
+ * This activity hosts a fragment with a recyclerview to
+ * show for one meal all it's ingredients and the fractional
+ * costs of each ingredient. The activity implements through a
+ * Floating Action Button also the functionality to take a photo
+ * of the meal which will then be shown in the toolbar. Another
+ * Floating Action Button is used to call the ingredient edit
+ * activity. The activity receives an extra that determines
+ * which meal shall be shown.
+ */
 public class MealDetailActivity extends AppCompatActivity
         implements IngredientListFragment.OnListFragmentInteractionListener {
 
@@ -51,13 +63,30 @@ public class MealDetailActivity extends AppCompatActivity
     private File mPhotoFile;
     private ImageView mImageView;
 
-
+    /**
+     * Static method used to start the activity from within another
+     * activity/fragment. It facilitates for passing the mealId as extra.
+     * <p/>
+     * @param packageContext from caller activity
+     * @param mealId uuid of the meal that shall be used in the MealDetailActivity
+     * @return intent to start MealDetailActivity
+     */
     public static Intent newIntent(Context packageContext, UUID mealId){
         Intent intent = new Intent(packageContext, MealDetailActivity.class);
         intent.putExtra(EXTRA_MEAL_ID, mealId);
         return intent;
     }
 
+    /**
+     * configures the toolbar and starts fragment
+     * <p/>
+     * This method configures and starts the fragment which contains the
+     * main functionality. The material design collapsing toolbar is
+     * configured and set from within this method. Further the
+     * FAB's for photo intent and starting the edit ingredient activity
+     * are also configured here.
+     * @param savedInstanceState bundle with extra
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +106,6 @@ public class MealDetailActivity extends AppCompatActivity
                 " - " + mMeal.getPortion() + " Portion(s)");
 
 
-
         if(mPhotoFile == null || !mPhotoFile.exists()){
 
             mImageView.setBackground(null);
@@ -86,7 +114,6 @@ public class MealDetailActivity extends AppCompatActivity
                     mPhotoFile.getPath(), MealDetailActivity.this);
             mImageView.setBackground(new BitmapDrawable(MealDetailActivity.this.getResources(), bitmap));
         }
-
 
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         FloatingActionButton fab_photo = findViewById(R.id.fab_take_photo);
@@ -145,18 +172,25 @@ public class MealDetailActivity extends AppCompatActivity
 
     }
 
-    @Override
-    public void onPause(){
-        super.onPause();
 
-        MealPricer.get(this)
-                .updateMeal(mMeal);
-    }
-
+    /**
+     * onListFragmentInteraction override
+     * <p/>
+     * This code is currently not used.
+     */
     @Override
     public void onListFragmentInteraction() {
     }
 
+    /**
+     * onActivityResult override
+     * <p/>
+     * Method that kicks in when returning from taking photo intent.
+     * It loads the photo and displays it in the toolbar.
+     * @param requestCode request code for photo
+     * @param resultCode reports succes of the returning intent
+     * @param data not used in this override
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (resultCode != RESULT_OK){
