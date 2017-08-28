@@ -56,7 +56,7 @@ public class IngredientChooserFragment extends Fragment {
      * Needs to know which mealId we work with
      * to pass it as argument on startup.
      *
-     * @param mealId
+     * @param mealId uuid of the meal that shall be used
      * @return fragment initialized with the meal provided as mealId
      */
     public static IngredientChooserFragment newInstance(UUID mealId){

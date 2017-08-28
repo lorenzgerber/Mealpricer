@@ -69,7 +69,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
      *
      * @param parent The parent view here is the recycler view
      * @param viewType not used here as only one type inmplemented
-     * @return
+     * @return viewholder to be shown on the recycler view
      */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -85,7 +85,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
      * ingredients into how the GUI/layout should be adapted
      *
      * @param holder ViewHolder where the item shall be bound to
-     * @param position the number of the current item on the recyclerview
+     * @param position the number of the current item on the recycler view
      */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {

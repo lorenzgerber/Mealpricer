@@ -46,12 +46,6 @@ public class IngredientListFragment extends Fragment {
     private List<Integer> mPrices;
     private OnListFragmentInteractionListener mListener;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public IngredientListFragment() {
-    }
 
     public static IngredientListFragment newInstance(UUID mealId){
         Bundle args = new Bundle();
