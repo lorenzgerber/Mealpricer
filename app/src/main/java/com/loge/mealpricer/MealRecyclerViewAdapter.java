@@ -30,7 +30,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * MealRecyclerView adapter for the MealList fragment
+ * <p/>
+ * This recycler view provides the main information of the mealpricer app.
+ * It shows all meals in the database with the respective price. On initial startup,
+ * the portion values for which the ingredients are indicated are presented. Choosing
+ * by the gui spinner a different portion only calculates a new value presented in the
+ * gui but does not persist it in the database. However, for UI consistency, the values
+ * are persisted in a fragment argument during, for example orientation change.
+ */
 public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerViewAdapter.ViewHolder> {
 
     private List<Meal> mMeals;
@@ -39,12 +48,26 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
     private static final String[] mPortionsString = {"1", "2", "4"};
     private static final Integer[] mPortionsInteger = {1, 2, 4};
 
+    /**
+     * Default constructor assigns data arguments to class variables
+     * @param meals list of meals to be shown
+     * @param portionSelection ArrayList of integers representing the portion selector gui state
+     * @param listener item click interaction listener
+     */
     public MealRecyclerViewAdapter(List<Meal> meals, ArrayList<Integer> portionSelection, OnListFragmentInteractionListener listener) {
         mMeals = meals;
         mPortionSelection = portionSelection;
         mListener = listener;
     }
 
+    /**
+     * onCreateViewHolder override
+     * <p/>
+     * Used to inflated the indvidual recycler view item layout
+     * @param parent recycler view
+     * @param viewType not used
+     * @return view of an individual recycler view item
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -52,6 +75,16 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         return new ViewHolder(view);
     }
 
+    /**
+     * onBindViewHolder overrdie
+     * <p/>
+     * This method configures the recycler view item widgets and loads them with data.
+     * Further, the needed listeners are attached to the widgets. Here, a listener
+     * for the spinner widget to choose meal portion calculation and the whole
+     * item interaction listener for entering single meal edit activity are used.
+     * @param holder viewHolder
+     * @param position position of recycler view item
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
@@ -63,7 +96,6 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         ArrayAdapter<String> aa = new ArrayAdapter<>(holder.mSpinner.getContext(), android.R.layout.simple_spinner_item, mPortionsString);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.mSpinner.setAdapter(aa);
-        //int mPortion = mMeals.get(position).getPortion();
         int mPortion = mPortionSelection.get(position);
 
         switch(mPortion) {
@@ -116,16 +148,36 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         });
     }
 
+    /**
+     * getItemCount override
+     * <p/>
+     * Provides the current length of the main data object, the meal list.
+     * @return integer number of meals.
+     */
     @Override
     public int getItemCount() {
         return mMeals.size();
     }
 
+    /**
+     * Setting and refreshing the data containers
+     * <p/>
+     * This method is used to refresh the data. There
+     * is no sanity check that the length of both
+     * data items match.
+     * @param meals list of meals
+     * @param portions list of portions
+     */
     public void setMealsPortions(List<Meal> meals, ArrayList<Integer> portions){
         mMeals = meals;
         mPortionSelection = portions;
     }
 
+    /**
+     * ViewHolder class
+     * <p/>
+     * Fetches and assigns all widgets to the view holder.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mNameView;
@@ -149,19 +201,47 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         }
     }
 
+    /**
+     * Meal Portion Spinner Listener Class
+     * <p/>
+     * Provides methods to provide the current recyclerview item number
+     * and a reference to the Price TextView so that it can be updated
+     * when the spinner position is changed. Further the class also
+     * updates the datastructure which is used to persist the spinner
+     * positions over orientation change.
+     */
     private class CustomSpinnerListener implements AdapterView.OnItemSelectedListener {
 
         private int mPosition;
         private TextView mPriceView;
 
+        /**
+         * provide recycler view item number to which to attach the listener
+         * @param position integer recycler view position
+         */
         private void updatePosition(int position){
             mPosition = position;
         }
 
+        /**
+         * reference to the price TextView
+         * @param priceView TextView widget
+         */
         private void setPriceView(TextView priceView){
             mPriceView = priceView;
         }
 
+        /**
+         * onItemSelected override
+         * <p/>
+         * When a new spinner value is selected, a new price is calculated for the
+         * according portion. Further, the data structure mPortionSelection, is updated
+         * to keep the gui setting persistent during orientation changes.
+         * @param parent parent of spinner
+         * @param view Spinner view
+         * @param position spinner position
+         * @param id spinner value
+         */
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             float mResult = (float) mMeals.get(mPosition).getPrice() / ((float) mMeals.get(mPosition).getPortion() / (float) mPortionsInteger[position]);
@@ -169,6 +249,10 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
             mPortionSelection.set(mPosition, mPortionsInteger[position]);
         }
 
+        /**
+         * not implemented
+         * @param parent not used
+         */
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
 
