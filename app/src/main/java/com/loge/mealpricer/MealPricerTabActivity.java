@@ -116,31 +116,6 @@ public class MealPricerTabActivity extends AppCompatActivity
         }
     }
 
-    /**
-     * This is currently a stub
-     * as no menu is implemented yet.
-     * @param menu widget whet
-     * @return boolean when the menu could be installed
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_meal_pricer_tab, menu);
-        return true;
-    }
-
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     @Override
     public void onListFragmentInteraction(Meal item){
