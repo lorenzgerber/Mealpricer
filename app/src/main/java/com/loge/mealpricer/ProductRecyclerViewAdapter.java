@@ -25,18 +25,38 @@ import com.loge.mealpricer.ProductListFragment.OnListFragmentInteractionListener
 import java.util.List;
 
 /**
- *
+ * RecyclerViewAdapter for Products
+ * <p/>
+ * Used in ProductListFragment to present all available
+ * products as a list. An OnListFragmentInteractionListener
+ * enables navigation to the edit view of an individual
+ * product.
  */
 public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder> {
 
-    private List<Product> mValues;
+    private List<Product> mProducts;
     private final OnListFragmentInteractionListener mListener;
 
-    public ProductRecyclerViewAdapter(List<Product> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    /**
+     * Default Constructor
+     * <p/>
+     * Assigns arguments to the class variables.
+     * @param products
+     * @param listener
+     */
+    public ProductRecyclerViewAdapter(List<Product> products, OnListFragmentInteractionListener listener) {
+        mProducts = products;
         mListener = listener;
     }
 
+    /**
+     * onCreateViewHolder override
+     * <p/>
+     * This method assigns the layout for individual recycler view rows
+     * @param parent recycler view
+     * @param viewType not used
+     * @return view of one recycler view column
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -44,13 +64,20 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
         return new ViewHolder(view);
     }
 
+    /**
+     * onBindViewHolder override
+     * <p/>
+     * Sets up the widgets, loads the data to them and attaches listener.
+     * @param holder ViewHolder
+     * @param position sequence number of ViewHolder in recycler view
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mNameView.setText(mValues.get(position).getName());
-        holder.mPriceView.setText(String.valueOf(mValues.get(position).getPrice()));
-        holder.mWeightView.setText(String.valueOf(mValues.get(position).getWeight()));
-        holder.mVolumeView.setText(String.valueOf(mValues.get(position).getVolume()));
+        holder.mItem = mProducts.get(position);
+        holder.mNameView.setText(mProducts.get(position).getName());
+        holder.mPriceView.setText(String.valueOf(mProducts.get(position).getPrice()));
+        holder.mWeightView.setText(String.valueOf(mProducts.get(position).getWeight()));
+        holder.mVolumeView.setText(String.valueOf(mProducts.get(position).getVolume()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,15 +91,32 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
         });
     }
 
+    /**
+     * getItemCount override
+     * <p/>
+     * Gets size of Product List
+     * @return length of list
+     */
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mProducts.size();
     }
 
+    /**
+     * Method to set/refresh the data
+     * <p/>
+     * @param products List of products
+     */
     public void setProducts(List<Product> products){
-        mValues = products;
+        mProducts = products;
     }
 
+    /**
+     * Product ViewHolder
+     * <p/>
+     * This class represents the row of a recycler view.
+     * It consists of four TextView widgets.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mNameView;
@@ -81,6 +125,12 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
         public final TextView mVolumeView;
         public Product mItem;
 
+        /**
+         * Default constructor
+         * <p/>
+         * Attaches the widgets to the provided view.
+         * @param view
+         */
         public ViewHolder(View view) {
             super(view);
             mView = view;

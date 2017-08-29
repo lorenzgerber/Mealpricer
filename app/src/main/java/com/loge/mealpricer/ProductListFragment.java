@@ -28,10 +28,10 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
+ * A fragment that uses a recycler view to show all available products.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * This fragment is contained in the MealPricerTabActivity as the second tab
+ * in the ViewPager.
  */
 public class ProductListFragment extends Fragment {
 
@@ -39,23 +39,27 @@ public class ProductListFragment extends Fragment {
     private RecyclerView mProductRecyclerView;
     private ProductRecyclerViewAdapter mAdapter;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public ProductListFragment() {
-    }
 
+    /**
+     * Method to create new instance of ProductListFragment
+     * <p/>
+     * @return ProductListFragment instance
+     */
     public static ProductListFragment newInstance() {
         return new ProductListFragment();
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        updateUI();
-    }
-
+    /**
+     * onCreateView override
+     * <p/>
+     * Method that fetches the layout,  inflates it and
+     * and installs the recycler view.
+     *
+     * @param inflater inflater instance
+     * @param container to attach the view to
+     * @param savedInstanceState bundle
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,6 +86,12 @@ public class ProductListFragment extends Fragment {
     }
 
 
+    /**
+     * Method to reload the data for UI
+     * <p/>
+     * This method reloads the data from the database
+     * and notifies the adapter to fire an UI refresh
+     */
     private void updateUI() {
 
         MealPricer mealPricer = MealPricer.get(getActivity());
@@ -97,6 +107,13 @@ public class ProductListFragment extends Fragment {
     }
 
 
+    /**
+     * Safety check on listener interface
+     * <p/>
+     * This method checks whether the OnListFragmentInteractionListener
+     * interface has been implemented by the container activity.
+     * @param context callers context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -108,6 +125,23 @@ public class ProductListFragment extends Fragment {
         }
     }
 
+    /**
+     * onResume override
+     * <p/>
+     * Method used to reload data and fire
+     * UI refresh on orientation change.
+     */
+    @Override
+    public void onResume(){
+        super.onResume();
+        updateUI();
+    }
+
+    /**
+     * onDetach override
+     * <p/>
+     * Method to detach the listener
+     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -115,14 +149,9 @@ public class ProductListFragment extends Fragment {
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
+     * Interface for OnListFragmentInteracitonListener
      * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * This interface needs to be implemented by containing activities.
      */
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Product item);
