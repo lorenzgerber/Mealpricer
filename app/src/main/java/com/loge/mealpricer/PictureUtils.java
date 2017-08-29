@@ -20,8 +20,26 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 
 
+/**
+ * Helper Class for scaling images
+ * <p/>
+ * This code is mostly taken from the course book
+ * (Android Programming: The Big Nerd Ranch, 3:e, 2017) and is currently
+ * in a very raw form. In the future, this class has to be extended to provide
+ * also image cropping of the meal image four-ways: depending both on the aspect-ratio
+ * of the source image, and on the orientation of the screen.
+ */
 class PictureUtils {
 
+    /**
+     * method that uses display size to guess an initial scaling value
+     * <p/>
+     * This method can be used for convenience when no the exact scaling
+     * parameters are not know yet.
+     * @param path file handle to image
+     * @param activity caller's activity
+     * @return scaled bitmap
+     */
     public static Bitmap getScaledBitmap(String path, Activity activity){
         Point size = new Point();
         activity.getWindowManager().getDefaultDisplay().getSize(size);
@@ -30,6 +48,16 @@ class PictureUtils {
     }
 
 
+    /**
+     * Method that scales an image to given arguments
+     * <p/>
+     * The method takes an image file handle and scales the provided image
+     * down according to the provided width and height arguments.
+     * @param path file handle to image
+     * @param destWidth destination width in pixel
+     * @param destHeight destination height in pixel
+     * @return scaled image
+     */
     private static Bitmap getScaledBitmap(String path, int destWidth, int destHeight){
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;

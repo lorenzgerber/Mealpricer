@@ -134,8 +134,8 @@ public class Meal {
      * Getter of the photo filename
      * <p/>
      * This method constructs the filename of a eventual jpg
-     * of the meal.
-     * @return hypothetical filename string for the meal photo file
+     * of the meal. Method will return the name independent whether the file exists or not
+     * @return filename string for the meal photo file
      */
     public String getPhotoFilename() {
         return "IMG_" + getMealId().toString() + ".jpg";
