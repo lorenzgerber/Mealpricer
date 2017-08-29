@@ -24,6 +24,9 @@ import com.loge.mealpricer.ProductListFragment.OnListFragmentInteractionListener
 
 import java.util.List;
 
+/**
+ *
+ */
 public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder> {
 
     private List<Product> mValues;

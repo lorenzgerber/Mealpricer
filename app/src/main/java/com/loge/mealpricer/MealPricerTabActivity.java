@@ -36,7 +36,19 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
-
+/**
+ * Main Activity of MealPricer
+ * <p/>
+ * On starting the app, the user ends up in this activity which is implemented
+ * with a viewpager to hosts the MealListFragment and the ProductListFragment in
+ * material design style tabs. The Activity uses an extra with the ProductListFragment
+ * to keep track of which tab to present on returning from either of the fragments.
+ * The class further implements AlertDialogs for collecting data from the user to
+ * add a new meal or product.
+ * <p/>
+ * The activity implements the onListFragmentInteractionListeners for both hosted
+ * fragments to provide actions on recycler list item clicks.
+ */
 public class MealPricerTabActivity extends AppCompatActivity
         implements ProductListFragment.OnListFragmentInteractionListener,
         MealListFragment.OnListFragmentInteractionListener {
@@ -46,7 +58,7 @@ public class MealPricerTabActivity extends AppCompatActivity
 
 
     /**
-     * The {@link ViewPager} that will host the section contents.
+     * The ViewPager that will host the section contents.
      */
     private ViewPager mViewPager;
 
@@ -57,6 +69,14 @@ public class MealPricerTabActivity extends AppCompatActivity
     private String mProductName = "";
     private int mMealPortion = 1;
 
+    /**
+     * onCreate override
+     * </p>
+     * Here the viewpager for the tabs and the
+     * floating action buttons are setup. Further,
+     * the behaviour of the toolbar is set.
+     * @param savedInstanceState stored state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,19 +84,9 @@ public class MealPricerTabActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        /*
-      The {@link android.support.v4.view.PagerAdapter} that will provide
-      fragments for each of the sections. We use a
-      {@link FragmentPagerAdapter} derivative, which will keep every
-      loaded fragment in memory. If this becomes too memory intensive, it
-      may be best to switch to a
-      {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(sectionsPagerAdapter);
 
@@ -84,7 +94,6 @@ public class MealPricerTabActivity extends AppCompatActivity
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +116,12 @@ public class MealPricerTabActivity extends AppCompatActivity
         }
     }
 
-
+    /**
+     * This is currently a stub
+     * as no menu is implemented yet.
+     * @param menu widget whet
+     * @return boolean when the menu could be installed
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -115,14 +129,11 @@ public class MealPricerTabActivity extends AppCompatActivity
         return true;
     }
 
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
