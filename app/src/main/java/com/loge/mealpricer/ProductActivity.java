@@ -26,6 +26,17 @@ import android.view.View;
 
 import java.util.UUID;
 
+/**
+ * Activity that hosts the fragment for editing products
+ * <p/>
+ * This activity hosts the MealDetailFragment which contains
+ * builds a form like view to edit products. Further, this
+ * activity handles an extra which is sent back to the calling
+ * activity on ending the activity to inform the calling
+ * activity (MealPricerTabActivity) which tab view to
+ * show (ProductListFragment).
+ *
+ */
 public class ProductActivity extends AppCompatActivity {
 
     private static final String EXTRA_PRODUCT_ID =
@@ -33,12 +44,31 @@ public class ProductActivity extends AppCompatActivity {
     private static final String SWITCH_TAB = "switch_tab";
     private static final int TAB_SECOND = 1;
 
+    /**
+     * Method to load an extra on ProductActivity intent
+     * <p/>
+     * This method is called from an activity that wants to start
+     * ProductActivity and provides by an extra which product to
+     * edit.
+     * @param packageContext caller activity context
+     * @param productId string of productId uuid
+     * @return intent loaded with extra
+     */
     public static Intent newIntent(Context packageContext, UUID productId){
         Intent intent = new Intent(packageContext, ProductActivity.class);
         intent.putExtra(EXTRA_PRODUCT_ID, productId);
         return intent;
     }
 
+    /**
+     * onCreate override
+     * <p/>
+     * Method creates the material design toolbar and
+     * floating action button. Further it loads a
+     * MealDetail fragment with the productId as args
+     * and starts the fragment.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +101,14 @@ public class ProductActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method to load the callers activity intent with an extra
+     * <p/>
+     * This method is used to send back information to the caller about
+     * which Activity/Fragment we're coming from to open the correct
+     * tab in the view pager.
+     * @return intent loaded with extra
+     */
     @Override
     public Intent getSupportParentActivityIntent() { // getParentActivityIntent() if you are not using the Support Library
         final Bundle bundle = new Bundle();

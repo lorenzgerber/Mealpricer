@@ -38,7 +38,14 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * A placeholder fragment containing a simple view.
+ * Fragment that host the product editing functionality
+ * <p/>
+ * This fragment is hosted in the ProductActivity from
+ * which it obtains a bundle argument determining which
+ * product that shall be opened for editing. The fragment
+ * uses a simple fixed view with several EditText widgets
+ * and additional functionality to take and show the photo
+ * of the product.
  */
 public class ProductFragment extends Fragment {
 
@@ -51,6 +58,14 @@ public class ProductFragment extends Fragment {
     private ImageView mPhotoView;
 
 
+    /**
+     * Method to load the fragment with the productId as bundle argument
+     * <p/>
+     * This method is called from the hosting activity to provide the
+     * information which productId that shall be loaded for edit.
+     * @param productId string uuid of the product to be edited
+     * @return fragment loaded with bundle args
+     */
     public static ProductFragment newInstance(UUID productId){
         Bundle args = new Bundle();
         args.putSerializable(ARG_PRODUCT_ID, productId);
@@ -60,6 +75,12 @@ public class ProductFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * onCreate override
+     * <p/>
+     * Method used to (re)load the data on create.
+     * @param savedInstanceState bundle with extra
+     */
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -68,14 +89,27 @@ public class ProductFragment extends Fragment {
         mPhotoFile = MealPricer.get(getActivity()).getPhotoFile(mProduct);
     }
 
+    /**
+     * onPause override
+     * <p/>
+     * Calls the activity for store volatile data to the database.
+     * This method is called for example on orientation change.
+     */
     @Override
     public void onPause() {
         super.onPause();
-
         MealPricer.get(getActivity()).updateProduct(mProduct);
     }
 
-
+    /**
+     * Taking care of returning photo capture intent
+     * <p/>
+     * This method catches the returning photo capture intent, tries
+     * to fetch the photo and call the updatePhotoView Method.
+     * @param requestCode specific request int
+     * @param resultCode returning activity result code
+     * @param data not used here
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (resultCode != Activity.RESULT_OK){
@@ -94,9 +128,18 @@ public class ProductFragment extends Fragment {
 
     }
 
-
-
-
+    /**
+     * onCreateView override of ProductFragment
+     * <p/>
+     * Method that fetches and inflates the layout. Further it
+     * attaches and configures widgets. This includes setting the
+     * TextChange listeners for TextEdit fields and the onClick
+     * listener for the photo ImageButton.
+     * @param inflater inflater instance
+     * @param container container where to attach the view
+     * @param savedInstanceState bundle
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -205,8 +248,8 @@ public class ProductFragment extends Fragment {
 
         });
 
-        PackageManager packageManager = getActivity().getPackageManager();
 
+        PackageManager packageManager = getActivity().getPackageManager();
         ImageButton photoButton = v.findViewById(R.id.product_camera);
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
