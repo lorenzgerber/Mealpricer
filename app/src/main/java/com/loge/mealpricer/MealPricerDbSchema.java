@@ -14,8 +14,19 @@
  */
 package com.loge.mealpricer;
 
-
+/**
+ * Database Scheme
+ * <p/>
+ * This class defines the database scheme
+ * for the application user side with
+ * public static variables for global
+ * accessability.
+ */
 class MealPricerDbSchema {
+
+    /**
+     * Class defining application wide handles for the product table
+     */
     public static final class ProductTable {
         public static final String NAME = "product";
 
@@ -28,6 +39,9 @@ class MealPricerDbSchema {
         }
     }
 
+    /**
+     * Class defining application wide handles for the meal table
+     */
     public static final class MealTable {
         public static final String NAME = "meal";
 
@@ -38,6 +52,9 @@ class MealPricerDbSchema {
         }
     }
 
+    /**
+     * Class defining application wide handles for the ingredient table
+     */
     public static final class IngredientTable {
         public static final String NAME = "ingredient";
 

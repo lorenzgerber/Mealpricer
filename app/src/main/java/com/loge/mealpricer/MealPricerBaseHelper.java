@@ -22,17 +22,37 @@ import com.loge.mealpricer.MealPricerDbSchema.IngredientTable;
 import com.loge.mealpricer.MealPricerDbSchema.MealTable;
 import com.loge.mealpricer.MealPricerDbSchema.ProductTable;
 
-
+/**
+ * Database Helper, Table creation
+ * <p/>
+ * The main task of this class is to startup the
+ * SQLite database engine, and if needed, create
+ * new tables. It extends the SQLiteOpenHelper with
+ * application specifc values such as db name, verion
+ * and the table structure.
+ */
 class MealPricerBaseHelper extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "mealPricerBase.db";
 
+    /**
+     * Constructor
+     * <p/>
+     * @param context callers context
+     */
     public MealPricerBaseHelper(Context context){
         super(context, DATABASE_NAME, null, VERSION);
     }
 
 
+    /**
+     * onCreate override
+     * <p/>
+     * If the table don't exist yet, they are
+     * created in this method.
+     * @param db
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -64,6 +84,14 @@ class MealPricerBaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * onUpgrade override
+     * <p/>
+     * Currently no override for upgrade is defined.
+     * @param db not used
+     * @param oldVersion not used
+     * @param newVersion not used
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
