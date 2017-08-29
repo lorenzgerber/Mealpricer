@@ -75,6 +75,10 @@ public class MealPricerTabActivity extends AppCompatActivity
      * Here the viewpager for the tabs and the
      * floating action buttons are setup. Further,
      * the behaviour of the toolbar is set.
+     * <p/>
+     * Here also the tab switching when returning
+     * from another activity is handled using the
+     * SWTICH_TAB extra.
      * @param savedInstanceState stored state
      */
     @Override
@@ -117,18 +121,39 @@ public class MealPricerTabActivity extends AppCompatActivity
     }
 
 
+    /**
+     * MealList recycler view item listener implementation
+     * <p/>
+     * Starts a MealDetailActivity providing the chosen mealId obtained
+     * from the listener as extra.
+     * @param meal
+     */
     @Override
-    public void onListFragmentInteraction(Meal item){
-        Intent intent = MealDetailActivity.newIntent(this, item.getMealId());
+    public void onListFragmentInteraction(Meal meal){
+        Intent intent = MealDetailActivity.newIntent(this, meal.getMealId());
         startActivity(intent);
     }
 
+    /**
+     * ProductList recycler view item listener implementation
+     * <p/>
+     * Starts a ProductActivity providing the chosen productId obtained
+     * from the listener as extra.
+     * @param product
+     */
     @Override
-    public void onListFragmentInteraction(Product item) {
-        Intent intent = ProductActivity.newIntent(this, item.getProductId());
+    public void onListFragmentInteraction(Product product) {
+        Intent intent = ProductActivity.newIntent(this, product.getProductId());
         startActivity(intent);
     }
 
+    /**
+     * Helper method for the new meal AlertDialog
+     * <p/>
+     * This method is called as positive exit from the enterMealNameDialog.
+     * It requests a new meal instance from the database and configures it
+     * according to the user entries from the alert dialog.
+     */
     private void createNewMeal(){
         Meal mMeal = MealPricer.get(MealPricerTabActivity.this).newMeal();
         mMeal.setName(mMealName);
@@ -137,6 +162,13 @@ public class MealPricerTabActivity extends AppCompatActivity
         onListFragmentInteraction(mMeal);
     }
 
+    /**
+     * Helper method for new product AlertDialog
+     * <p/>
+     * This method is called as positive exit from the enterProductNameDialog.
+     * It requests a new product instance from the database and configures it
+     * according to the user entries from the alert dialog.
+     */
     private void createNewProduct(){
         Product mProduct = MealPricer.get(MealPricerTabActivity.this).newProduct();
         mProduct.setName(mProductName);
@@ -144,6 +176,16 @@ public class MealPricerTabActivity extends AppCompatActivity
         onListFragmentInteraction(mProduct);
     }
 
+    /**
+     * Custom Alert Dialog for new Meal
+     * <p/>
+     * Dialog asks user for product name and the meal portion. The
+     * dialog uses a custom layout to host both an EditText box
+     * and a spinner. On succes, a helper method is called that
+     * creates the new meal in the database and subsequently
+     * starts a new mealDetail activity indicating the new
+     * meal id as extra.
+     */
     private void enterMealNameDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MealPricerTabActivity.this);
         builder.setTitle("Enter Name and Portion of Meal");
@@ -185,6 +227,15 @@ public class MealPricerTabActivity extends AppCompatActivity
 
     }
 
+    /**
+     * AlertDialog to obtain product name for new product
+     * <p/>
+     * Standard AlertDialog that asks the user for the new
+     * product name. On success, a helper method is called
+     * that creates the new product in the database and
+     * subsequently starts a new productDetail activity
+     * providing the new productId as extra.
+     */
     private void enterProductNameDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MealPricerTabActivity.this);
         builder.setTitle("Enter Name of Product");
