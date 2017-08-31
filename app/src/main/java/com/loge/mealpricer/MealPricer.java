@@ -542,7 +542,7 @@ public class MealPricer {
                 whereArgs,
                 null,
                 null,
-                null
+                ProductTable.Cols.NAME
         );
         return new ProductCursorWrapper(cursor);
     }
@@ -565,7 +565,7 @@ public class MealPricer {
                 whereArgs,
                 null,
                 null,
-                null
+                MealTable.Cols.NAME
         );
         return new MealCursorWrapper(cursor);
     }
