@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 
 import java.util.List;
+import java.util.UUID;
 
 import static android.view.View.INVISIBLE;
 import static com.loge.mealpricer.MeasureType.BOTH_VOLUME;
@@ -89,10 +90,16 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
      */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+
+        holder.mWeightEditTextListener.updatePosition(holder.getAdapterPosition());
+        holder.mWeightEditTextListener.setOverride(true);
+        holder.mVolumeEditTextListener.updatePosition(holder.getAdapterPosition());
+        holder.mVolumeEditTextListener.setOverride(true);
+        holder.mSelectedCheckBoxListener.updatePosition(holder.getAdapterPosition());
+        holder.mSelectedCheckBoxListener.setOverride(true);
+
+
         holder.mNameView.setText(mProducts.get(position).getName());
-
-
-
         int mAmount = mIngredients.get(position).getAmount();
         MeasureType mMeasureType = mIngredients.get(position).getMeasureType();
 
@@ -152,21 +159,10 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             holder.mSelectIngredient.setChecked(false);
         }
 
-        WeightEditTextListener weightListener = new WeightEditTextListener();
-        weightListener.updatePosition(position);
-        weightListener.setCheckBox(holder.mSelectIngredient);
-        holder.mWeightView.addTextChangedListener(weightListener);
 
-        VolumeEditTextListener volumeListener = new VolumeEditTextListener();
-        volumeListener.updatePosition(position);
-        volumeListener.setCheckBox(holder.mSelectIngredient);
-        holder.mVolumeView.addTextChangedListener(volumeListener);
-
-        SelectedCheckBoxListener selectListener = new SelectedCheckBoxListener();
-        selectListener.updatePosition(position);
-        selectListener.setWeightControl(holder.mWeightView);
-        selectListener.setVolumeControl(holder.mVolumeView);
-        holder.mSelectIngredient.setOnCheckedChangeListener(selectListener);
+        holder.mWeightEditTextListener.setOverride(false);
+        holder.mVolumeEditTextListener.setOverride(false);
+        holder.mSelectedCheckBoxListener.setOverride(false);
 
     }
 
@@ -215,6 +211,9 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         public final TextView mVolumeView;
         public final TextInputLayout mTextInputLayoutVolume;
         public final CheckBox mSelectIngredient;
+        public final WeightEditTextListener mWeightEditTextListener;
+        public final VolumeEditTextListener mVolumeEditTextListener;
+        public final SelectedCheckBoxListener mSelectedCheckBoxListener;
 
 
         /**
@@ -236,6 +235,20 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
             mTextInputLayoutWeight = view.findViewById(R.id.textInputLayout_weight);
             mVolumeView = view.findViewById(R.id.product_volume);
             mTextInputLayoutVolume = view.findViewById(R.id.textInputLayout_volume);
+
+            mWeightEditTextListener = new WeightEditTextListener();
+            mWeightEditTextListener.setCheckBox(mSelectIngredient);
+            mWeightView.addTextChangedListener(mWeightEditTextListener);
+
+            mVolumeEditTextListener = new VolumeEditTextListener();
+            mVolumeEditTextListener.setCheckBox(mSelectIngredient);
+            mVolumeView.addTextChangedListener(mVolumeEditTextListener);
+
+            mSelectedCheckBoxListener = new SelectedCheckBoxListener();
+            mSelectedCheckBoxListener.setWeightControl(mWeightView);
+            mSelectedCheckBoxListener.setVolumeControl(mVolumeView);
+            mSelectIngredient.setOnCheckedChangeListener(mSelectedCheckBoxListener);
+
 
             mWeightView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
 
@@ -290,6 +303,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         private int mPosition;
         private TextView mWeight;
         private TextView mVolume;
+        private boolean mOverride;
 
         /**
          * Setting the current ViewHolder position
@@ -317,6 +331,17 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         }
 
         /**
+         * Setting override for onCheckedChanged
+         * <p/>
+         * This method is used to override the listener
+         * during binding the ViewHoler
+         * @param override boolean to set override
+         */
+        public void setOverride(boolean override){
+            mOverride = override;
+        }
+
+        /**
          * set the connected TextViews to an empty string
          * <p/>
          * Will check for isChecked and set, if false the weight and volume
@@ -327,13 +352,16 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-            if (buttonView.isChecked()){
-                mIngredients.get(mPosition).setSelected(true);
-            } else {
-                mIngredients.get(mPosition).setSelected(false);
-                mWeight.setText("");
-                mVolume.setText("");
+            if(!mOverride){
+                if (buttonView.isChecked()){
+                    mIngredients.get(mPosition).setSelected(true);
+                } else {
+                    mIngredients.get(mPosition).setSelected(false);
+                    mWeight.setText("");
+                    mVolume.setText("");
+                }
             }
+
         }
     }
 
@@ -347,6 +375,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
     private class WeightEditTextListener implements TextWatcher {
         private int mPosition;
         private CheckBox mSelected;
+        private boolean mOverride;
 
         /**
          * Setting the current ViewHolder position
@@ -355,6 +384,17 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
          */
         public void updatePosition(int position) {
             this.mPosition = position;
+        }
+
+        /**
+         * Setting override for onTextChage
+         * <p/>
+         * This method is used to override the listener
+         * during binding the ViewHoler
+         * @param override boolean to set override
+         */
+        public void setOverride(boolean override){
+            mOverride = override;
         }
 
         /**
@@ -383,17 +423,20 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         @Override
         public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
 
-            if(charSequence.length()!=0){
-                mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
-                mIngredients.get(mPosition).setSelected(true);
-                mSelected.setChecked(true);
-            } else {
-                mIngredients.get(mPosition).setAmount(0);
+            if(!mOverride){
+                if(charSequence.length()!=0){
+                    mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
+                    mIngredients.get(mPosition).setSelected(true);
+                    mSelected.setChecked(true);
+                } else {
+                    mIngredients.get(mPosition).setAmount(0);
+                }
+
+                if(mIngredients.get(mPosition).getMeasureType() == BOTH_VOLUME){
+                    mIngredients.get(mPosition).setMeasureType(BOTH_WEIGHT);
+                }
             }
 
-            if(mIngredients.get(mPosition).getMeasureType() == BOTH_VOLUME){
-                mIngredients.get(mPosition).setMeasureType(BOTH_WEIGHT);
-            }
         }
 
         @Override
@@ -412,6 +455,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
     private class VolumeEditTextListener implements TextWatcher {
         private int mPosition;
         private CheckBox mSelected;
+        private boolean mOverride;
 
         /**
          * Setting the current ViewHolder position
@@ -420,6 +464,17 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
          */
         public void updatePosition(int position) {
             this.mPosition = position;
+        }
+
+        /**
+         * Setting override for onTextChage
+         * <p/>
+         * This method is used to override the listener
+         * during binding the ViewHoler
+         * @param override boolean to set override
+         */
+        public void setOverride(boolean override){
+            mOverride = override;
         }
 
         /**
@@ -435,6 +490,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {
         }
 
+
         /**
          * onTextChanged override for VolumeEdit TextView widget
          * <p/>
@@ -448,17 +504,20 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         @Override
         public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
 
-            if(charSequence.length()!=0){
-                mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
-                mIngredients.get(mPosition).setSelected(true);
-                mSelected.setChecked(true);
-            } else {
-                mIngredients.get(mPosition).setAmount(0);
+            if(!mOverride){
+                if(charSequence.length()!=0){
+                    mIngredients.get(mPosition).setAmount(Integer.parseInt(String.valueOf(charSequence)));
+                    mIngredients.get(mPosition).setSelected(true);
+                    mSelected.setChecked(true);
+                } else {
+                    mIngredients.get(mPosition).setAmount(0);
+                }
+
+                if(mIngredients.get(mPosition).getMeasureType() == BOTH_WEIGHT) {
+                    mIngredients.get(mPosition).setMeasureType(BOTH_VOLUME);
+                }
             }
 
-            if(mIngredients.get(mPosition).getMeasureType() == BOTH_WEIGHT) {
-                mIngredients.get(mPosition).setMeasureType(BOTH_VOLUME);
-            }
         }
 
         @Override
