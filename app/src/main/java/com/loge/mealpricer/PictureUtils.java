@@ -15,6 +15,7 @@
 package com.loge.mealpricer;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -78,4 +79,68 @@ class PictureUtils {
         options.inSampleSize = inSampleSize;
         return BitmapFactory.decodeFile(path, options);
     }
+
+
+
+
+
+
+
+
+
+
+    public static Bitmap getCroppedBitmap(String path, Activity activity){
+        Bitmap mScaled = null;
+        Bitmap mCropped = null;
+        Point mScreenSize = new Point();
+
+        int mOrientation = activity.getResources().getConfiguration().orientation;
+        activity.getWindowManager().getDefaultDisplay().getSize(mScreenSize);
+
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+
+        float mImageWidth = options.outWidth;
+        float mImageHeight = options.outHeight;
+
+
+        if (mOrientation == Configuration.ORIENTATION_LANDSCAPE){
+            if (mImageWidth > mImageHeight){
+                float mRatio = mImageWidth/mScreenSize.x;
+                int mScaledHeight = (int) (mImageWidth/mScreenSize.x*mRatio);
+                mScaled = getScaledBitmap(path,mScreenSize.x, mScaledHeight);
+                mCropped = Bitmap.createBitmap(mScaled, 0, (int) (mImageHeight*mRatio*0.25), mScreenSize.x, (int) (mImageHeight*mRatio*0.5));
+            } else {
+                mScaled = getScaledBitmap(path,mScreenSize.x, (int) (mImageWidth/mScreenSize.x*mImageHeight));
+                mCropped = Bitmap.createBitmap(mScaled, 0, 0, mScreenSize.x, 0);
+            }
+        } else {
+            if (mImageWidth > mImageHeight){
+                //Photo is Landscape
+                mScaled = getScaledBitmap(path,mScreenSize.x, (int) (mImageWidth/mScreenSize.x*mImageHeight));
+                mCropped = Bitmap.createBitmap(mScaled, 0, 0, mScreenSize.x, 0);
+
+            } else {
+                //Photo is Portrait
+                mScaled = getScaledBitmap(path,mScreenSize.x, (int) (mImageWidth/mScreenSize.x*mImageHeight));
+                mCropped = Bitmap.createBitmap(mScaled, 0, 0, mScreenSize.x, 0);
+
+            }
+        }
+
+
+        return mCropped;
+
+
+
+
+
+
+    }
+
+
+
+
 }
