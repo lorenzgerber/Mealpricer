@@ -110,7 +110,7 @@ public class MealDetailActivity extends AppCompatActivity
 
             mImageView.setBackground(null);
         } else {
-            Bitmap bitmap = PictureUtils.getScaledBitmap(
+            Bitmap bitmap = PictureUtils.getCroppedBitmap(
                     mPhotoFile.getPath(), MealDetailActivity.this);
             mImageView.setBackground(new BitmapDrawable(MealDetailActivity.this.getResources(), bitmap));
         }
@@ -142,8 +142,6 @@ public class MealDetailActivity extends AppCompatActivity
                 }
                 startActivityForResult(captureImage, REQUEST_PHOTO);
 
-                Snackbar.make(view, "Take Photo for Meal", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -208,7 +206,7 @@ public class MealDetailActivity extends AppCompatActivity
             if(mPhotoFile == null || !mPhotoFile.exists()){
                 mImageView.setBackground(null);
             } else {
-                Bitmap bitmap = PictureUtils.getScaledBitmap(
+                Bitmap bitmap = PictureUtils.getCroppedBitmap(
                         mPhotoFile.getPath(), MealDetailActivity.this);
                 mImageView.setBackground(new BitmapDrawable(getResources(), bitmap));
             }

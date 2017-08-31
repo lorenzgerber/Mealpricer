@@ -90,8 +90,7 @@ class PictureUtils {
 
 
     public static Bitmap getCroppedBitmap(String path, Activity activity){
-        Bitmap mScaled = null;
-        Bitmap mCropped = null;
+
         Point mScreenSize = new Point();
 
         int mOrientation = activity.getResources().getConfiguration().orientation;
@@ -106,41 +105,34 @@ class PictureUtils {
         float mImageHeight = options.outHeight;
 
 
+
         if (mOrientation == Configuration.ORIENTATION_LANDSCAPE){
             if (mImageWidth > mImageHeight){
-                float mRatio = mImageWidth/mScreenSize.x;
-                int mScaledHeight = (int) (mImageWidth/mScreenSize.x*mRatio);
-                mScaled = getScaledBitmap(path,mScreenSize.x, mScaledHeight);
-                mCropped = Bitmap.createBitmap(mScaled, 0, (int) (mImageHeight*mRatio*0.25), mScreenSize.x, (int) (mImageHeight*mRatio*0.5));
+                float mRatio = mScreenSize.x/mImageWidth;
+                int mScaledHeight = (int) (mRatio * mImageHeight);
+                Bitmap mScaled = getScaledBitmap(path, mScreenSize.x, mScaledHeight);
+                return Bitmap.createBitmap(mScaled, 0, (int) (mImageHeight * mRatio * 0.25), mScaled.getWidth(), (int) (mScaled.getHeight() * 0.5));
             } else {
-                mScaled = getScaledBitmap(path,mScreenSize.x, (int) (mImageWidth/mScreenSize.x*mImageHeight));
-                mCropped = Bitmap.createBitmap(mScaled, 0, 0, mScreenSize.x, 0);
+                float mRatio = mScreenSize.x/mImageWidth;
+                int mScaledHeight = (int) (mRatio * mImageHeight);
+                Bitmap mScaled = getScaledBitmap(path, mScreenSize.x, mScaledHeight);
+                return Bitmap.createBitmap(mScaled, 0, (int) (mImageHeight * mRatio * 0.375), mScaled.getWidth(), (int) (mScaled.getHeight() * 0.3));
             }
         } else {
             if (mImageWidth > mImageHeight){
                 //Photo is Landscape
-                mScaled = getScaledBitmap(path,mScreenSize.x, (int) (mImageWidth/mScreenSize.x*mImageHeight));
-                mCropped = Bitmap.createBitmap(mScaled, 0, 0, mScreenSize.x, 0);
+                float mRatio = mScreenSize.x/mImageWidth;
+                int mScaledHeight = (int) (mRatio * mImageHeight);
+                Bitmap mScaled = getScaledBitmap(path, mScreenSize.x, mScaledHeight);
+                return Bitmap.createBitmap(mScaled, 0, (int) (mImageHeight*mRatio*0.25), mScaled.getWidth(), (int) (mScaled.getHeight() * 0.6));
 
             } else {
                 //Photo is Portrait
-                mScaled = getScaledBitmap(path,mScreenSize.x, (int) (mImageWidth/mScreenSize.x*mImageHeight));
-                mCropped = Bitmap.createBitmap(mScaled, 0, 0, mScreenSize.x, 0);
-
+                float mRatio = mScreenSize.x/mImageWidth;
+                int mScaledHeight = (int) (mRatio * mImageHeight);
+                Bitmap mScaled = getScaledBitmap(path, mScreenSize.x, mScaledHeight);
+                return Bitmap.createBitmap(mScaled, 0, (int) (mImageHeight*mRatio*0.375), mScaled.getWidth(), (int) (mScaled.getHeight() * 0.3));
             }
         }
-
-
-        return mCropped;
-
-
-
-
-
-
     }
-
-
-
-
 }
