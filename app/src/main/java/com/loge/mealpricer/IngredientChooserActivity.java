@@ -89,7 +89,7 @@ public class IngredientChooserActivity extends AppCompatActivity{
      * <p/>
      * This is used to inform the resuming previous activity from where we return
      * to set the proper state of the tab gui.
-     * @return
+     * @return intent with extra
      */
     @Override
     public Intent getSupportParentActivityIntent() {

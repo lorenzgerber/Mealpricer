@@ -89,7 +89,7 @@ public class MealPricer {
      * <p/>
      * Uses the zero argument constructor which will
      * create an UUID on instantiation.
-     * @return
+     * @return new instance of Meal
      */
     public Meal newMeal(){
         return new Meal();
@@ -218,7 +218,7 @@ public class MealPricer {
      * mealId and productId to these provided in the ingredient
      * object. If they match, the database entry is updated with
      * the provided object data.
-     * @param ingredient
+     * @param ingredient object instance
      */
     public void updateIngredient(Ingredient ingredient){
         String uuidMealString = ingredient.getMealId().toString();

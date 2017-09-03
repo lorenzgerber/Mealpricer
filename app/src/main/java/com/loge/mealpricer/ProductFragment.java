@@ -138,7 +138,7 @@ public class ProductFragment extends Fragment {
      * @param inflater inflater instance
      * @param container container where to attach the view
      * @param savedInstanceState bundle
-     * @return
+     * @return view with product edit gui
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

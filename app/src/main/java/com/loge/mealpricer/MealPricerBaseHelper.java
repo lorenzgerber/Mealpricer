@@ -51,7 +51,7 @@ class MealPricerBaseHelper extends SQLiteOpenHelper {
      * <p/>
      * If the table don't exist yet, they are
      * created in this method.
-     * @param db
+     * @param db SQLite database instance
      */
     @Override
     public void onCreate(SQLiteDatabase db) {

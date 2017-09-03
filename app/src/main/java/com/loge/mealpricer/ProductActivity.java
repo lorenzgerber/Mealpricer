@@ -67,7 +67,7 @@ public class ProductActivity extends AppCompatActivity {
      * floating action button. Further it loads a
      * MealDetail fragment with the productId as args
      * and starts the fragment.
-     * @param savedInstanceState
+     * @param savedInstanceState bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

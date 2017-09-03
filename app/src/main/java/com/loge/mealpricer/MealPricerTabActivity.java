@@ -126,7 +126,7 @@ public class MealPricerTabActivity extends AppCompatActivity
      * <p/>
      * Starts a MealDetailActivity providing the chosen mealId obtained
      * from the listener as extra.
-     * @param meal
+     * @param meal object instance which will be accessible through listener
      */
     @Override
     public void onListFragmentInteraction(Meal meal){
@@ -139,7 +139,7 @@ public class MealPricerTabActivity extends AppCompatActivity
      * <p/>
      * Starts a ProductActivity providing the chosen productId obtained
      * from the listener as extra.
-     * @param product
+     * @param product object which will be accessible through recycler view item listener
      */
     @Override
     public void onListFragmentInteraction(Product product) {

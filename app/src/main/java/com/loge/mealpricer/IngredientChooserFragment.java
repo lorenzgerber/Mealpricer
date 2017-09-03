@@ -89,7 +89,7 @@ public class IngredientChooserFragment extends Fragment {
      * @param inflater layout inflater
      * @param parent parent ViewGroup, where the recycler view shall be attached to
      * @param savedInstanceState bundle that contains the mealId
-     * @return
+     * @return recycler view showing all ingredients
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent,
@@ -189,7 +189,7 @@ public class IngredientChooserFragment extends Fragment {
      * <p/>
      * The method checks which values are available in the product to
      * set a correct MeasureType for the ingredient instance.
-     * @param product
+     * @param product instance of product
      * @return MeasureType enum value according to the provided product
      */
     private MeasureType getMeasureType(Product product){

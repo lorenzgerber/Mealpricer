@@ -41,8 +41,8 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
      * Default Constructor
      * <p/>
      * Assigns arguments to the class variables.
-     * @param products
-     * @param listener
+     * @param products List of Products
+     * @param listener recyler view item listener
      */
     public ProductRecyclerViewAdapter(List<Product> products, OnListFragmentInteractionListener listener) {
         mProducts = products;
@@ -129,7 +129,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
          * Default constructor
          * <p/>
          * Attaches the widgets to the provided view.
-         * @param view
+         * @param view ViewHolder of Product list recycler view
          */
         public ViewHolder(View view) {
             super(view);

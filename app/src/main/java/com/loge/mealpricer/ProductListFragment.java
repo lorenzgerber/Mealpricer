@@ -58,7 +58,7 @@ public class ProductListFragment extends Fragment {
      * @param inflater inflater instance
      * @param container to attach the view to
      * @param savedInstanceState bundle
-     * @return
+     * @return view with recycler view of products
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

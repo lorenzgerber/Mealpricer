@@ -223,7 +223,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
          * two onFocus event listeners for the textView
          * boxes WeightView and VolumeView.
          *
-         * @param view
+         * @param view ViewHolder, one row of the recycler view
          */
         public ViewHolder(View view) {
             super(view);
