@@ -70,7 +70,7 @@ class PictureUtils {
         int inSampleSize = 1;
         if(srcHeight > destHeight || srcWidth > destWidth){
             float heightScale = srcHeight / destHeight;
-            float widthScale = srcWidth / srcWidth;
+            float widthScale = srcWidth / destWidth;
 
             inSampleSize = Math.round(heightScale > widthScale ? heightScale : widthScale);
         }
@@ -104,6 +104,12 @@ class PictureUtils {
         float mImageWidth = options.outWidth;
         float mImageHeight = options.outHeight;
 
+        // The following if then else is to work proper in android studio on virtual device
+        // where photos are smaller than screen resolution. Hence no scaling/cropping in the
+        // in the virtual device !!!
+        if (mScreenSize.x > mImageWidth){
+            return getScaledBitmap(path, activity);
+        }
 
 
         if (mOrientation == Configuration.ORIENTATION_LANDSCAPE){
@@ -116,7 +122,7 @@ class PictureUtils {
                 float mRatio = mScreenSize.x/mImageWidth;
                 int mScaledHeight = (int) (mRatio * mImageHeight);
                 Bitmap mScaled = getScaledBitmap(path, mScreenSize.x, mScaledHeight);
-                return Bitmap.createBitmap(mScaled, 0, (int) (mImageHeight * mRatio * 0.375), mScaled.getWidth(), (int) (mScaled.getHeight() * 0.3));
+                return Bitmap.createBitmap(mScaled, 0, (int) (mImageHeight * mRatio * 0.5), mScaled.getWidth(), (int) (mScaled.getHeight() * 0.3));
             }
         } else {
             if (mImageWidth > mImageHeight){
@@ -125,7 +131,6 @@ class PictureUtils {
                 int mScaledHeight = (int) (mRatio * mImageHeight);
                 Bitmap mScaled = getScaledBitmap(path, mScreenSize.x, mScaledHeight);
                 return Bitmap.createBitmap(mScaled, 0, (int) (mImageHeight*mRatio*0.25), mScaled.getWidth(), (int) (mScaled.getHeight() * 0.6));
-
             } else {
                 //Photo is Portrait
                 float mRatio = mScreenSize.x/mImageWidth;
