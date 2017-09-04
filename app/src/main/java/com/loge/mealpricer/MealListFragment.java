@@ -116,7 +116,7 @@ public class MealListFragment extends Fragment {
     /**
      * Method that updates the UI
      *
-     * This function either instantiates a new ViewAdpater and loads it
+     * This function either instantiates a new ViewAdapter and loads it
      * with data or if the adapter only exists, loads fresh data into it.
      */
     private void updateUI() {
@@ -216,7 +216,7 @@ public class MealListFragment extends Fragment {
     /**
      * interface for Listener
      * <p/>
-     * This needs to be impelemented by the activity that hosts this
+     * This needs to be implemented by the activity that hosts this
      * fragment.
      */
     public interface OnListFragmentInteractionListener {

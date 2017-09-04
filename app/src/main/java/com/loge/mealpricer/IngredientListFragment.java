@@ -123,7 +123,7 @@ public class IngredientListFragment extends Fragment {
      * Method reloads in sequence the ingredient list and
      * based on ingredients the products from the database.
      * For the prices, it only provides a container, they
-     * will be calculated in the viewholder.
+     * will be calculated in the ViewHolder.
      */
     private void updateUI(){
         MealPricer mealPricer = MealPricer.get(getActivity());

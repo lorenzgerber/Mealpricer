@@ -155,7 +155,7 @@ public class Product {
      * <p/>
      * This method constructs filename string for the product photo file. Method will return
      * the name independent whether the file exists or not.
-     * @return filename string for the product pohto file.
+     * @return filename string for the product photo file.
      */
     public String getPhotoFilename() {
         return "IMG_" + getProductId().toString() + ".jpg";

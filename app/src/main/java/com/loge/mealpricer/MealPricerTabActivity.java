@@ -78,7 +78,7 @@ public class MealPricerTabActivity extends AppCompatActivity
      * <p/>
      * Here also the tab switching when returning
      * from another activity is handled using the
-     * SWTICH_TAB extra.
+     * SWITCH_TAB extra.
      * @param savedInstanceState stored state
      */
     @Override
@@ -181,7 +181,7 @@ public class MealPricerTabActivity extends AppCompatActivity
      * <p/>
      * Dialog asks user for product name and the meal portion. The
      * dialog uses a custom layout to host both an EditText box
-     * and a spinner. On succes, a helper method is called that
+     * and a spinner. On success, a helper method is called that
      * creates the new meal in the database and subsequently
      * starts a new mealDetail activity indicating the new
      * meal id as extra.

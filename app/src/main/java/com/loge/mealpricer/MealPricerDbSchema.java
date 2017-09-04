@@ -20,7 +20,7 @@ package com.loge.mealpricer;
  * This class defines the database scheme
  * for the application user side with
  * public static variables for global
- * accessability.
+ * accessibility.
  */
 class MealPricerDbSchema {
 

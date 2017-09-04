@@ -28,7 +28,7 @@ import com.loge.mealpricer.MealPricerDbSchema.ProductTable;
  * The main task of this class is to startup the
  * SQLite database engine, and if needed, create
  * new tables. It extends the SQLiteOpenHelper with
- * application specifc values such as db name, verion
+ * application specific values such as db name, version
  * and the table structure.
  */
 class MealPricerBaseHelper extends SQLiteOpenHelper {

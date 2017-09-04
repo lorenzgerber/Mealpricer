@@ -63,7 +63,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
     /**
      * onCreateViewHolder override
      * <p/>
-     * Used to inflated the indvidual recycler view item layout
+     * Used to inflated the individual recycler view item layout
      * @param parent recycler view
      * @param viewType not used
      * @return view of an individual recycler view item
@@ -76,7 +76,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
     }
 
     /**
-     * onBindViewHolder overrdie
+     * onBindViewHolder override
      * <p/>
      * This method configures the recycler view item widgets and loads them with data.
      * Further, the needed listeners are attached to the widgets. Here, a listener
@@ -204,10 +204,10 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
     /**
      * Meal Portion Spinner Listener Class
      * <p/>
-     * Provides methods to provide the current recyclerview item number
+     * Provides methods to provide the current RecyclerView item number
      * and a reference to the Price TextView so that it can be updated
      * when the spinner position is changed. Further the class also
-     * updates the datastructure which is used to persist the spinner
+     * updates the data structure which is used to persist the spinner
      * positions over orientation change.
      */
     private class CustomSpinnerListener implements AdapterView.OnItemSelectedListener {

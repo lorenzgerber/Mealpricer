@@ -21,7 +21,7 @@ package com.loge.mealpricer;
  * a ingredient supports various ways of how the ingredient
  * chooser view should be configured. It depends basically
  * whether there is none, only weight, only volume or
- * both weight and volume data available. The differentation
+ * both weight and volume data available. The differentiation
  * between BOTH_WEIGHT and BOTH_VOLUME further determines
  * which one is used in the ingredient when the product
  * provides values for both.

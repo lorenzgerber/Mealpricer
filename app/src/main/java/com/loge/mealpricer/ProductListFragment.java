@@ -149,7 +149,7 @@ public class ProductListFragment extends Fragment {
     }
 
     /**
-     * Interface for OnListFragmentInteracitonListener
+     * Interface for OnListFragmentInteractionListener
      * <p/>
      * This interface needs to be implemented by containing activities.
      */

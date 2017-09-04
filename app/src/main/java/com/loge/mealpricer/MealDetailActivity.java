@@ -42,7 +42,7 @@ import java.util.UUID;
 /**
  * Activity that shows one meal and its ingredients
  * <p/>
- * This activity hosts a fragment with a recyclerview to
+ * This activity hosts a fragment with a RecyclerView to
  * show for one meal all it's ingredients and the fractional
  * costs of each ingredient. The activity implements through a
  * Floating Action Button also the functionality to take a photo
@@ -186,7 +186,7 @@ public class MealDetailActivity extends AppCompatActivity
      * Method that kicks in when returning from taking photo intent.
      * It loads the photo and displays it in the toolbar.
      * @param requestCode request code for photo
-     * @param resultCode reports succes of the returning intent
+     * @param resultCode reports success of the returning intent
      * @param data not used in this override
      */
     @Override

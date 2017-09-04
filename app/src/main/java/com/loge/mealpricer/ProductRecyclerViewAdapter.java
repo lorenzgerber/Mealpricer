@@ -42,7 +42,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
      * <p/>
      * Assigns arguments to the class variables.
      * @param products List of Products
-     * @param listener recyler view item listener
+     * @param listener recycler view item listener
      */
     public ProductRecyclerViewAdapter(List<Product> products, OnListFragmentInteractionListener listener) {
         mProducts = products;

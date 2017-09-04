@@ -80,15 +80,18 @@ class PictureUtils {
         return BitmapFactory.decodeFile(path, options);
     }
 
-
-
-
-
-
-
-
-
-
+    /**
+     * Method that crops an image to fit for the collapsible toolbar
+     * <p/>
+     * This method check image size and screen orientation to return
+     * a bitmap of proper aspect ratio to visualize in the collapsible
+     * toolbar. This functionality work not when the provided image width
+     * is lower than screen width (often the case when testing on virtual
+     * device).
+     * @param path path to source image
+     * @param activity activity context
+     * @return scaled and cropped bitmap
+     */
     public static Bitmap getCroppedBitmap(String path, Activity activity){
 
         Point mScreenSize = new Point();

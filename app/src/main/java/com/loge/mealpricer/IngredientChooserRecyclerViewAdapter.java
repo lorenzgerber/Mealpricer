@@ -334,7 +334,7 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
          * Setting override for onCheckedChanged
          * <p/>
          * This method is used to override the listener
-         * during binding the ViewHoler
+         * during binding the ViewHolder
          * @param override boolean to set override
          */
         public void setOverride(boolean override){
@@ -387,10 +387,10 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         }
 
         /**
-         * Setting override for onTextChage
+         * Setting override for onTextChange
          * <p/>
          * This method is used to override the listener
-         * during binding the ViewHoler
+         * during binding the ViewHolder
          * @param override boolean to set override
          */
         public void setOverride(boolean override){
@@ -467,10 +467,10 @@ public class IngredientChooserRecyclerViewAdapter extends RecyclerView.Adapter<I
         }
 
         /**
-         * Setting override for onTextChage
+         * Setting override for onTextChange
          * <p/>
          * This method is used to override the listener
-         * during binding the ViewHoler
+         * during binding the ViewHolder
          * @param override boolean to set override
          */
         public void setOverride(boolean override){

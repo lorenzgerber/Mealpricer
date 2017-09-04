@@ -46,7 +46,7 @@ public class MealPricer {
     private final SQLiteDatabase mDatabase;
 
     /**
-     * public Singelton constructor
+     * public Singleton constructor
      * <p/>
      * According to android code analyzer, singletons
      * are not completely safe in android. In the future
@@ -153,7 +153,7 @@ public class MealPricer {
      * <p/>
      * This method deletes the corresponding ingredient
      * in the database when productId and mealId match.
-     * @param i ingredient object to be delted
+     * @param i ingredient object to be deleted
      */
     public void deleteIngredient(Ingredient i){
 
@@ -451,7 +451,7 @@ public class MealPricer {
      * <p/>
      * Convenience method that iterates through all ingredients associated
      * with a meal and summing up the fractional costs.
-     * @param mealId uuid of the meal for which the price shall be calcualted
+     * @param mealId uuid of the meal for which the price shall be calculated
      * @return integer price of the meal calculated from fractional ingredient costs
      */
     public int calcPriceMeal(UUID mealId){
