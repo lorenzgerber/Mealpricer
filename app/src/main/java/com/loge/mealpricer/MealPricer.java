@@ -248,6 +248,7 @@ public class MealPricer {
                 products.add(cursor.getProduct());
                 cursor.moveToNext();
             }
+            cursor.close();
         }
 
         return products;
@@ -270,6 +271,7 @@ public class MealPricer {
                 meals.add(cursor.getMeal());
                 cursor.moveToNext();
             }
+            cursor.close();
         }
 
         return meals;
@@ -293,6 +295,7 @@ public class MealPricer {
                 ingredients.add(cursor.getIngredient());
                 cursor.moveToNext();
             }
+            cursor.close();
         }
 
         return ingredients;
@@ -317,11 +320,14 @@ public class MealPricer {
                 }
         )) {
             if (cursor.getCount() == 0) {
+                cursor.close();
                 return null;
             }
 
             cursor.moveToFirst();
-            return cursor.getProduct();
+            Product product = cursor.getProduct();
+            cursor.close();
+            return product;
         }
     }
 
@@ -343,11 +349,14 @@ public class MealPricer {
                 new String[]{mealId.toString()}
         )) {
             if (cursor.getCount() == 0) {
+                cursor.close();
                 return null;
             }
 
             cursor.moveToFirst();
-            return cursor.getMeal();
+            Meal meal = cursor.getMeal();
+            cursor.close();
+            return meal;
         }
     }
 
@@ -371,11 +380,14 @@ public class MealPricer {
                 new String[]{mealId.toString(), productId.toString()}
         )) {
             if (cursor.getCount() == 0) {
+                cursor.close();
                 return null;
             }
 
             cursor.moveToFirst();
-            return cursor.getIngredient();
+            Ingredient ingredient = cursor.getIngredient();
+            cursor.close();
+            return ingredient;
         }
 
     }
