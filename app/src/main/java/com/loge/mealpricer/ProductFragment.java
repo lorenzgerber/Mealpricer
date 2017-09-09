@@ -24,13 +24,10 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.FileProvider;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 
@@ -148,19 +145,23 @@ public class ProductFragment extends Fragment {
 
         EditText nameField = v.findViewById(R.id.product_name_entry);
         nameField.setText(mProduct.getName());
-        nameField.addTextChangedListener(new ProductFragmentTextWatchers.NameTextWatcher(mProduct));
+        nameField.addTextChangedListener(new ProductFragmentTextWatchers
+                .NameTextWatcher(mProduct));
 
         EditText weightField = v.findViewById(R.id.product_weight_entry);
         weightField.setText(String.valueOf(mProduct.getWeight()));
-        weightField.addTextChangedListener(new ProductFragmentTextWatchers.WeightTextWatcher(mProduct));
+        weightField.addTextChangedListener(new ProductFragmentTextWatchers
+                .WeightTextWatcher(mProduct));
 
         EditText volumeField = v.findViewById(R.id.product_volume_entry);
         volumeField.setText(String.valueOf(mProduct.getVolume()));
-        volumeField.addTextChangedListener(new ProductFragmentTextWatchers.VolumeTextWatcher(mProduct));
+        volumeField.addTextChangedListener(new ProductFragmentTextWatchers
+                .VolumeTextWatcher(mProduct));
 
         EditText priceField = v.findViewById(R.id.product_price_entry);
         priceField.setText(String.valueOf(mProduct.getPrice()));
-        priceField.addTextChangedListener(new ProductFragmentTextWatchers.PriceTextWatcher(mProduct));
+        priceField.addTextChangedListener(new ProductFragmentTextWatchers
+                .PriceTextWatcher(mProduct));
 
         PackageManager packageManager = getActivity().getPackageManager();
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -177,8 +178,6 @@ public class ProductFragment extends Fragment {
 
         return v;
     }
-
-
 
     /**
      * Custom onClick Listener

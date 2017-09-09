@@ -174,7 +174,6 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
             mPortionSelection.remove(mPosition);
             notifyItemRemoved(mPosition);
             notifyItemRangeChanged(mPosition, mMeals.size());
-
         }
     }
 
@@ -288,6 +287,4 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
 
         }
     }
-
-
 }
