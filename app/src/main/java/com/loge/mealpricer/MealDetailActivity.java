@@ -123,27 +123,8 @@ public class MealDetailActivity extends AppCompatActivity
                 captureImage.resolveActivity(packageManager) != null;
         fab_photo.setEnabled(canTakePhoto);
 
-        fab_photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Uri uri = FileProvider.getUriForFile(MealDetailActivity.this,
-                        "com.loge.mealpricer.fileprovider", mPhotoFile);
-                captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-
-
-                List<ResolveInfo> cameraActivities = MealDetailActivity.this
-                        .getPackageManager().queryIntentActivities(captureImage,
-                                PackageManager.MATCH_DEFAULT_ONLY);
-
-                for (ResolveInfo activity : cameraActivities) {
-                    MealDetailActivity.this.grantUriPermission(activity.activityInfo.packageName,
-                            uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                }
-                startActivityForResult(captureImage, REQUEST_PHOTO);
-
-            }
-        });
+        fab_photo.setOnClickListener(new FabPhotoOnClickListener(captureImage));
+        
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FloatingActionButton fab_add_ingredient = findViewById(R.id.fab_add_ingredient);
@@ -169,6 +150,36 @@ public class MealDetailActivity extends AppCompatActivity
         }
 
     }
+
+    public class FabPhotoOnClickListener implements View.OnClickListener {
+
+        Intent mCaptureImage;
+
+        public FabPhotoOnClickListener(Intent captureImage){
+            mCaptureImage = captureImage;
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            Uri uri = FileProvider.getUriForFile(MealDetailActivity.this,
+                    "com.loge.mealpricer.fileprovider", mPhotoFile);
+            mCaptureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
+
+            List<ResolveInfo> cameraActivities = MealDetailActivity.this
+                    .getPackageManager().queryIntentActivities(mCaptureImage,
+                            PackageManager.MATCH_DEFAULT_ONLY);
+
+            for (ResolveInfo activity : cameraActivities) {
+                MealDetailActivity.this.grantUriPermission(activity.activityInfo.packageName,
+                        uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            }
+            startActivityForResult(mCaptureImage, REQUEST_PHOTO);
+
+        }
+    }
+
 
 
     /**
