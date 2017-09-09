@@ -33,6 +33,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+
 import java.io.File;
 import java.util.List;
 import java.util.UUID;
@@ -147,107 +148,19 @@ public class ProductFragment extends Fragment {
 
         EditText nameField = v.findViewById(R.id.product_name_entry);
         nameField.setText(mProduct.getName());
-        nameField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(
-                    CharSequence s, int start, int before, int count) {
-                // Intentionally left blank
-            }
-
-            @Override
-            public void onTextChanged(
-                    CharSequence s, int start, int before, int count){
-                mProduct.setName(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // Intentionally left blank
-            }
-
-        });
+        nameField.addTextChangedListener(new ProductFragmentTextWatchers.NameTextWatcher(mProduct));
 
         EditText weightField = v.findViewById(R.id.product_weight_entry);
         weightField.setText(String.valueOf(mProduct.getWeight()));
-        weightField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(
-                    CharSequence s, int start, int before, int count) {
-                // Intentionally left blank
-            }
-
-            @Override
-            public void onTextChanged(
-                    CharSequence s, int start, int before, int count){
-                if (s.length() != 0){
-                    mProduct.setWeight(Integer.parseInt(s.toString()));
-                } else {
-                    mProduct.setWeight(0);
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // Intentionally left blank
-            }
-
-        });
+        weightField.addTextChangedListener(new ProductFragmentTextWatchers.WeightTextWatcher(mProduct));
 
         EditText volumeField = v.findViewById(R.id.product_volume_entry);
         volumeField.setText(String.valueOf(mProduct.getVolume()));
-        volumeField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(
-                    CharSequence s, int start, int before, int count) {
-                // Intentionally left blank
-            }
-
-            @Override
-            public void onTextChanged(
-                    CharSequence s, int start, int before, int count){
-                if (s.length() != 0){
-                    mProduct.setVolume(Integer.parseInt(s.toString()));
-                } else {
-                    mProduct.setVolume(0);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // Intentionally left blank
-            }
-
-        });
+        volumeField.addTextChangedListener(new ProductFragmentTextWatchers.VolumeTextWatcher(mProduct));
 
         EditText priceField = v.findViewById(R.id.product_price_entry);
         priceField.setText(String.valueOf(mProduct.getPrice()));
-        priceField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(
-                    CharSequence s, int start, int before, int count) {
-                // Intentionally left blank
-            }
-
-            @Override
-            public void onTextChanged(
-                    CharSequence s, int start, int before, int count){
-
-                if(s.length() != 0){
-                    mProduct.setPrice(Integer.parseInt(s.toString()));
-                } else {
-                    mProduct.setPrice(0);
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // Intentionally left blank
-            }
-
-        });
-
+        priceField.addTextChangedListener(new ProductFragmentTextWatchers.PriceTextWatcher(mProduct));
 
         PackageManager packageManager = getActivity().getPackageManager();
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -257,33 +170,60 @@ public class ProductFragment extends Fragment {
 
 
         mPhotoView = v.findViewById(R.id.product_image);
-
         mPhotoView.setClickable(canTakePhoto);
-
-        mPhotoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri uri = FileProvider.getUriForFile(getActivity(),
-                        "com.loge.mealpricer.fileprovider", mPhotoFile);
-                captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-
-
-                List<ResolveInfo> cameraActivities = getActivity()
-                        .getPackageManager().queryIntentActivities(captureImage,
-                                PackageManager.MATCH_DEFAULT_ONLY);
-
-                for (ResolveInfo activity : cameraActivities) {
-                    getActivity().grantUriPermission(activity.activityInfo.packageName,
-                            uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                }
-                startActivityForResult(captureImage, REQUEST_PHOTO);
-            }
-        });
-
+        mPhotoView.setOnClickListener(new PhotoImageViewOnClickListener(captureImage));
 
         updatePhotoView();
 
         return v;
+    }
+
+
+
+    /**
+     * Custom onClick Listener
+     * <p/>
+     * OnClick listener that will start an implicit intent provided as argument to
+     * the listener.
+     */
+    private class PhotoImageViewOnClickListener implements View.OnClickListener{
+
+        Intent mCaptureImage;
+
+        /**
+         * Conststructor
+         * <p/>
+         * Default constructor takes implicit intent to take a photo.
+         * @param captureImage implicit intent to take photo
+         */
+        public PhotoImageViewOnClickListener(Intent captureImage){
+            mCaptureImage = captureImage;
+        }
+
+        /**
+         * OnClickListener Implementation
+         * <p/>
+         * Starts implicit intent to take a product photo when the user
+         * presses the ImageView.
+         * @param view view object to which to attach the onClickListener
+         */
+        @Override
+        public void onClick(View view) {
+            Uri uri = FileProvider.getUriForFile(getActivity(),
+                    "com.loge.mealpricer.fileprovider", mPhotoFile);
+            mCaptureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
+
+            List<ResolveInfo> cameraActivities = getActivity()
+                    .getPackageManager().queryIntentActivities(mCaptureImage,
+                            PackageManager.MATCH_DEFAULT_ONLY);
+
+            for (ResolveInfo activity : cameraActivities) {
+                getActivity().grantUriPermission(activity.activityInfo.packageName,
+                        uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            }
+            startActivityForResult(mCaptureImage, REQUEST_PHOTO);
+        }
     }
 
     private void updatePhotoView() {

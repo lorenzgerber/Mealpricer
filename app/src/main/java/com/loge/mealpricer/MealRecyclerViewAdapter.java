@@ -119,7 +119,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
 
         holder.mSpinner.setOnItemSelectedListener(spinnerListener);
 
-        holder.mImageButton.setOnClickListener(new deleteButtonOnClickListener(holder));
+        holder.mImageButton.setOnClickListener(new DeleteOnClickListener(holder));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +138,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
      * It takes the view holder as argument to act upon. This class
      * is specific to the MealRecyclerViewAdapter class.
      */
-    private class deleteButtonOnClickListener implements View.OnClickListener{
+    private class DeleteOnClickListener implements View.OnClickListener{
 
         ViewHolder mHolder;
 
@@ -148,7 +148,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
          * Default constructor for custom onClickListener
          * @param holder ViewHolder that contains the entry to be deleted
          */
-        public deleteButtonOnClickListener(ViewHolder holder){
+        public DeleteOnClickListener(ViewHolder holder){
             mHolder = holder;
         }
 
@@ -165,8 +165,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
             MealPricer.get(mHolder.mImageButton.getContext()).deleteMeal(mHolder.mItem);
 
             int mPosition = mHolder.getAdapterPosition();
-            File mPhotoFile = MealPricer.get(mHolder.mImageButton.getContext())
-                    .getPhotoFile(mMeals.get(mPosition));
+            File mPhotoFile = MealPricer.get(mHolder.mImageButton.getContext()).getPhotoFile(mMeals.get(mPosition));
             if(mPhotoFile != null || mPhotoFile.exists()){
                 mPhotoFile.delete();
             }
