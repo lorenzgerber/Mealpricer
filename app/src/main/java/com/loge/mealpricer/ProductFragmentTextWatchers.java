@@ -8,9 +8,9 @@ import android.text.TextWatcher;
  * Helper Class to Collect TextWatchers
  * <p/>
  * This class serves as a container for all
- * textwatcher inner classes for the product fragment UI.
+ * TextWatcher inner classes for the product fragment UI.
  */
-public class ProductFragmentTextWatchers {
+class ProductFragmentTextWatchers {
 
 
     /**
@@ -21,7 +21,7 @@ public class ProductFragmentTextWatchers {
      */
     public static class NameTextWatcher implements TextWatcher {
 
-        Product mProduct;
+        final Product mProduct;
 
         public NameTextWatcher(Product product){
             mProduct = product;
@@ -53,7 +53,7 @@ public class ProductFragmentTextWatchers {
      */
     public static class WeightTextWatcher implements TextWatcher{
 
-        Product mProduct;
+        final Product mProduct;
 
         public WeightTextWatcher(Product product){
             mProduct = product;
@@ -91,7 +91,7 @@ public class ProductFragmentTextWatchers {
      */
     public static class VolumeTextWatcher implements TextWatcher{
 
-        Product mProduct;
+        final Product mProduct;
 
         public VolumeTextWatcher(Product product){
             mProduct = product;
@@ -127,7 +127,7 @@ public class ProductFragmentTextWatchers {
      */
     public static class PriceTextWatcher implements TextWatcher{
 
-        Product mProduct;
+        final Product mProduct;
 
         public PriceTextWatcher(Product product){
             mProduct = product;

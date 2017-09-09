@@ -194,24 +194,6 @@ public class MealPricer {
     }
 
     /**
-     * Update a database meal entry
-     * <p/>
-     * Method looks for database entry with corresponding
-     * mealId to the one provided in meal object. If found,
-     * the database is updated with the provided object data.
-     * Currently unused method as name updates of the meal are
-     * not implemented yet.
-     * @param meal meal object to be used for updating corresponding database entry
-     */
-    public void updateMeal(Meal meal){
-        String uuidString = meal.getMealId().toString();
-        ContentValues values = getContentValues(meal);
-
-        mDatabase.update(MealTable.NAME, values, MealTable.Cols.MEAL_ID + " = ?",
-                new String[] { uuidString });
-    }
-
-    /**
      * Update a database ingredient entry
      * <p/>
      * Method looks for database entry with corresponding

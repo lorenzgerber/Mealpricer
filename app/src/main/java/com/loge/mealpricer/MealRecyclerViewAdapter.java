@@ -140,7 +140,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
      */
     private class DeleteOnClickListener implements View.OnClickListener{
 
-        ViewHolder mHolder;
+        final ViewHolder mHolder;
 
         /**
          * Constructor
@@ -158,7 +158,7 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
          * Specific method to be used within MealRecyclerViewAdapter class.
          * The OnClickListener implements the functionality to delete a
          * meal entry.
-         * @param view
+         * @param view container of the image button
          */
         @Override
         public void onClick(View view) {

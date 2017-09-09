@@ -160,12 +160,12 @@ public class MealDetailActivity extends AppCompatActivity
      */
     private class FabPhotoOnClickListener implements View.OnClickListener {
 
-        Intent mCaptureImage;
+        final Intent mCaptureImage;
 
         /**
          * Constructor
          * <p/>
-         * Constructor for custom onClick listner
+         * Constructor for custom onClick listener
          * @param captureImage Implicit intent to take a photo
          */
         public FabPhotoOnClickListener(Intent captureImage){
@@ -178,7 +178,7 @@ public class MealDetailActivity extends AppCompatActivity
          * <p/>
          * OnClick implementation specific for MealDetailActivity FAB photo
          * button. It will start the provided intent.
-         * @param view to wich the onClick action is attached to.
+         * @param view to which the onClick action is attached to.
          */
         @Override
         public void onClick(View view) {

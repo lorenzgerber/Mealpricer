@@ -187,10 +187,10 @@ public class ProductFragment extends Fragment {
      */
     private class PhotoImageViewOnClickListener implements View.OnClickListener{
 
-        Intent mCaptureImage;
+        final Intent mCaptureImage;
 
         /**
-         * Conststructor
+         * Constructor
          * <p/>
          * Default constructor takes implicit intent to take a photo.
          * @param captureImage implicit intent to take photo
