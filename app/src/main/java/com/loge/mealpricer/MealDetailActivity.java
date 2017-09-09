@@ -124,7 +124,7 @@ public class MealDetailActivity extends AppCompatActivity
         fab_photo.setEnabled(canTakePhoto);
 
         fab_photo.setOnClickListener(new FabPhotoOnClickListener(captureImage));
-        
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FloatingActionButton fab_add_ingredient = findViewById(R.id.fab_add_ingredient);
@@ -151,15 +151,35 @@ public class MealDetailActivity extends AppCompatActivity
 
     }
 
-    public class FabPhotoOnClickListener implements View.OnClickListener {
+    /**
+     * Custom onClick Listener
+     * <p/>
+     * OnClick listener that will start an implicit intent provided as argument to
+     * the listener. The listener is specific to the MealDetailActivity FAB photo
+     * button.
+     */
+    private class FabPhotoOnClickListener implements View.OnClickListener {
 
         Intent mCaptureImage;
 
+        /**
+         * Constructor
+         * <p/>
+         * Constructor for custom onClick listner
+         * @param captureImage Implicit intent to take a photo
+         */
         public FabPhotoOnClickListener(Intent captureImage){
             mCaptureImage = captureImage;
 
         }
 
+        /**
+         * onClick implementation
+         * <p/>
+         * OnClick implementation specific for MealDetailActivity FAB photo
+         * button. It will start the provided intent.
+         * @param view to wich the onClick action is attached to.
+         */
         @Override
         public void onClick(View view) {
             Uri uri = FileProvider.getUriForFile(MealDetailActivity.this,
@@ -179,8 +199,6 @@ public class MealDetailActivity extends AppCompatActivity
 
         }
     }
-
-
 
     /**
      * onListFragmentInteraction override

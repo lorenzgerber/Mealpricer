@@ -118,25 +118,8 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
         spinnerListener.setPriceView(holder.mPriceView);
 
         holder.mSpinner.setOnItemSelectedListener(spinnerListener);
-        holder.mImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                MealPricer.get(holder.mImageButton.getContext()).deleteMeal(holder.mItem);
-
-                int mPosition = holder.getAdapterPosition();
-                File mPhotoFile = MealPricer.get(holder.mImageButton.getContext()).getPhotoFile(mMeals.get(mPosition));
-                if(mPhotoFile != null || mPhotoFile.exists()){
-                    mPhotoFile.delete();
-                }
-
-                mMeals.remove(mPosition);
-                mPortionSelection.remove(mPosition);
-                notifyItemRemoved(mPosition);
-                notifyItemRangeChanged(mPosition, mMeals.size());
-            }
-        });
-
+        holder.mImageButton.setOnClickListener(new deleteButtonOnClickListener(holder));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +129,54 @@ public class MealRecyclerViewAdapter extends RecyclerView.Adapter<MealRecyclerVi
                 }
             }
         });
+    }
+
+    /**
+     * Custom onClick Listener
+     * <p/>
+     * OnClick listener that will delete a meal detail list  entry.
+     * It takes the view holder as argument to act upon. This class
+     * is specific to the MealRecyclerViewAdapter class.
+     */
+    private class deleteButtonOnClickListener implements View.OnClickListener{
+
+        ViewHolder mHolder;
+
+        /**
+         * Constructor
+         * <p/>
+         * Default constructor for custom onClickListener
+         * @param holder ViewHolder that contains the entry to be deleted
+         */
+        public deleteButtonOnClickListener(ViewHolder holder){
+            mHolder = holder;
+        }
+
+        /**
+         * onClickListener Implementation
+         * <p/>
+         * Specific method to be used within MealRecyclerViewAdapter class.
+         * The OnClickListener implements the functionality to delete a
+         * meal entry.
+         * @param view
+         */
+        @Override
+        public void onClick(View view) {
+            MealPricer.get(mHolder.mImageButton.getContext()).deleteMeal(mHolder.mItem);
+
+            int mPosition = mHolder.getAdapterPosition();
+            File mPhotoFile = MealPricer.get(mHolder.mImageButton.getContext())
+                    .getPhotoFile(mMeals.get(mPosition));
+            if(mPhotoFile != null || mPhotoFile.exists()){
+                mPhotoFile.delete();
+            }
+
+            mMeals.remove(mPosition);
+            mPortionSelection.remove(mPosition);
+            notifyItemRemoved(mPosition);
+            notifyItemRangeChanged(mPosition, mMeals.size());
+
+        }
     }
 
     /**
