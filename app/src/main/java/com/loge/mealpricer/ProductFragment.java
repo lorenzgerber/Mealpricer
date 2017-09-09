@@ -250,14 +250,17 @@ public class ProductFragment extends Fragment {
 
 
         PackageManager packageManager = getActivity().getPackageManager();
-        ImageButton photoButton = v.findViewById(R.id.product_camera);
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         boolean canTakePhoto = mPhotoFile != null &&
                 captureImage.resolveActivity(packageManager) != null;
-        photoButton.setEnabled(canTakePhoto);
 
-        photoButton.setOnClickListener(new View.OnClickListener() {
+
+        mPhotoView = v.findViewById(R.id.product_image);
+
+        mPhotoView.setClickable(canTakePhoto);
+
+        mPhotoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Uri uri = FileProvider.getUriForFile(getActivity(),
@@ -278,7 +281,6 @@ public class ProductFragment extends Fragment {
         });
 
 
-        mPhotoView = v.findViewById(R.id.product_image);
         updatePhotoView();
 
         return v;
@@ -286,7 +288,7 @@ public class ProductFragment extends Fragment {
 
     private void updatePhotoView() {
         if(mPhotoFile == null || !mPhotoFile.exists()){
-            mPhotoView.setImageDrawable(null);
+            mPhotoView.setImageDrawable(getResources().getDrawable(R.drawable.ic_take_photo));
         } else {
             Bitmap bitmap = PictureUtils.getScaledBitmap(
                     mPhotoFile.getPath(), getActivity());
